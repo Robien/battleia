@@ -1,16 +1,9 @@
-/**
- * 
- */
 package core.ressources;
 
 import api.IA.InfosBase;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 
-/**
- * @author tbxf1355
- * 
- */
 public class InfosBaseMoteur
 {
 

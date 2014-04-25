@@ -1,10 +1,12 @@
-/**
- * 
- */
 package tools;
 
 import java.util.HashMap;
 
+/**
+ * 
+ * permet de log plus facilement qu'avec System.out.println()
+ * 
+ */
 public class Log
 {
     public enum tag
@@ -16,6 +18,7 @@ public class Log
 
     private static boolean               printTag    = true;
 
+    //changer ici pour activer/désactiver les logs suivant les tags
     public static void printablePredef()
     {
         isPrintable.put(tag.IAMANAGER, false);

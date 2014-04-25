@@ -1,13 +1,11 @@
-/**
- * 
- */
 package core.ressources;
 
 import java.util.Random;
 
 /**
- * @author tbxf1355
- * 
+ * cette structure contient toutes les infos constantes pour le jeu
+ * il ne faut pas l'utiliser directement, mais la classe Environement
+ * Par contre pour faire des tests, il est conseillé de changer les valeurs
  */
 public class Constantes
 {
@@ -24,7 +22,7 @@ public class Constantes
     // general
     public static float         proportionAugmentation      = 1.2f;
     public static final boolean random                      = false;
-    public static final int     sizePrecalcul               = 100;   // 0 = sans precalcul
+    public static final int     sizePrecalcul               = 100;  // 0 = sans precalcul
 
     // ressource de depart
     public static int           departBois                  = 100;
@@ -69,6 +67,7 @@ public class Constantes
         return values;
     }
 
+    //un singleton, ça serait mieux quand même
     // /** Holder to make the singleton */
     // private static class SingletonHolder
     // {

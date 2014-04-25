@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dumy;
 
 import java.util.ArrayList;

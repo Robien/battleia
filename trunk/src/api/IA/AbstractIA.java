@@ -9,8 +9,13 @@ import java.util.ArrayList;
 public abstract class AbstractIA
 {
 
-    public abstract void nouveauTour(ArrayList<InfosBase> a);
+    // cette méthode est appelé à chaque nouveau tour
+    // infosBases contient les infos sur les différentes bases controlé par l'IA. Pour l'instant le tableau contiend qu'un seul élément.
+    // l'IA doit choisir quel action faire et l'inscrire directement dans "infosBases"
+    // il faut choisir la construction à faire le cas échéant et donner la répartitions des travailleurs.
+    public abstract void nouveauTour(ArrayList<InfosBase> infosBases);
 
+    // cette methode doit juste retourner le nom de l'IA
     public abstract String getName();
 
 }

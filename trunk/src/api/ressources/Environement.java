@@ -13,8 +13,10 @@ import core.ressources.Constantes.typeRessource;
 import core.ressources.Values;
 
 /**
- * @author tbxf1355
- * 
+ * cette classe contiend tout ce qu'il faut savoir sur l'environement.
+ * Il y a aussi ici les valeurs précalculé pour éviter que les IA le fassent elles mêmes
+ * les méthodes dont le nom commence par RAW sont des méthodes qui font vraiment le calcul, sinon c'est précalculé.
+ * C'est une classe singleton
  */
 public class Environement
 {
@@ -28,7 +30,7 @@ public class Environement
     }
 
     /**
-     * @return the unique instance of the CameraManager
+     * @return the unique instance of Environement
      */
     public static Environement get()
     {
@@ -121,6 +123,9 @@ public class Environement
         return cache.getData(base).dummyRepartition;
     }
 
+    /**
+     * retourne l'objet Values qui contient des infos précalculés.
+     */
     public Values getValuePrecalcule()
     {
         return Constantes.getValues();

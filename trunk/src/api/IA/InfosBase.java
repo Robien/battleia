@@ -1,38 +1,57 @@
-/**
- * 
- */
 package api.IA;
 
 import core.ressources.Constantes;
 import core.ressources.InfosBaseMoteur;
 import core.ressources.Constantes.typeBatiment;
 
-/**
- * @author tbxf1355
- * 
- */
+// toutes les indos utiles sont stoqué dans cette structure.
+// il y a aussi la place pour donner les instructions de constructions (regarder les champs qui ne sont pas finaux)
+// les champs sont public (structure) mais il y aussi des getter... et du coup ben ça sert à rien!
 public class InfosBase
 {
 
     public final int    idBase;
 
+    //stock de la base
     public final int    quantiteBois;
     public final int    quantitePierre;
     public final int    quantiteMetal;
 
     public final int    population;
 
+    //niveau de construction des batiments de la base
     public final int    lvlBucheron;
     public final int    lvlCarriere;
     public final int    lvlMine;
     public final int    lvlFerme;
 
+    //champs à ramplir...
     public int          popBucheron;
     public int          popCarriere;
     public int          popMine;
 
     public typeBatiment constructionEnCours;
-    public final int    tempsEcouleDepuisDebutConstruction;
+    public final int    tempsRestantConstruction;
+
+    // retourne le niveau de construction du batiment batiment
+    public int getLvl(Constantes.typeBatiment batiment)
+    {
+        switch (batiment)
+        {
+        case BUCHERON:
+            return lvlBucheron;
+        case CARRIERE:
+            return lvlCarriere;
+        case FERME:
+            return lvlFerme;
+        case MINE:
+            return lvlMine;
+        case NONE:
+            return 0;
+        default:
+            return 0;
+        }
+    }
 
     /**
      * @return the popBucheron
@@ -174,25 +193,6 @@ public class InfosBase
         return lvlFerme;
     }
 
-    public int getLvl(Constantes.typeBatiment batiment)
-    {
-        switch (batiment)
-        {
-        case BUCHERON:
-            return lvlBucheron;
-        case CARRIERE:
-            return lvlCarriere;
-        case FERME:
-            return lvlFerme;
-        case MINE:
-            return lvlMine;
-        case NONE:
-            return 0;
-        default:
-            return 0;
-        }
-    }
-
     // constructeur avec tout les champs.
 
     public InfosBase(int idBase, int b, int p, int m, int pop, int lvlB, int lvlC, int lvlM, int lvlF, int popB, int popC, int popM,
@@ -216,7 +216,7 @@ public class InfosBase
         this.popMine = popM;
 
         this.constructionEnCours = constructionEnCours;
-        this.tempsEcouleDepuisDebutConstruction = tempsEcouleDepuisDebutConstruction;
+        this.tempsRestantConstruction = tempsEcouleDepuisDebutConstruction;
 
     }
 
@@ -225,8 +225,9 @@ public class InfosBase
     {
         this(info.idBase, info.quantiteBois, info.quantitePierre, info.quantiteMetal, info.population, info.lvlBucheron, info.lvlCarriere,
                 info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
-                info.tempsEcouleDepuisDebutConstruction);
+                info.tempsRestantConstruction);
     }
+
     // constructeur par copie2.
     public InfosBase(InfosBaseMoteur info)
     {

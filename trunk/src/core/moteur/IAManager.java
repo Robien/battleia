@@ -14,8 +14,13 @@ import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
 import core.ressources.InfosBaseMoteur;
 
+// gestionaire d'IA
 public class IAManager
 {
+
+    // condition de victoire
+    private int                                             nbTourMax   = 0;                // 0 == désactivé
+    private int                                             metalForWin = 1000000;
 
     private ArrayList<AbstractIA>                           ias         = new ArrayList<>();
 
@@ -23,8 +28,6 @@ public class IAManager
     private HashMap<AbstractIA, Long>                       temps       = new HashMap<>();
     private static int                                      idBase      = 0;
     private boolean                                         stop        = false;
-    private int                                             nbTourMax   = 0;                // 0 == désactivé
-    private int                                             metalForWin = 1000000;
 
     private int                                             maxLvl      = 0;
     private printStatsToFile                                statLvl;
@@ -35,6 +38,12 @@ public class IAManager
         NONE, PAR_IA, PAR_BASE
     }
 
+    /**
+     * constructeur de IAManager
+     * 
+     * @param statLvl
+     *            le niveau de stat écrit dans des fichiers
+     */
     public IAManager(printStatsToFile statLvl)
     {
         this.statLvl = statLvl;
@@ -44,6 +53,10 @@ public class IAManager
         }
     }
 
+    /**
+     * declare l'IA pour qu'elle participe à la battle
+     * @param ia l'IA à ajouté
+     */
     public void declareIA(AbstractIA ia)
     {
         ias.add(ia);
@@ -53,6 +66,7 @@ public class IAManager
         }
     }
 
+    //lance le jeu
     public void BOOM()
     {
         Log.print(tag.IAMANAGER, "init constantes");

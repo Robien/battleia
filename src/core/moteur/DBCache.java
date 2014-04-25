@@ -1,6 +1,3 @@
-/**
- * 
- */
 package core.moteur;
 
 import java.util.HashMap;
@@ -9,7 +6,7 @@ import api.IA.InfosBase;
 
 public class DBCache
 {
-
+    
     private HashMap<InfosBase, DBData> datas;
 
     public DBCache()

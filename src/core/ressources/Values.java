@@ -9,6 +9,10 @@ import tools.Log.tag;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
 
+/**
+ * le cache de valeurs précalculés
+ * 
+ */
 public class Values
 {
 
@@ -71,7 +75,7 @@ public class Values
             cout.add(coutTmp);
 
         }
-        Log.print(tag.VALUES, "fait en " + ((System.nanoTime() - debut) / 1000) + "us (soit " + ((System.nanoTime() - debut) / 1000 / (size - mSize) )
+        Log.print(tag.VALUES, "fait en " + ((System.nanoTime() - debut) / 1000) + "us (soit " + ((System.nanoTime() - debut) / 1000 / (size - mSize))
                 + "us par valeur)");
         mSize = Math.max(size, mSize);
     }

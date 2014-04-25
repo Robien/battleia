@@ -1,6 +1,3 @@
-/**
- * 
- */
 package core.moteur;
 
 import java.util.HashMap;
@@ -14,10 +11,7 @@ import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
 
-/**
- * @author tbxf1355
- * 
- */
+//db du cache
 public class DBData
 {
 

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tools;
 
 import java.io.BufferedWriter;
@@ -12,6 +9,11 @@ import java.util.HashMap;
 import api.IA.AbstractIA;
 import api.IA.InfosBase;
 
+/**
+ * 
+ * sauvegarde les stats dans un fichier.
+ * 
+ */
 public class LogFile
 {
 
@@ -50,7 +52,7 @@ public class LogFile
         try
         {
             w.write(bois + "/" + pierre + "/" + metal + "/" + pop + "/" + lvlBucheron + "/" + lvlCarriere + "/" + lvlMine + "/" + lvlFerme + "/"
-                    + temps+"\n");
+                    + temps + "\n");
         }
         catch (IOException e)
         {

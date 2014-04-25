@@ -15,9 +15,6 @@ import api.ressources.Environement;
 public class DumyAI extends AbstractIA
 {
 
-    /**
-     * 
-     */
     public DumyAI()
     {}
 

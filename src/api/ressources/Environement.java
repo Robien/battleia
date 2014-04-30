@@ -48,6 +48,11 @@ public class Environement
         return Constantes.isConstructionPossible(batiment, base.getLvl(batiment), base.quantiteBois, base.quantitePierre, base.quantiteMetal);
     }
 
+    public boolean RAWisConstructionPossible(typeBatiment batiment, int lvlCourrant, int bois, int pierre, int metal)
+    {
+        return Constantes.isConstructionPossible(batiment, lvlCourrant, bois, pierre, metal);
+    }
+
     public int RAWgetProd(Constantes.typeRessource res, InfosBase base)
     {
         return Constantes.getProd(base.getLvl(getBatimentOfRessources(res)), res);

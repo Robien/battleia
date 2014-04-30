@@ -176,16 +176,25 @@ public class IAManager
                         // si elle viens de démarer
                         if (infosBaseMoteur.constructionEnCours != infosBaseMoteur.rel.constructionEnCours)
                         {
-                            infosBaseMoteur.constructionEnCours = infosBaseMoteur.rel.constructionEnCours;
-                            infosBaseMoteur.quantiteBois -= Environement.get().getCoutAmelioration(infosBaseMoteur.rel.constructionEnCours,
-                                    typeRessource.BOIS, infosBaseMoteur.rel);
-                            infosBaseMoteur.quantiteMetal -= Environement.get().getCoutAmelioration(infosBaseMoteur.rel.constructionEnCours,
-                                    typeRessource.METAL, infosBaseMoteur.rel);
-                            infosBaseMoteur.quantitePierre -= Environement.get().getCoutAmelioration(infosBaseMoteur.rel.constructionEnCours,
-                                    typeRessource.PIERRE, infosBaseMoteur.rel);
-                            infosBaseMoteur.tempsEcouleDepuisDebutConstruction = Environement.get().getCoutAmelioration(
-                                    infosBaseMoteur.rel.constructionEnCours, typeRessource.TEMPS, infosBaseMoteur.rel);
-                            // System.out.println("temps avant fin :" + infosBaseMoteur.tempsEcouleDepuisDebutConstruction);
+                            if (Environement.get().isConstructionPossible(infosBaseMoteur.rel.constructionEnCours, infosBaseMoteur.rel))
+                            {
+
+                                infosBaseMoteur.constructionEnCours = infosBaseMoteur.rel.constructionEnCours;
+                                infosBaseMoteur.quantiteBois -= Environement.get().getCoutAmelioration(infosBaseMoteur.rel.constructionEnCours,
+                                        typeRessource.BOIS, infosBaseMoteur.rel);
+                                infosBaseMoteur.quantiteMetal -= Environement.get().getCoutAmelioration(infosBaseMoteur.rel.constructionEnCours,
+                                        typeRessource.METAL, infosBaseMoteur.rel);
+                                infosBaseMoteur.quantitePierre -= Environement.get().getCoutAmelioration(infosBaseMoteur.rel.constructionEnCours,
+                                        typeRessource.PIERRE, infosBaseMoteur.rel);
+                                infosBaseMoteur.tempsEcouleDepuisDebutConstruction = Environement.get().getCoutAmelioration(
+                                        infosBaseMoteur.rel.constructionEnCours, typeRessource.TEMPS, infosBaseMoteur.rel);
+                                // System.out.println("temps avant fin :" + infosBaseMoteur.tempsEcouleDepuisDebutConstruction);
+                            }
+                            else
+                            {
+                                Log.print(tag.ERREUR, "Pas assez de ressources pour faire la construction !");
+                                infosBaseMoteur.rel.constructionEnCours = typeBatiment.NONE;
+                            }
                         }
                         else
                         {

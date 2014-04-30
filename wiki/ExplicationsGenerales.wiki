@@ -1,0 +1,159 @@
+#summary copie-collage du mail ;)
+
+
+Alors déjà, oui, j'ai choisi de dire IA et pas AI. Fallait en choisir un des deux.
+Le concept est simple : le but c'est de programmer des IA qui vont se taper dessus. J'explique plus en détail après (si, si, plus en détail, regarde la taille du mail ;) )
+
+Donc je te propose de coder ton IA et de défier tout les autres qui sont finalement que des mauvais. Je préfère prévenir tout de suite, faut coder en Java. Mais bon, avec eclipse, y'a rien a faire, juste appuyer sur ctrl+espace et y'a tout qui se code tout seul. (en Java ça marche même pour les structures conditionnelles comme les try-catch ou switch case, du coup pas vraiment besoin de connaitre la syntaxe)
+
+Donc si t'es prêt à montrer à tout le monde que c'est toi le plus grand des programmeurs, viens, on a des cookies.
+
+Maintenant je vais expliquer ce que tu va devoir faire, parce que pour l'instant, y'a pas trop de détails, faut bien avouer, hein.
+Mr IA est un chef d'un village respectable, mais néanmoins primitif et sans vergogne (oui, vergogne, je sais, c'est un mot qui n'a pas été utilisé depuis les années 50 environs)
+Le but est de régner sur la galaxie. Heureusement pour simplifier la tâche (hu-hu), dans cet univers la galaxie, c'est juste une planète toute petite. Ouf.
+Il s'agit d'un jeu de stratégie, un peu comme les jeux Php (ogame etc...). Il faut donc construire des bâtiments pour accumuler assez de ressources pour construire une armé et réduire son voisin en poussière si fine que même swiffer peut pas la ramasser.
+Vouz'allez me dire "ha mais vouiiii, mais c'est duuur de faire une IA pour çaaaa" et vous aurez pas tord. Juste, c'est dur pour tout le monde ! na ! (et pourtant j'aime pas trop quand les choses sont équitables...) C'est ça qui est intéressant !
+Mais bon, pour que ça ne soit pas trop de choses à coder d'un coup, je vous propose de commencer avec juste un petit truc simple, c'est à dire une course aux ressources. La première IA qui arrive à avoir une certaine quantité de ressources gagne. ça a l'avantage que ça resservira surement pour la suite de la programmation des IA. Je me suis dit que c'était mieux de commencer doucement. Et le premier qui me dit que c'est parce que j'ai pas eu le temps de coder la suite ... ben il aura un peu raison. Et en plus c'est le premier à le dire, alors il a un peu la classe.
+Ha j'oubliais (mais comme c'est un mail, je peux toujours réécrire plus haut, mais bon c'est assez fatigant) mais il va falloir coder une IA performante ;) D'habitude je suis plutôt du genre à aimer les brutes épaisses, mais coder une IA qui teste toutes les possibilités pour voir laquelle est la meilleures, c'est un peu nul. Du coup, je compte le temps que prend chaque IA et les plus lentes auront un malus, les plus rapide un bonus. Va falloir optimiser tout ça les cocos ! (ça ne comprend pas les optimisations sur les calculs sur l'univers lui même, j'explique pourquoi (et comment) plus bas)
+
+Encore plus de détail sur le système de jeu ? Okay, attachez vos ceintures, c'est parti-titi.
+
+Il y a 3 ressources principales, le bois (pour les constructions simples) la pierre (pour les constructions évoluées) et le métal (pour l'armée principalement)
+A cela il faut ajouter une 4ieme ressources un peu spéciale et je pense que c'est surtout sur elle que tout va se jouer... la population. Pour qu'un bâtiment marche il faut qu'il y aie des travailleurs qui y travaille. Il va donc falloir augmenter sa population et les répartir dans les différents bâtiments suivant les besoins.
+De ça on peut facilement en déduire les 4 bâtiments principaux : la cabane de bucherons (abrégé en bucheron), la carrière, la mine et la ferme.
+Chaque bâtiment possède un niveau (niveau 0 = pas construit du tout). Chaque augmentation de niveau augmente la production de ressources mais aussi le nombre de travailleurs pour faire fonctionner à 100% le bâtiment (sauf pour la ferme, bien sûr). Plus ça va plus l'augmentation d'un niveau coute cher en ressources et en temps de construction, mais plus ça va plus l'augmentation de production augmente (désolé, tu n'as pas le droit de relire cette phrase, faut la comprendre du premier coup).
+Ce que je n'ai pas dit, c'est que ça se joue en tour par tour. L'IA est en faite un hiboux qui prend des décision la nuit et tout ce passe le jour. En pratique je demande à toutes les IA ce qu'elle veulent faire et après je fait toutes les actions en même temps.
+
+Les ressources :
+ bois, pierre, métal, population
+les bâtiments :
+bucherons (coute que du bois)
+carrière (coute que du bois)
+mine (coute du bois et de la pierre)
+ferme (coute que du bois)
+
+Je donne pas les prix parce que ... ils sont calculé aléatoirement au début de la partie ! Mouhaha ! vous pouvez pas faire des pré calculs donc. Tout est un peu aléatoire, le cout, la production, le temps de construction, mais aussi l'évolution de la production (la différence de proportion entre le niveau 1 et sa production et le niveau 100 et sa production). C'est possible que la production augmente de façon proportionnelle, mais c'est possible (et surtout probable) qu'elle augmente de façon exponentielle. Tout ça est désactivable pour faire les tests de développement, là aussi, les infos sont plus bas.
+Vous remarquez que le métal sert à rien... et ben si, parce que les conditions de victoires sont simple : le premier qui a 1 000 000 de métal gagne.
+
+La population ne se produit pas, dès que le niveau de la ferme est augmenté, pof, la population à augmenté !
+
+
+Maintenant que les grandes lignes sont posées, passons à la documentation.
+
+Si je veux proposer mon IA, comment je fait ?
+il faut d'abord avoir de quoi coder du Java. Si j'ai choisi Java, c'est justement parce que c'est pas très dur de préparer l’environnement. Je vous conseil de coder avec éclipse, mais vous faites se que vous voulez. Sachez juste que si vous ne prenez pas éclipse je risque de venir chez vous et de noyer votre poisson rouge. Vous voudriez pas qu'il arrive quelque chose à bubule quand même ?
+
+===Sous windows===
+1) si vous n'avez pas éclipse, rendez vous rue de la paix, heuuuu, je veux dire ici : https://www.eclipse.org/downloads/
+vous téléchargez, et hop ça marche.
+2) si vous n'avez pas tortoiseSVN deux possibilités, soit vous l'installez, soit vous dézipez l'archive en pièce jointe (dans ce cas vous n'aurais pas les potentielles mis à jours)
+si vous avez tortoiseSVN, vous pouvez checkout cette adresse : http://battleia.googlecode.com/svn/trunk/
+la suite est commune aux autres plateformes
+
+===sous Linux===
+1) installez éclipse si c'est pas déjà fait (apt-get ou autre, ou téléchargez l'archive sans installation)
+2) installez svn si c'est pas déjà fait
+3) svn co http://battleia.googlecode.com/svn/trunk/
+la suite est commune aux autres plateformes
+
+===sous mac===
+1) prenez votre mac et mettez le à la poubelle
+2) achetez vous un vrai ordinateur avec un vrai OS et suivez les instructions si dessus
+
+
+Ensuite, il faut ouvrir eclipse et faire fichier, importer, projet existant dans le workspace (chez moi c'est en anglais, je vous fait la traduction en live (Nelson si tu m'écoute) donc c'est peut être pas exactement ça). Faites parcourir dans le premier champs en haut et choisissez le répertoire où y'a le projet. Normalement, le reste est bon, faites "finir".
+Vous êtes maintenant prêt pour dominer le monde (c'est un peu sur-fait je vous préviens)
+
+==l'arborescence du code==
+
+Y'a 4 packages dans le dossier src.
+api -> contient ce que vous aurez besoin pour coder l'IA
+core -> tout ce qui fait fonctionner le jeu est ici
+dumy -> une implémentation toute simple d'IA qui peut vous servir d'inspiration
+tools -> des outils (mais bon y'a pas grand chose pour l'instant)
+
+Dans le package api y'a deux sous packages très simple : IA : ce qu'il faut pour coder l'IA et ressources les infos sur l’environnement.
+Dans core y'a la classe main et 2 autres packages : moteur (vous avez juste besoin de savoir qu'il y a IAManager ici) et ressources qui contient les classes qui définissent le jeu)
+Dans tools y'a une classe de Log que je vous invite à utiliser et une classe LogFile que normalement vous avez pas besoin d'utiliser
+dans dumy y'a une dumyIA (et une variante ...)
+
+==coder sa première IA==
+Il faut que vous créiez votre package à vous avec vos classes dedans. C'est ça que vous m’enverrez quand vous l'aurez codé pour que je l'intègre dans le code des autres IA.
+La méthode la plus simple est de copier coller la classe dummyIA qui fait tout très bien (normal, c'est moi qui l'ai codé) mais je vais expliquer tout en détail.
+Vous devez redéfinir la classe AbstractIA et implémenter les méthodes abstraites. Avec éclipse c'est simple, vous faites clic droit sur votre package et vous faites nouveau>classe. Il reste plus qu'à remplir le nom de votre IA et de choisir dans "superclasse" AbstractIA (vous pouvez faire parcourir ou utiliser ctrl + espace...)
+Après ça normalement tout est en place. Si vous n'avez pas vos méthodes d'implémentées, vous pouvez toujours cliquer sur le message d'erreur et éclipse vous proposera de le faire à votre place.
+Il y deux méthodes à coder. Il y en a une très simple : getName. Vous avez juste à retourner le nom de votre IA. ça sert juste aux stats.
+la deuxième, nouveauTour, ben c'est là que tout va se passer. Elle est appelé à chaque tours en vous donnant les infos sur chacune de vos bases. (niveaux des bâtiments, etc...) C'est un tableau parce qu'il y a les infos pour toutes les bases... mais pour l'instant on ne peut en avoir qu'une seule, je sais... C'est aussi dans les InfosBases qu'on va retourner les actions à faire. Il y a deux chose à mettre dans cette classe : l'ordre de construction et la répartition de population (c'est les champs qui ne sont pas "finaux"). attention à bien remplir la réparation de population, elle à toujours à 0 partout par défaut ! J'attire votre attention sur getDummyRepartition qui vous donne une répartion simple et équilibré entre les bâtiments. vous pouvez utiliser ça dans un premier temps...
+
+Je vous fournis des tas d'informations pour que vous pouvez prendre vos décisions les plus justes possible. Où les trouver ?
+déjà il y a la classe InfosBase que je vous donne qui contient les principales infos sur la base (oui je sais, les champs sont public, mais c'est une structure, donc ça va, hein !)
+après il y a une seule classe qui va vous donner toutes les infos que vous avez besoin, c'est Environement. Vous n'avez pas le droit d'utiliser autre chose (a part les classes du package tools...). Si vous avez vraiment besoin d'une info qui n'y est pas, dites le moi je ferrais une mise à jour.
+Précision : le coup d'un batiment au lvl 0 c'est le prix qu'il faut pour passer au niveau 1. Par contre la production au niveau 0 c'est bien la production du bâtiment quand il est au niveau 0
+
+
+Une fois que vous avez codé votre IA, vous devez la déclarer dans le main (core -> Main.java) en suivant l'exemple. Après il faut expliquer à java comment lancer le code. Pour cela il faut aller sur la petite flèche à coté de la flèche verte (qui sert à lancer le projet après) et faire "run configurations". Après il faut double cliquer sur Java Application, changer le nom tout en haut, choisir le bon projet si c'est pas déjà fait et faire "search" et choisir le seul main qui s'affiche. Apply and run and it's all good.
+
+==La classe Environement==
+
+La classe Environement est une classe singleton, vous pouvez donc y accéder de partout en faisant Environement.get().
+Il y a deux type de méthodes. Les méthodes dont le nom commence par RAW et les autres. Les méthodes qui commence par RAW sont les méthodes qui font vraiment des calculs alors que les autres sont des méthodes qui ont déjà les résultats stocké dans des tableaux. Utilisez donc les méthodes qui ne commence pas par RAW, ça va plus vite (c'est le but en même temps)
+Je fait tout pour que le temps passé par votre IA soit le temps de réflexion, pas le temps de calcul compliqué qui servent à rien.
+Pour ça, on a souvent besoin de savoir les infos sur ce qui va se passer après pour pouvoir prévoir ce qui va se passer. J'ai donc dans Environement une méthode getValues qui contiens plein d'infos précalculé sur les niveaux de constructions. Il y en a une quantité normalement assez grande. Et elle s'agrandit avec le temps.
+
+==La classe Log==
+Vous pouvez utiliser la classe Log pour voir se qui se passe. Il y a des tag prédéfini (dont un IA que vous pouvez utiliser (y'a aussi erreur qui est cool)) ou vous pouvez utiliser un string.
+Vous pouvez aller ici aussi pour activer/désactiver des logs en particuliers. Si vous n'avez pas envie de voir l'évolution du jeu vous pouvez désactiver les log de celui-ci  ici. (ou les stats qui sont assez verbeux)
+Le jeu fait des logs automatiquement dans des fichiers. ça me sert à moi pour faire des courbes comparatives entre les IA. Si vous voulez plus de précision dessus, regardez la classe LogFile ou demandez moi. (sous linux vous pouvez parser les data avec cut -d"/" -fX avec X la donnée que vous voulez et après un petit coup de gnuplot et c'est beau)
+
+
+Normalement avec tout ça vous avez de quoi faire votre IA. Néanmoins vous aurez peut être besoin de plus pour développer votre IA.
+
+==Les constantes==
+Pour comprendre comment le jeu marche vous pouvez aller faire un tour dans core>ressources>Constantes.java
+Pour le développement vous pouvez modifier quelques constantes et regarder ce qui se passe. Il y a des variables intéressantes à noter : proportionAugmentation qui donne le ratio d'augmentation entre deux niveau, random qui active ou désactive le calcul random des constantes (attention pour l'instant l'implémentation est pas très bien faite, il est possible de tomber sur des cas de figure où les ressources de bases ne sont pas suffisante pour construire quoi que ce soit...)
+Changer ce que vous voulez pour vous aider, mais va falloir faire avec les vrais valeurs une fois fini ;)
+J'attire votre attention sur les enums :
+
+    public enum typeBatiment
+    {
+        NONE, BUCHERON, CARRIERE, MINE, FERME
+    }
+
+    public enum typeRessource
+    {
+        BOIS, PIERRE, METAL, POPULATION, TEMPS
+    }
+
+avec ça vous pouvez faire des boucles for :
+                for (typeRessource res : typeRessource.values())
+                {
+                    //pour toutes les ressources...
+                }
+               for (typeBatiment bat : typeBatiment.values())
+               {
+                    //pour tout les batiments ...
+               }
+
+
+dans le fichier IAManager vous pouvez regler les conditions de victoires et entre autre décider de mettre un nombre de tour max. ça peut être utile quand vous êtes dans une boucle infini ....
+
+
+Quelques infos complémentaires pour utiliser eclipse ...
+raccourcis utile :
+ctrl+espace : autocomplétion (ça marche à pas mal d'endroit)
+ctrl+maj+F : autoformatage (réglable dans project, propriety, java code style, formater. sinon je vous met ma conf en pièce jointe)
+alt-F4 : affiche une photo d'une madame toute nue.
+
+Ceux qui utiliserons de l’égyptien auront leur production de ressources divisé par deux ! C'est pas parce qu'on code du java qu'il faut se laisser aller !
+
+
+Bref, regardez bien comment à été fait dummyAI il y a les bases dedans et codez un truc génial !
+Dès que vous avez une version, même pas finie, envoyez moi ça que je puisse déjà vous comparer aux autres IA.
+Vous pouvez aussi commencer à réfléchir à la suite. Il y aura certainement une version avec la colonisation de nouvelles bases et donc avec des échanges de ressources entre elles (prévoyez que ça va vous couter de la pop ;) ) et ensuite la création d'une armée et attaquer les gens.
+
+Pour vous donner une idée, la partie se fini au 5429ieme tour de jeu (donc si votre IA fait pareil en 0,5s de calcul par tour ben la simulation prend une heure ...)
+J'ai plein d'autres trucs à dire mais je vais pas trop vous assommer d'infos (trop tard ?) Du coup si y'a des trucs pas clair, dites le moi !
+
+
+Bon code !
+On se retrouve au toboggan !

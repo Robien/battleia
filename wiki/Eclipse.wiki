@@ -1,0 +1,12 @@
+#summary Quelques astuces pour éclipse
+#labels eclipse
+
+
+ctrl+espace : autocomplétion (ça marche à pas mal d'endroit)
+ctrl+maj+F : autoformatage (réglable dans project, propriety, java code style, formater. sinon je vous met ma conf en pièce jointe)
+alt-F4 : affiche une photo d'une madame toute nue.
+alt + maj + R : renomer (en changeant aussi les références)
+ctrl + maj + O : ajoute/supprimer les import
+
+sinon vous pouvez toujours faire clic droit sur n'importe quoi et faire "refactor" y'a plein de truc sympa pour faire le boulot à notre place.
+Et y'a aussi clic droit, source qui nous permet d'ajouter du code généré automatiquement (exemple : les getter et setter)

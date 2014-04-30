@@ -55,7 +55,9 @@ public class IAManager
 
     /**
      * declare l'IA pour qu'elle participe à la battle
-     * @param ia l'IA à ajouté
+     * 
+     * @param ia
+     *            l'IA à ajouté
      */
     public void declareIA(AbstractIA ia)
     {
@@ -66,7 +68,7 @@ public class IAManager
         }
     }
 
-    //lance le jeu
+    // lance le jeu
     public void BOOM()
     {
         Log.print(tag.IAMANAGER, "init constantes");
@@ -105,25 +107,26 @@ public class IAManager
                 Environement.get().setCache(cache);
 
                 Log.print(tag.IAMANAGER, "début du calcul de l'IA");
-                Thread threadIA = new Thread()
-                {
-                    @Override
-                    public void run()
-                    {
-
-                        ia.nouveauTour(basesIA);
-                    }
-                };
+                // Thread threadIA = new Thread()
+                // {
+                // @Override
+                // public void run()
+                // {
+                //
+                // ia.nouveauTour(basesIA);
+                // }
+                // };
                 long debut = System.nanoTime();
-                threadIA.start();
-                try
-                {
-                    threadIA.join();
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
+                // threadIA.start();
+                ia.nouveauTour(basesIA);
+                // try
+                // {
+                // threadIA.join();
+                // }
+                // catch (InterruptedException e)
+                // {
+                // e.printStackTrace();
+                // }
                 long fin = System.nanoTime();
 
                 Log.print(tag.IAMANAGER, "fin calcul de l'IA ");

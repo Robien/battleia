@@ -252,6 +252,25 @@ public class Constantes
             return 0;
         }
     }
+    public static float getProdFloat(int lvl, typeRessource ressource)
+    {
+    	
+    	switch (ressource)
+    	{
+    	case BOIS:
+    		return getValueFloat(lvl, prodBois);
+    	case METAL:
+    		return getValueFloat(lvl, prodMetal);
+    	case PIERRE:
+    		return getValueFloat(lvl, prodPierre);
+    	case POPULATION:
+    		return getValueFloat(lvl, prodPop);
+    	case TEMPS:
+    		return 0;
+    	default:
+    		return 0;
+    	}
+    }
 
     public static int getProd(typeBatiment batiment, int lvl, typeRessource ressource)
     {
@@ -329,6 +348,10 @@ public class Constantes
     public static int getValue(int lvl, int val)
     {
         return (int) ((float) val * Math.pow(proportionAugmentation, lvl));
+    }
+    public static float getValueFloat(int lvl, int val)
+    {
+    	return (float) (val * Math.pow(proportionAugmentation, lvl));
     }
 
     public static boolean isConstructionPossible(typeBatiment batiment, int lvlCourrant, int bois, int pierre, int metal)

@@ -232,7 +232,7 @@ public class InfosBase
     // constructeur par copie2.
     public InfosBase(InfosBaseMoteur info)
     {
-        this(info.idBase, info.quantiteBois, info.quantitePierre, info.quantiteMetal, info.population, info.lvlBucheron, info.lvlCarriere,
+        this(info.idBase, (int) info.quantiteBois, (int) info.quantitePierre, (int) info.quantiteMetal, info.population, info.lvlBucheron, info.lvlCarriere,
                 info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
                 info.tempsEcouleDepuisDebutConstruction);
     }

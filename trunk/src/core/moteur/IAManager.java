@@ -150,17 +150,17 @@ public class IAManager
                     // occupons nous maintenant de la production de ressources.
                     if (Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel) != 0)
                     {
-                        infosBaseMoteur.quantiteBois += Environement.get().getProd(typeRessource.BOIS, infosBaseMoteur.rel)
+                        infosBaseMoteur.quantiteBois += Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel)
                                 * (infosBaseMoteur.rel.popBucheron) / Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel);
                     }
                     if (Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel) != 0)
                     {
-                        infosBaseMoteur.quantiteMetal += Environement.get().getProd(typeRessource.METAL, infosBaseMoteur.rel)
+                        infosBaseMoteur.quantiteMetal += Environement.get().RAWgetProdFloat(typeRessource.METAL, infosBaseMoteur.rel)
                                 * (infosBaseMoteur.rel.popMine) / Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel);
                     }
                     if (Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel) != 0)
                     {
-                        infosBaseMoteur.quantitePierre += Environement.get().getProd(typeRessource.PIERRE, infosBaseMoteur.rel)
+                        infosBaseMoteur.quantitePierre += Environement.get().RAWgetProdFloat(typeRessource.PIERRE, infosBaseMoteur.rel)
                                 * (infosBaseMoteur.rel.popCarriere) / Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel);
                     }
                     if (infosBaseMoteur.quantiteMetal >= metalForWin)
@@ -224,11 +224,11 @@ public class IAManager
                     }
 
                     Log.print(tag.STATS, "BASEID:" + infosBaseMoteur.idBase);
-                    Log.print(tag.STATS, "ressources:" + infosBaseMoteur.quantiteBois + "/" + infosBaseMoteur.quantitePierre + "/"
-                            + infosBaseMoteur.quantiteMetal);
+                    Log.print(tag.STATS, "ressources:" + (int) infosBaseMoteur.quantiteBois + "/" + (int) infosBaseMoteur.quantitePierre + "/"
+                            + (int) infosBaseMoteur.quantiteMetal);
                     Log.print(tag.STATS, "batiments:" + infosBaseMoteur.lvlBucheron + "/" + infosBaseMoteur.lvlCarriere + "/"
                             + infosBaseMoteur.lvlMine + "/" + infosBaseMoteur.lvlFerme);
-                    log.writeStats(ia, infosBaseMoteur.quantiteBois, infosBaseMoteur.quantitePierre, infosBaseMoteur.quantiteMetal, Constantes
+                    log.writeStats(ia, (int) infosBaseMoteur.quantiteBois, (int) infosBaseMoteur.quantitePierre, (int) infosBaseMoteur.quantiteMetal, Constantes
                             .getValues().getProd(typeRessource.POPULATION, infosBaseMoteur.getLvl(typeBatiment.FERME)), infosBaseMoteur.lvlBucheron,
                             infosBaseMoteur.lvlCarriere, infosBaseMoteur.lvlMine, infosBaseMoteur.lvlFerme, temps.get(ia));
 

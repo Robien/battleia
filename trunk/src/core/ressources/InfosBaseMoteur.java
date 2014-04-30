@@ -9,9 +9,9 @@ public class InfosBaseMoteur
 
     public int          idBase;
 
-    public int          quantiteBois;
-    public int          quantitePierre;
-    public int          quantiteMetal;
+    public float          quantiteBois;
+    public float          quantitePierre;
+    public float          quantiteMetal;
 
     public int          population;
 
@@ -108,7 +108,7 @@ public class InfosBaseMoteur
     /**
      * @return the quantiteBois
      */
-    public int getQuantiteBois()
+    public float getQuantiteBois()
     {
         return quantiteBois;
     }
@@ -116,7 +116,7 @@ public class InfosBaseMoteur
     /**
      * @return the quantitePierre
      */
-    public int getQuantitePierre()
+    public float getQuantitePierre()
     {
         return quantitePierre;
     }
@@ -124,7 +124,7 @@ public class InfosBaseMoteur
     /**
      * @return the quantiteMetal
      */
-    public int getQuantiteMetal()
+    public float getQuantiteMetal()
     {
         return quantiteMetal;
     }
@@ -211,7 +211,7 @@ public class InfosBaseMoteur
 
     // constructeur avec tout les champs.
 
-    public InfosBaseMoteur(int idBase, int b, int p, int m, int pop, int lvlB, int lvlC, int lvlM, int lvlF, int popB, int popC, int popM,
+    public InfosBaseMoteur(int idBase, float b, float p, float m, int pop, int lvlB, int lvlC, int lvlM, int lvlF, int popB, int popC, int popM,
             typeBatiment constructionEnCours, int tempsEcouleDepuisDebutConstruction)
     {
         this.idBase = idBase;

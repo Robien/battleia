@@ -10,22 +10,23 @@ import core.ressources.Constantes.typeBatiment;
 public class InfosBase
 {
 
+    // permet de différencier une base d'une autre. Ce chiffre reste constant tout au long de la partie.
     public final int    idBase;
 
-    //stock de la base
+    // stock de la base
     public final int    quantiteBois;
     public final int    quantitePierre;
     public final int    quantiteMetal;
 
     public final int    population;
 
-    //niveau de construction des batiments de la base
+    // niveau de construction des batiments de la base
     public final int    lvlBucheron;
     public final int    lvlCarriere;
     public final int    lvlMine;
     public final int    lvlFerme;
 
-    //champs à ramplir...
+    // champs à ramplir...
     public int          popBucheron;
     public int          popCarriere;
     public int          popMine;

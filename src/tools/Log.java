@@ -11,21 +11,22 @@ public class Log
 {
     public enum tag
     {
-        IAMANAGER, JEU, CACHE, VALUES, IA, STATS, ERREUR
+        IAMANAGER, JEU, CACHE, VALUES, IA, IADUMMY, STATS, ERREUR
     }
 
     private static HashMap<tag, Boolean> isPrintable = new HashMap<>();
 
     private static boolean               printTag    = true;
 
-    //changer ici pour activer/désactiver les logs suivant les tags
+    // changer ici pour activer/désactiver les logs suivant les tags
     public static void printablePredef()
     {
         isPrintable.put(tag.IAMANAGER, false);
         isPrintable.put(tag.JEU, true);
         isPrintable.put(tag.CACHE, false);
         isPrintable.put(tag.VALUES, false);
-        isPrintable.put(tag.IA, false);
+        isPrintable.put(tag.IADUMMY, false);
+        isPrintable.put(tag.IA, true);
         isPrintable.put(tag.STATS, true);
         isPrintable.put(tag.ERREUR, true);
     }

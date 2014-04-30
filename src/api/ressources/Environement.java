@@ -57,6 +57,10 @@ public class Environement
     {
         return Constantes.getProd(base.getLvl(getBatimentOfRessources(res)), res);
     }
+    public float RAWgetProdFloat(Constantes.typeRessource res, InfosBase base)
+    {
+    	return Constantes.getProdFloat(base.getLvl(getBatimentOfRessources(res)), res);
+    }
 
     public int RAWgetProdNextLvl(Constantes.typeRessource res, InfosBase base)
     {

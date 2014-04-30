@@ -18,11 +18,6 @@ public class DumyAI extends AbstractIA
     public DumyAI()
     {}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see api.AbstractIA#nouveauTour(java.util.ArrayList)
-     */
     @Override
     public void nouveauTour(ArrayList<InfosBase> a)
     {
@@ -42,11 +37,11 @@ public class DumyAI extends AbstractIA
                     if (Environement.get().isConstructionPossible(typeBatiment.FERME, infosBase))
                     {
                         infosBase.constructionEnCours = typeBatiment.FERME;
-                        Log.print(tag.IA, "construction ferme");
+                        Log.print(tag.IADUMMY, "construction ferme");
                     }
                     else
                     {
-                        Log.print(tag.IA, "construction ferme en attente");
+                        Log.print(tag.IADUMMY, "construction ferme en attente");
                         // si on a pas les ressources, on attand de les avoir....
                     }
 
@@ -57,23 +52,23 @@ public class DumyAI extends AbstractIA
                     if (Environement.get().isConstructionPossible(typeBatiment.BUCHERON, infosBase))
                     {
                         infosBase.constructionEnCours = typeBatiment.BUCHERON;
-                        Log.print(tag.IA, "construction bucheron");
+                        Log.print(tag.IADUMMY, "construction bucheron");
                     }
 
                     else if (Environement.get().isConstructionPossible(typeBatiment.CARRIERE, infosBase))
                     {
                         infosBase.constructionEnCours = typeBatiment.CARRIERE;
-                        Log.print(tag.IA, "construction carriere");
+                        Log.print(tag.IADUMMY, "construction carriere");
                     }
                     else if (Environement.get().isConstructionPossible(typeBatiment.MINE, infosBase))
                     {
                         infosBase.constructionEnCours = typeBatiment.MINE;
-                        Log.print(tag.IA, "construction mine");
+                        Log.print(tag.IADUMMY, "construction mine");
                     }
                     else
                     {
                         // on ne peut rien construire... on attend en espérant qu'on produit assez pour construire quelque chose après...
-                        Log.print(tag.IA, "construction rien du tout");
+                        Log.print(tag.IADUMMY, "construction rien du tout");
                     }
 
                 }
@@ -90,11 +85,6 @@ public class DumyAI extends AbstractIA
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see api.AbstractIA#getName()
-     */
     @Override
     public String getName()
     {

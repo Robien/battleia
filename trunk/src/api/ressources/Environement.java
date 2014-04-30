@@ -113,6 +113,11 @@ public class Environement
         return cache.getData(base).coutPop.get(batiment);
     }
 
+    /**
+     * ça c'est pour l'IAManager ;)
+     * 
+     * @param cache
+     */
     public void setCache(DBCache cache)
     {
         this.cache = cache;

@@ -17,9 +17,11 @@ import api.IA.InfosBase;
 public class LogFile
 {
 
-    HashMap<AbstractIA, File>     filesIA   = new HashMap<>();
-    HashMap<InfosBase, File>      filesBase = new HashMap<>();
-    HashMap<File, BufferedWriter> buffers   = new HashMap<>();
+    private HashMap<AbstractIA, File>     filesIA   = new HashMap<>();
+    private HashMap<InfosBase, File>      filesBase = new HashMap<>();
+    private HashMap<File, BufferedWriter> buffers   = new HashMap<>();
+
+    private String                        path      = "log/";
 
     public LogFile()
     {}
@@ -79,7 +81,7 @@ public class LogFile
     private File createFile(String name)
     {
         name = name.replace(" ", "_").replaceAll("[\\W\\d]", ".");
-        File f = new File("IA." + name + ".txt");
+        File f = new File(path + "IA." + name + ".txt");
 
         if (f.exists())
         {

@@ -1,6 +1,5 @@
 package core;
 
-import WoodooDragonBase.WoodooDragonBase;
 import tools.Log;
 import core.moteur.IAManager;
 import core.moteur.IAManager.printStatsToFile;
@@ -19,7 +18,6 @@ public class Main
         // ajouter ici son IA
         iaManager.declareIA(new DumyAI());
         iaManager.declareIA(new DumyAIVariante());
-        iaManager.declareIA(new WoodooDragonBase());
         // iaManager.declareIA(new MonIAIci());
 
         // c'est parti !

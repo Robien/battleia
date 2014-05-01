@@ -19,8 +19,8 @@ public class IAManager
 {
 
     // condition de victoire
-    private int                                             nbTourMax   = 0;                // 0 == désactivé
-    private int                                             metalForWin = 1000000;
+    private static int                                             nbTourMax   = 0;                // 0 == désactivé
+    private static int                                             metalForWin = 1000000;
 
     private ArrayList<AbstractIA>                           ias         = new ArrayList<>();
 
@@ -279,5 +279,15 @@ public class IAManager
             bases.put(ia, basesIA);
         }
     }
+    
+    public static int getNbTourMax()
+    {
+    	return nbTourMax;
+    }
 
+    public static int getMetalForWin()
+    {
+    	return metalForWin;
+    }
+    
 }

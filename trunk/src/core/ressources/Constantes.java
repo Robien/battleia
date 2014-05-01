@@ -20,7 +20,7 @@ public class Constantes
     }
 
     // general
-    public static float         proportionAugmentation      = 1.2f;
+    public static float         proportionAugmentation      = 5f;
     public static final boolean random                      = false;
     public static final int     sizePrecalcul               = 100;  // 0 = sans precalcul
 

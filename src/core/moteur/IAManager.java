@@ -129,6 +129,8 @@ public class IAManager
                 // }
                 long fin = System.nanoTime();
 
+                ia.tempsDeCalcul += (fin - debut);
+
                 Log.print(tag.IAMANAGER, "fin calcul de l'IA ");
                 Log.print(tag.STATS, "temps de calcul de l'IA " + ia.getName() + " : " + ((fin - debut) / 1000) + "us");
                 temps.put(ia, fin - debut);
@@ -257,7 +259,7 @@ public class IAManager
             {
                 totalMetal += infosBase.quantiteMetal;
             }
-            Log.print(tag.JEU, "total ia " + ia.getName() + ": " + totalMetal);
+            Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " ("+(int)(ia.tempsDeCalcul/1000000)+"ms)");
             if (totalMetal > maxMetal)
             {
                 gagant.clear();

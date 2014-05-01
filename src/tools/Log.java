@@ -14,9 +14,10 @@ public class Log
         IAMANAGER, JEU, CACHE, VALUES, IA, IADUMMY, STATS, ERREUR
     }
 
-    private static HashMap<tag, Boolean> isPrintable = new HashMap<>();
+    private static HashMap<tag, Boolean> isPrintable       = new HashMap<>();
 
-    private static boolean               printTag    = true;
+    private static boolean               printTag          = true;
+    private static boolean               printOnlyGameInfo = false;
 
     // changer ici pour activer/désactiver les logs suivant les tags
     public static void printablePredef()
@@ -38,13 +39,17 @@ public class Log
 
     public static void print(String tag, String text)
     {
-        if (printTag)
+        if (!printOnlyGameInfo || tag == Log.tag.JEU.toString())
         {
-            System.out.println("[" + tag + "] " + text);
-        }
-        else
-        {
-            System.out.println(text);
+
+            if (printTag)
+            {
+                System.out.println("[" + tag + "] " + text);
+            }
+            else
+            {
+                System.out.println(text);
+            }
         }
     }
 

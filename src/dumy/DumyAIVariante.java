@@ -20,24 +20,24 @@ public class DumyAIVariante extends AbstractIA
     {}
 
     @Override
-    public void nouveauTour(ArrayList<InfosBase> a)
+    public void nouveauTour(ArrayList<InfosBase> infosBases)
     {
         // on parcours toutes les bases ... pour l'instant c'est facile y'en a qu'une, mais bon quand même.
-        for (InfosBase infosBase : a)
+        for (InfosBase base : infosBases)
         {
 
             // si y'a déjà une construction en cours on ne fait rien...
-            if (infosBase.constructionEnCours == typeBatiment.NONE)
+            if (base.constructionEnCours == typeBatiment.NONE)
             {
                 // maintenant on va choisir quel construction on va faire
 
                 // si on a un soucis de pop, on va faire une ferme en prioritée.
-                if (Environement.get().getProd(typeRessource.POPULATION, infosBase) < Environement.get().getCoutPopGeneral(infosBase))
+                if (Environement.get().getProd(typeRessource.POPULATION, base) < Environement.get().getCoutPopGeneral(base))
                 {
                     // System.out.println("soucis pop");
-                    if (Environement.get().isConstructionPossible(typeBatiment.FERME, infosBase))
+                    if (Environement.get().isConstructionPossible(typeBatiment.FERME, base))
                     {
-                        infosBase.constructionEnCours = typeBatiment.FERME;
+                        base.constructionEnCours = typeBatiment.FERME;
                         Log.print(tag.IADUMMY, "construction ferme");
                     }
                     else
@@ -50,19 +50,19 @@ public class DumyAIVariante extends AbstractIA
                 else
                 {
                     // pas de soucis de pop, alors on construit autre chose!
-                    if (Environement.get().isConstructionPossible(typeBatiment.MINE, infosBase))
+                    if (Environement.get().isConstructionPossible(typeBatiment.MINE, base))
                     {
-                        infosBase.constructionEnCours = typeBatiment.MINE;
+                        base.constructionEnCours = typeBatiment.MINE;
                         Log.print(tag.IADUMMY, "construction mine");
                     }
-                    else if (Environement.get().isConstructionPossible(typeBatiment.BUCHERON, infosBase))
+                    else if (Environement.get().isConstructionPossible(typeBatiment.BUCHERON, base))
                     {
-                        infosBase.constructionEnCours = typeBatiment.BUCHERON;
+                        base.constructionEnCours = typeBatiment.BUCHERON;
                         Log.print(tag.IADUMMY, "construction bucheron");
                     }
-                    else if (Environement.get().isConstructionPossible(typeBatiment.CARRIERE, infosBase))
+                    else if (Environement.get().isConstructionPossible(typeBatiment.CARRIERE, base))
                     {
-                        infosBase.constructionEnCours = typeBatiment.CARRIERE;
+                        base.constructionEnCours = typeBatiment.CARRIERE;
                         Log.print(tag.IADUMMY, "construction carriere");
                     }
                     else
@@ -75,10 +75,10 @@ public class DumyAIVariante extends AbstractIA
 
             }
 
-            // on s'occupe de la gestion de la pop... une gestion très simple est déjà caclulé pour nous alors on l'utilise.
-            infosBase.popBucheron = Environement.get().getDummyRepartitionPop(infosBase).get(typeBatiment.BUCHERON);
-            infosBase.popCarriere = Environement.get().getDummyRepartitionPop(infosBase).get(typeBatiment.CARRIERE);
-            infosBase.popMine = Environement.get().getDummyRepartitionPop(infosBase).get(typeBatiment.MINE);
+            // on s'occupe de la gestion de la pop... une gestion très simple est déjà calculée pour nous alors on l'utilise.
+            base.popBucheron = Environement.get().getDummyRepartitionPop(base).get(typeBatiment.BUCHERON);
+            base.popCarriere = Environement.get().getDummyRepartitionPop(base).get(typeBatiment.CARRIERE);
+            base.popMine = Environement.get().getDummyRepartitionPop(base).get(typeBatiment.MINE);
             // ça remplit tout les batiments avec le bon nombre si on a assez de pop, sinon ça applique un ratio égal à tous les batiments
 
         }

@@ -10,18 +10,17 @@ import api.IA.AbstractIA;
 import api.IA.InfosBase;
 
 /**
- * 
  * sauvegarde les stats dans un fichier.
  * 
  */
 public class LogFile
 {
+    
+    private String                        path      = "log/";
 
     private HashMap<AbstractIA, File>     filesIA   = new HashMap<>();
     private HashMap<InfosBase, File>      filesBase = new HashMap<>();
     private HashMap<File, BufferedWriter> buffers   = new HashMap<>();
-
-    private String                        path      = "log/";
 
     public LogFile()
     {}

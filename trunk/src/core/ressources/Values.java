@@ -20,7 +20,7 @@ public class Values
     private int                                                               mSize = 0;
 
     // les données ...
-    private ArrayList<HashMap<typeRessource, Integer>>                        prod  = new ArrayList<>();
+    private ArrayList<HashMap<typeRessource, Float>>                          prod  = new ArrayList<>();
     private ArrayList<HashMap<typeBatiment, HashMap<typeRessource, Integer>>> cout  = new ArrayList<>();
 
     public Values(int size)
@@ -36,9 +36,15 @@ public class Values
     }
 
     // retourne la quantité de res produit au niveau lvl du batiment relatif (bois : bucheron)
-    public int getProd(typeRessource res, int lvl)
+    public float getProdFloat(typeRessource res, int lvl)
     {
         return prod.get(lvl).get(res);
+    }
+
+    // retourne la quantité de res produit au niveau lvl du batiment relatif (bois : bucheron)
+    public int getProd(typeRessource res, int lvl)
+    {
+        return (int) (float) prod.get(lvl).get(res);
     }
 
     // retourne le cout en ressources res pour augmenter la batiment au niveau lvl+1
@@ -56,11 +62,11 @@ public class Values
         long debut = System.nanoTime();
         for (int i = mSize; i < size; i++)
         {
-            HashMap<typeRessource, Integer> prodTmp = new HashMap<>();
+            HashMap<typeRessource, Float> prodTmp = new HashMap<>();
             HashMap<typeBatiment, HashMap<typeRessource, Integer>> coutTmp = new HashMap<>();
             for (typeRessource res : typeRessource.values())
             {
-                prodTmp.put(res, Constantes.getProd(i, res));
+                prodTmp.put(res, Constantes.getProdFloat(i, res));
             }
             prod.add(prodTmp);
             for (typeBatiment bat : typeBatiment.values())

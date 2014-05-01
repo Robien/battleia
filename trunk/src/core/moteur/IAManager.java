@@ -19,8 +19,8 @@ public class IAManager
 {
 
     // condition de victoire
-    private static int                                             nbTourMax   = 0;                // 0 == désactivé
-    private static int                                             metalForWin = 1000000;
+    private static int                                      nbTourMax   = 0;                // 0 == désactivé
+    private static int                                      metalForWin = 1000000;
 
     private ArrayList<AbstractIA>                           ias         = new ArrayList<>();
 
@@ -172,6 +172,7 @@ public class IAManager
                     // si il y a une construction en cours
                     if (infosBaseMoteur.rel.constructionEnCours != typeBatiment.NONE)
                     {
+                        infosBaseMoteur.timeConstruct++;
                         // System.out.println("construction EN COURS !!! ...");
                         // si elle viens de démarer
                         if (infosBaseMoteur.constructionEnCours != infosBaseMoteur.rel.constructionEnCours)
@@ -222,15 +223,24 @@ public class IAManager
                         }
 
                     }
+                    else
+                    {
+                        // pas de construction en cours
+                        infosBaseMoteur.timePasConstruct++;
+                    }
 
                     Log.print(tag.STATS, "BASEID:" + infosBaseMoteur.idBase);
                     Log.print(tag.STATS, "ressources:" + (int) infosBaseMoteur.quantiteBois + "/" + (int) infosBaseMoteur.quantitePierre + "/"
                             + (int) infosBaseMoteur.quantiteMetal);
                     Log.print(tag.STATS, "batiments:" + infosBaseMoteur.lvlBucheron + "/" + infosBaseMoteur.lvlCarriere + "/"
                             + infosBaseMoteur.lvlMine + "/" + infosBaseMoteur.lvlFerme);
-                    log.writeStats(ia, (int) infosBaseMoteur.quantiteBois, (int) infosBaseMoteur.quantitePierre, (int) infosBaseMoteur.quantiteMetal, Constantes
-                            .getValues().getProd(typeRessource.POPULATION, infosBaseMoteur.getLvl(typeBatiment.FERME)), infosBaseMoteur.lvlBucheron,
-                            infosBaseMoteur.lvlCarriere, infosBaseMoteur.lvlMine, infosBaseMoteur.lvlFerme, temps.get(ia));
+                    Log.print(tag.STATS, "temps passé en construction : " + infosBaseMoteur.timeConstruct + " temps passé à attendre : "
+                            + infosBaseMoteur.timePasConstruct);
+
+                    log.writeStats(ia, (int) infosBaseMoteur.quantiteBois, (int) infosBaseMoteur.quantitePierre, (int) infosBaseMoteur.quantiteMetal,
+                            (int) Constantes.getValues().getProd(typeRessource.POPULATION, infosBaseMoteur.getLvl(typeBatiment.FERME)),
+                            infosBaseMoteur.lvlBucheron, infosBaseMoteur.lvlCarriere, infosBaseMoteur.lvlMine, infosBaseMoteur.lvlFerme,
+                            temps.get(ia));
 
                 }
             }
@@ -279,15 +289,15 @@ public class IAManager
             bases.put(ia, basesIA);
         }
     }
-    
+
     public static int getNbTourMax()
     {
-    	return nbTourMax;
+        return nbTourMax;
     }
 
     public static int getMetalForWin()
     {
-    	return metalForWin;
+        return metalForWin;
     }
-    
+
 }

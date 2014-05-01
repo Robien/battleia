@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import api.IA.InfosBase;
 import core.moteur.DBCache;
+import core.moteur.IAManager;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
@@ -57,9 +58,10 @@ public class Environement
     {
         return Constantes.getProd(base.getLvl(getBatimentOfRessources(res)), res);
     }
+
     public float RAWgetProdFloat(Constantes.typeRessource res, InfosBase base)
     {
-    	return Constantes.getProdFloat(base.getLvl(getBatimentOfRessources(res)), res);
+        return Constantes.getProdFloat(base.getLvl(getBatimentOfRessources(res)), res);
     }
 
     public int RAWgetProdNextLvl(Constantes.typeRessource res, InfosBase base)
@@ -143,6 +145,16 @@ public class Environement
     public Values getValuePrecalcule()
     {
         return Constantes.getValues();
+    }
+
+    public int getMetalForWin()
+    {
+        return IAManager.getMetalForWin();
+    }
+
+    public int getNbTourMax()
+    {
+        return IAManager.getNbTourMax();
     }
 
 }

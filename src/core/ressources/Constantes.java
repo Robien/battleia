@@ -2,6 +2,8 @@ package core.ressources;
 
 import java.util.Random;
 
+import tools.Log;
+
 /**
  * cette structure contient toutes les infos constantes pour le jeu
  * il ne faut pas l'utiliser directement, mais la classe Environement
@@ -90,7 +92,7 @@ public class Constantes
 
     public static int getRandInt(Random r)
     {
-        return (r.nextInt(10) + 1);
+        return (r.nextInt(100) + 1);
     }
 
     public static void init()
@@ -133,6 +135,13 @@ public class Constantes
             coutMetalFerme = 0;
             tempsDeConstructionFerme = tempsDeConstructionFerme * getRandInt(r);
             prodPop = prodPop * getRandInt(r);
+            
+            
+            departBois = (int) (coutBoisBucheron+departBois*r.nextFloat() * 10);
+            departMetal = (int) (coutMetalBucheron+departMetal*r.nextFloat() * 10);
+            departPierre = (int) (coutPierreBucheron+departPierre*r.nextFloat() * 10);
+            
+            print();
         }
 
         values = new Values(sizePrecalcul);
@@ -370,6 +379,23 @@ if (lvl == 0 && batiment != typeBatiment.FERME)
     {
         return ((bois >= getCout(batiment, lvlCourrant, typeRessource.BOIS)) && (pierre >= getCout(batiment, lvlCourrant, typeRessource.PIERRE)) && (metal >= getCout(
                 batiment, lvlCourrant, typeRessource.METAL)));
+    }
+    
+    public static void print()
+    {
+    	Log.print("=== CONSTANTES ===");
+    	Log.print("= couts =");
+    	Log.print("Bois/Pierre/Metal/Population/temps");
+    	Log.print("Bucherons\t" + coutBoisBucheron + "/" + coutPierreBucheron + "/" + coutMetalBucheron + "/"+coutPopBucheron + "/"+tempsDeConstructionBucheron);
+    	Log.print("Carriere\t" + coutBoisCarriere + "/" + coutPierreCarriere + "/" + coutMetalCarriere+"/"+coutPopCarriere+ "/"+tempsDeConstructionCarriere);
+    	Log.print("Mine\t\t" + coutBoisMine + "/" + coutPierreMine + "/" + coutMetalMine+"/"+coutPopMine+ "/"+tempsDeConstructionMine);
+    	Log.print("Ferme\t\t" + coutBoisFerme + "/" + coutPierreFerme+ "/" + coutMetalFerme+"/0"+ "/"+tempsDeConstructionFerme);
+    	Log.print("= production =");
+    	Log.print(prodBois + "/" + prodPierre + "/" + prodMetal + "/"+prodPop);
+    	Log.print("= misc =");
+    	Log.print("proportion d'augmentation\t" + proportionAugmentation);
+    	
+    	
     }
 
 }

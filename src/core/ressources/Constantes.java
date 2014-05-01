@@ -67,7 +67,7 @@ public class Constantes
         return values;
     }
 
-    //un singleton, ça serait mieux quand même
+    // un singleton, ça serait mieux quand même
     // /** Holder to make the singleton */
     // private static class SingletonHolder
     // {
@@ -252,24 +252,25 @@ public class Constantes
             return 0;
         }
     }
+
     public static float getProdFloat(int lvl, typeRessource ressource)
     {
-    	
-    	switch (ressource)
-    	{
-    	case BOIS:
-    		return getValueFloat(lvl, prodBois);
-    	case METAL:
-    		return getValueFloat(lvl, prodMetal);
-    	case PIERRE:
-    		return getValueFloat(lvl, prodPierre);
-    	case POPULATION:
-    		return getValueFloat(lvl, prodPop);
-    	case TEMPS:
-    		return 0;
-    	default:
-    		return 0;
-    	}
+
+        switch (ressource)
+        {
+        case BOIS:
+            return getValueFloat(lvl, prodBois);
+        case METAL:
+            return getValueFloat(lvl, prodMetal);
+        case PIERRE:
+            return getValueFloat(lvl, prodPierre);
+        case POPULATION:
+            return getValue(lvl, prodPop);
+        case TEMPS:
+            return 0;
+        default:
+            return 0;
+        }
     }
 
     public static int getProd(typeBatiment batiment, int lvl, typeRessource ressource)
@@ -349,9 +350,10 @@ public class Constantes
     {
         return (int) ((float) val * Math.pow(proportionAugmentation, lvl));
     }
+
     public static float getValueFloat(int lvl, int val)
     {
-    	return (float) (val * Math.pow(proportionAugmentation, lvl));
+        return (float) (val * Math.pow(proportionAugmentation, lvl));
     }
 
     public static boolean isConstructionPossible(typeBatiment batiment, int lvlCourrant, int bois, int pierre, int metal)

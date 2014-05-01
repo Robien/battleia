@@ -9,9 +9,9 @@ public class InfosBaseMoteur
 
     public int          idBase;
 
-    public float          quantiteBois;
-    public float          quantitePierre;
-    public float          quantiteMetal;
+    public float        quantiteBois;
+    public float        quantitePierre;
+    public float        quantiteMetal;
 
     public int          population;
 
@@ -27,7 +27,10 @@ public class InfosBaseMoteur
     public typeBatiment constructionEnCours;
     public int          tempsEcouleDepuisDebutConstruction;
 
-    public InfosBase    rel = null;
+    public InfosBase    rel              = null;
+
+    public int          timeConstruct    = 0;
+    public int          timePasConstruct = 0;
 
     /**
      * @return the popBucheron

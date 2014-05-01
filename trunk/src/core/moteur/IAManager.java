@@ -234,7 +234,7 @@ public class IAManager
                             + (int) infosBaseMoteur.quantiteMetal);
                     Log.print(tag.STATS, "batiments:" + infosBaseMoteur.lvlBucheron + "/" + infosBaseMoteur.lvlCarriere + "/"
                             + infosBaseMoteur.lvlMine + "/" + infosBaseMoteur.lvlFerme);
-                    Log.print(tag.STATS, "temps passé en construction : " + infosBaseMoteur.timeConstruct + " temps passé à attendre : "
+                    Log.print(tag.STATS, "temps total construction : " + infosBaseMoteur.timeConstruct + " temps attente : "
                             + infosBaseMoteur.timePasConstruct);
 
                     log.writeStats(ia, (int) infosBaseMoteur.quantiteBois, (int) infosBaseMoteur.quantitePierre, (int) infosBaseMoteur.quantiteMetal,

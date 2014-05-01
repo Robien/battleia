@@ -235,7 +235,10 @@ public class Constantes
 
     public static int getProd(int lvl, typeRessource ressource)
     {
-
+    	if (lvl == 0 && ressource != typeRessource.POPULATION)
+    	{
+    		return 0;
+    	}
         switch (ressource)
         {
         case BOIS:
@@ -255,6 +258,10 @@ public class Constantes
 
     public static float getProdFloat(int lvl, typeRessource ressource)
     {
+    	if (lvl == 0 && ressource != typeRessource.POPULATION)
+    	{
+    		return 0;
+    	}
 
         switch (ressource)
         {
@@ -275,7 +282,10 @@ public class Constantes
 
     public static int getProd(typeBatiment batiment, int lvl, typeRessource ressource)
     {
-
+if (lvl == 0 && batiment != typeBatiment.FERME)
+{
+	return 0;
+}
         switch (batiment)
         {
         case BUCHERON:

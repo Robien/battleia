@@ -147,23 +147,65 @@ public class IAManager
                 Log.print(tag.IAMANAGER, "ia : " + ia.getName());
                 for (InfosBaseMoteur infosBaseMoteur : bases.get(ia))
                 {
+                	
+                	if (infosBaseMoteur.rel.popBucheron < 0)
+                	{
+                		infosBaseMoteur.rel.popBucheron = 0;
+                		Log.print(tag.ERREUR,"Nombre de travailleur négatif !");
+                	}
+                	if (infosBaseMoteur.rel.popMine < 0)
+                	{
+                		infosBaseMoteur.rel.popMine = 0;
+                		Log.print(tag.ERREUR,"Nombre de travailleur négatif !");
+                	}
+                	if (infosBaseMoteur.rel.popCarriere < 0)
+                	{
+                		infosBaseMoteur.rel.popCarriere = 0;
+                		Log.print(tag.ERREUR,"Nombre de travailleur négatif !");
+                	}
 
                     // System.out.println("ressources....");
                     // occupons nous maintenant de la production de ressources.
                     if (Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel) != 0)
                     {
-                        infosBaseMoteur.quantiteBois += Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel)
-                                * (infosBaseMoteur.rel.popBucheron) / Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel);
+                    	if ((infosBaseMoteur.rel.popBucheron) <= Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel))
+                    	{
+                    		infosBaseMoteur.quantiteBois += Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel)
+                    				* (infosBaseMoteur.rel.popBucheron) / Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel);
+                    	}
+                    	else
+                    	{
+                    		Log.print(tag.ERREUR,"Production de bois, trop de travailleurs !");
+                    		infosBaseMoteur.quantiteBois += Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel);
+                    	}
                     }
                     if (Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel) != 0)
                     {
-                        infosBaseMoteur.quantiteMetal += Environement.get().RAWgetProdFloat(typeRessource.METAL, infosBaseMoteur.rel)
-                                * (infosBaseMoteur.rel.popMine) / Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel);
+                    	if ((infosBaseMoteur.rel.popMine) <= Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel))
+                    	{
+                            infosBaseMoteur.quantiteMetal += Environement.get().RAWgetProdFloat(typeRessource.METAL, infosBaseMoteur.rel)
+                                    * (infosBaseMoteur.rel.popMine) / Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel);   
+                        }
+                    	else
+                    	{
+                    		Log.print(tag.ERREUR,"Production de métal, trop de travailleurs !");
+                            infosBaseMoteur.quantiteMetal += Environement.get().RAWgetProdFloat(typeRessource.METAL, infosBaseMoteur.rel);
+                    	}
+
                     }
                     if (Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel) != 0)
                     {
-                        infosBaseMoteur.quantitePierre += Environement.get().RAWgetProdFloat(typeRessource.PIERRE, infosBaseMoteur.rel)
-                                * (infosBaseMoteur.rel.popCarriere) / Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel);
+                    	if ((infosBaseMoteur.rel.popCarriere) <= Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel))
+                    	{
+                            infosBaseMoteur.quantitePierre += Environement.get().RAWgetProdFloat(typeRessource.PIERRE, infosBaseMoteur.rel)
+                                    * (infosBaseMoteur.rel.popCarriere) / Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel);  
+                        }
+                    	else
+                    	{
+                    		Log.print(tag.ERREUR,"Production de pierre, trop de travailleurs !");
+                    		infosBaseMoteur.quantitePierre += Environement.get().RAWgetProdFloat(typeRessource.PIERRE, infosBaseMoteur.rel);
+                    	}
+
                     }
                     if (infosBaseMoteur.quantiteMetal >= metalForWin)
                     {

@@ -19,6 +19,8 @@ public class Log
     private static boolean               printTag          = true;
     private static boolean               printOnlyGameInfo = false;
 
+    private static int                   nbErreur          = 0;
+
     // changer ici pour activer/désactiver les logs suivant les tags
     public static void printablePredef()
     {
@@ -55,6 +57,10 @@ public class Log
 
     public static void print(tag tag, String text)
     {
+        if (tag == tools.Log.tag.ERREUR)
+        {
+            nbErreur++;
+        }
         Boolean printable = isPrintable.get(tag);
         if (printable == null || printable == true)
         {
@@ -81,6 +87,14 @@ public class Log
     public static void printTag(tag tag, boolean printable)
     {
         isPrintable.put(tag, printable);
+    }
+
+    public static void printNbErreur()
+    {
+        if (nbErreur != 0)
+        {
+            print("/!\\ Il y a eu " + nbErreur + " erreur(s) !");
+        }
     }
 
 }

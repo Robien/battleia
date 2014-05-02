@@ -19,17 +19,20 @@ public class IAManager
 {
 
     // condition de victoire
-    private static int                                      nbTourMax   = 0;                // 0 == désactivé
-    private static int                                      metalForWin = 1000000;
+    private static int                                      nbTourMax       = 0;                // 0 == désactivé
+    private static int                                      metalForWin     = 1000000;
+    private static boolean                                  isTimeImportant = false;
+    private static float                                    importanceTemps = 10f;              // plus le chiffre est grand moins le temps est
+                                                                                                 // important
 
-    private ArrayList<AbstractIA>                           ias         = new ArrayList<>();
+    private ArrayList<AbstractIA>                           ias             = new ArrayList<>();
 
-    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases       = new HashMap<>();
-    private HashMap<AbstractIA, Long>                       temps       = new HashMap<>();
-    private static int                                      idBase      = 0;
-    private boolean                                         stop        = false;
+    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases           = new HashMap<>();
+    private HashMap<AbstractIA, Long>                       temps           = new HashMap<>();
+    private static int                                      idBase          = 0;
+    private boolean                                         stop            = false;
 
-    private int                                             maxLvl      = 0;
+    private int                                             maxLvl          = 0;
     private printStatsToFile                                statLvl;
     private LogFile                                         log;
 
@@ -89,6 +92,7 @@ public class IAManager
 
             // System.out.println("purge du cache");
             cache.purge();
+            double tempsMoyen = 0;
             for (final AbstractIA ia : ias)
             {
                 // System.out.println("préparation pour l'IA : " + ia.getName());
@@ -133,6 +137,7 @@ public class IAManager
 
                 Log.print(tag.IAMANAGER, "fin calcul de l'IA ");
                 Log.print(tag.STATS, "temps de calcul de l'IA " + ia.getName() + " : " + ((fin - debut) / 1000) + "us");
+                tempsMoyen += ((fin - debut) / (float) ias.size());
                 temps.put(ia, fin - debut);
             }
 
@@ -147,64 +152,76 @@ public class IAManager
                 Log.print(tag.IAMANAGER, "ia : " + ia.getName());
                 for (InfosBaseMoteur infosBaseMoteur : bases.get(ia))
                 {
-                	
-                	if (infosBaseMoteur.rel.popBucheron < 0)
-                	{
-                		infosBaseMoteur.rel.popBucheron = 0;
-                		Log.print(tag.ERREUR,"Nombre de travailleur négatif !");
-                	}
-                	if (infosBaseMoteur.rel.popMine < 0)
-                	{
-                		infosBaseMoteur.rel.popMine = 0;
-                		Log.print(tag.ERREUR,"Nombre de travailleur négatif !");
-                	}
-                	if (infosBaseMoteur.rel.popCarriere < 0)
-                	{
-                		infosBaseMoteur.rel.popCarriere = 0;
-                		Log.print(tag.ERREUR,"Nombre de travailleur négatif !");
-                	}
+
+                    if (infosBaseMoteur.rel.popBucheron < 0)
+                    {
+                        infosBaseMoteur.rel.popBucheron = 0;
+                        Log.print(tag.ERREUR, "Nombre de travailleur négatif !");
+                    }
+                    if (infosBaseMoteur.rel.popMine < 0)
+                    {
+                        infosBaseMoteur.rel.popMine = 0;
+                        Log.print(tag.ERREUR, "Nombre de travailleur négatif !");
+                    }
+                    if (infosBaseMoteur.rel.popCarriere < 0)
+                    {
+                        infosBaseMoteur.rel.popCarriere = 0;
+                        Log.print(tag.ERREUR, "Nombre de travailleur négatif !");
+                    }
+
+                    float proportionRessources = 1;
+                    if (isTimeImportant)
+                    {
+                        proportionRessources = ((float) (tempsMoyen / temps.get(ia)) - 1f) / importanceTemps + 1f;
+                    }
 
                     // System.out.println("ressources....");
                     // occupons nous maintenant de la production de ressources.
                     if (Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel) != 0)
                     {
-                    	if ((infosBaseMoteur.rel.popBucheron) <= Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel))
-                    	{
-                    		infosBaseMoteur.quantiteBois += Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel)
-                    				* (infosBaseMoteur.rel.popBucheron) / Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel);
-                    	}
-                    	else
-                    	{
-                    		Log.print(tag.ERREUR,"Production de bois, trop de travailleurs !");
-                    		infosBaseMoteur.quantiteBois += Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel);
-                    	}
+                        if ((infosBaseMoteur.rel.popBucheron) <= Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel))
+                        {
+                            infosBaseMoteur.quantiteBois += Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel)
+                                    * proportionRessources * (infosBaseMoteur.rel.popBucheron)
+                                    / Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel);
+                        }
+                        else
+                        {
+                            Log.print(tag.ERREUR, "Production de bois, trop de travailleurs !");
+                            infosBaseMoteur.quantiteBois += proportionRessources
+                                    * Environement.get().RAWgetProdFloat(typeRessource.BOIS, infosBaseMoteur.rel);
+                        }
                     }
                     if (Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel) != 0)
                     {
-                    	if ((infosBaseMoteur.rel.popMine) <= Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel))
-                    	{
+                        if ((infosBaseMoteur.rel.popMine) <= Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel))
+                        {
                             infosBaseMoteur.quantiteMetal += Environement.get().RAWgetProdFloat(typeRessource.METAL, infosBaseMoteur.rel)
-                                    * (infosBaseMoteur.rel.popMine) / Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel);   
+                                    * proportionRessources * (infosBaseMoteur.rel.popMine)
+                                    / Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel);
                         }
-                    	else
-                    	{
-                    		Log.print(tag.ERREUR,"Production de métal, trop de travailleurs !");
-                            infosBaseMoteur.quantiteMetal += Environement.get().RAWgetProdFloat(typeRessource.METAL, infosBaseMoteur.rel);
-                    	}
+                        else
+                        {
+                            Log.print(tag.ERREUR, "Production de métal, trop de travailleurs !");
+                            infosBaseMoteur.quantiteMetal += proportionRessources
+                                    * Environement.get().RAWgetProdFloat(typeRessource.METAL, infosBaseMoteur.rel);
+                        }
 
                     }
                     if (Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel) != 0)
                     {
-                    	if ((infosBaseMoteur.rel.popCarriere) <= Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel))
-                    	{
+                        if ((infosBaseMoteur.rel.popCarriere) <= Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel))
+                        {
                             infosBaseMoteur.quantitePierre += Environement.get().RAWgetProdFloat(typeRessource.PIERRE, infosBaseMoteur.rel)
-                                    * (infosBaseMoteur.rel.popCarriere) / Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel);  
+                                    * proportionRessources * (infosBaseMoteur.rel.popCarriere)
+                                    / Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel);
                         }
-                    	else
-                    	{
-                    		Log.print(tag.ERREUR,"Production de pierre, trop de travailleurs !");
-                    		infosBaseMoteur.quantitePierre += Environement.get().RAWgetProdFloat(typeRessource.PIERRE, infosBaseMoteur.rel);
-                    	}
+                        else
+                        {
+                            Log.print(tag.ERREUR, "Production de pierre, trop de travailleurs !");
+                            infosBaseMoteur.quantitePierre += proportionRessources
+                                    * Environement.get().RAWgetProdFloat(typeRessource.PIERRE, infosBaseMoteur.rel);
+                        }
 
                     }
                     if (infosBaseMoteur.quantiteMetal >= metalForWin)
@@ -301,7 +318,7 @@ public class IAManager
             {
                 totalMetal += infosBase.quantiteMetal;
             }
-            Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " ("+(int)(ia.tempsDeCalcul/1000000)+"ms)");
+            Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " (" + (int) (ia.tempsDeCalcul / 1000000) + "ms)");
             if (totalMetal > maxMetal)
             {
                 gagant.clear();

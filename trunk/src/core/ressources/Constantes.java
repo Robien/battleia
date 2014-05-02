@@ -135,12 +135,11 @@ public class Constantes
             coutMetalFerme = 0;
             tempsDeConstructionFerme = tempsDeConstructionFerme * getRandInt(r);
             prodPop = prodPop * getRandInt(r);
-            
-            
-            departBois = (int) (coutBoisBucheron+departBois*r.nextFloat() * 10);
-            departMetal = (int) (coutMetalBucheron+departMetal*r.nextFloat() * 10);
-            departPierre = (int) (coutPierreBucheron+departPierre*r.nextFloat() * 10);
-            
+
+            departBois = (int) (coutBoisBucheron + departBois * r.nextFloat() * 10);
+            departMetal = (int) (coutMetalBucheron + departMetal * r.nextFloat() * 10);
+            departPierre = (int) (coutPierreBucheron + departPierre * r.nextFloat() * 10);
+
             print();
         }
 
@@ -244,10 +243,10 @@ public class Constantes
 
     public static int getProd(int lvl, typeRessource ressource)
     {
-    	if (lvl == 0 && ressource != typeRessource.POPULATION)
-    	{
-    		return 0;
-    	}
+        if (lvl == 0 && ressource != typeRessource.POPULATION)
+        {
+            return 0;
+        }
         switch (ressource)
         {
         case BOIS:
@@ -267,10 +266,10 @@ public class Constantes
 
     public static float getProdFloat(int lvl, typeRessource ressource)
     {
-    	if (lvl == 0 && ressource != typeRessource.POPULATION)
-    	{
-    		return 0;
-    	}
+        if (lvl == 0 && ressource != typeRessource.POPULATION)
+        {
+            return 0;
+        }
 
         switch (ressource)
         {
@@ -291,10 +290,10 @@ public class Constantes
 
     public static int getProd(typeBatiment batiment, int lvl, typeRessource ressource)
     {
-if (lvl == 0 && batiment != typeBatiment.FERME)
-{
-	return 0;
-}
+        if (lvl == 0 && batiment != typeBatiment.FERME)
+        {
+            return 0;
+        }
         switch (batiment)
         {
         case BUCHERON:
@@ -380,22 +379,23 @@ if (lvl == 0 && batiment != typeBatiment.FERME)
         return ((bois >= getCout(batiment, lvlCourrant, typeRessource.BOIS)) && (pierre >= getCout(batiment, lvlCourrant, typeRessource.PIERRE)) && (metal >= getCout(
                 batiment, lvlCourrant, typeRessource.METAL)));
     }
-    
+
     public static void print()
     {
-    	Log.print("=== CONSTANTES ===");
-    	Log.print("= couts =");
-    	Log.print("Bois/Pierre/Metal/Population/temps");
-    	Log.print("Bucherons\t" + coutBoisBucheron + "/" + coutPierreBucheron + "/" + coutMetalBucheron + "/"+coutPopBucheron + "/"+tempsDeConstructionBucheron);
-    	Log.print("Carriere\t" + coutBoisCarriere + "/" + coutPierreCarriere + "/" + coutMetalCarriere+"/"+coutPopCarriere+ "/"+tempsDeConstructionCarriere);
-    	Log.print("Mine\t\t" + coutBoisMine + "/" + coutPierreMine + "/" + coutMetalMine+"/"+coutPopMine+ "/"+tempsDeConstructionMine);
-    	Log.print("Ferme\t\t" + coutBoisFerme + "/" + coutPierreFerme+ "/" + coutMetalFerme+"/0"+ "/"+tempsDeConstructionFerme);
-    	Log.print("= production =");
-    	Log.print(prodBois + "/" + prodPierre + "/" + prodMetal + "/"+prodPop);
-    	Log.print("= misc =");
-    	Log.print("proportion d'augmentation\t" + proportionAugmentation);
-    	
-    	
+        Log.print("=== CONSTANTES ===");
+        Log.print("= couts =");
+        Log.print("Bois/Pierre/Metal/Population/temps");
+        Log.print("Bucherons\t" + coutBoisBucheron + "/" + coutPierreBucheron + "/" + coutMetalBucheron + "/" + coutPopBucheron + "/"
+                + tempsDeConstructionBucheron);
+        Log.print("Carriere\t" + coutBoisCarriere + "/" + coutPierreCarriere + "/" + coutMetalCarriere + "/" + coutPopCarriere + "/"
+                + tempsDeConstructionCarriere);
+        Log.print("Mine\t\t" + coutBoisMine + "/" + coutPierreMine + "/" + coutMetalMine + "/" + coutPopMine + "/" + tempsDeConstructionMine);
+        Log.print("Ferme\t\t" + coutBoisFerme + "/" + coutPierreFerme + "/" + coutMetalFerme + "/0" + "/" + tempsDeConstructionFerme);
+        Log.print("= production =");
+        Log.print(prodBois + "/" + prodPierre + "/" + prodMetal + "/" + prodPop);
+        Log.print("= misc =");
+        Log.print("proportion d'augmentation\t" + proportionAugmentation);
+
     }
 
 }

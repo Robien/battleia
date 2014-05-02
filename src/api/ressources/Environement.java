@@ -69,21 +69,47 @@ public class Environement
         return Constantes.getProd(base.getLvl(getBatimentOfRessources(res)) + 1, res);
     }
 
+    /**
+     * retourne si avec les ressources actuelles la construction est possible.
+     * Pour plus de précision il est possible d'utiliser la méthode RAW qui prend en paramètre les ressources directement
+     * @param batiment
+     * @param base
+     * @return
+     */
     public boolean isConstructionPossible(Constantes.typeBatiment batiment, InfosBase base)
     {
         return cache.getData(base).isConstructible.get(batiment);
     }
 
+    /**
+     * retourne combien la base produit de cette ressource par tour
+     * @param res
+     * @param base
+     * @return
+     */
     public int getProd(Constantes.typeRessource res, InfosBase base)
     {
         return cache.getData(base).prod.get(res);
     }
 
+    /**
+     * retourne la production qu'un batiment aurait si il était augmenté d'un niveau.
+     * pour plus de valures, cf getValuesPrecalcule
+     * @param res
+     * @param base
+     * @return
+     */
     public int getProdNextLvl(Constantes.typeRessource res, InfosBase base)
     {
         return cache.getData(base).prodNext.get(res);
     }
 
+    /**
+     *  retourne le batiment qui produit la ressource
+     *  retourne NONE si incohérent
+     * @param ressource
+     * @return
+     */
     public typeBatiment getBatimentOfRessources(typeRessource ressource)
     {
         return Constantes.getBatimentOfRessources(ressource);
@@ -94,6 +120,15 @@ public class Environement
         return Constantes.getCout(batiment, base.getLvl(batiment), ressource);
     }
 
+    /**
+     * retourne le cout pour améliorer le batiment passé en paramètre. C'est possible de mettre TEMPS pour connaitre le temps de construction de
+     * batiment
+     * 
+     * @param batiment
+     * @param ressource
+     * @param base
+     * @return
+     */
     public int getCoutAmelioration(typeBatiment batiment, typeRessource ressource, InfosBase base)
     {
         return cache.getData(base).cout.get(batiment).get(ressource);
@@ -109,6 +144,12 @@ public class Environement
         return cout;
     }
 
+    /**
+     * retourne le cout en pop de tout les batiments cumulés
+     * 
+     * @param base
+     * @return
+     */
     public int getCoutPopGeneral(InfosBase base)
     {
         return cache.getData(base).coutPopCurrent;

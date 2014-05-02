@@ -335,6 +335,7 @@ public class IAManager
         {
             Log.print(tag.JEU, ia.getName());
         }
+        Log.printNbErreur();
         log.close();
 
     }

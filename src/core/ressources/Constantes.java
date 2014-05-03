@@ -26,7 +26,7 @@ public class Constantes
     public static HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
     public static HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
     public static float                                                proportionAugmentationBase  = 1.2f;
-    public static final boolean                                        random                      = false;
+    public static final boolean                                        random                      = true;
     public static final int                                            sizePrecalcul               = 100;            // 0 = sans precalcul
 
     // ressource de depart
@@ -429,6 +429,25 @@ public class Constantes
         Log.print(prodBois + "/" + prodPierre + "/" + prodMetal + "/" + prodPop);
         Log.print("= misc =");
         Log.print("proportion d'augmentation\t" + proportionAugmentationBase);
+        
+        for (typeBatiment bat : typeBatiment.values())
+        {
+            for (typeRessource res : typeRessource.values())
+            {
+                if (getCout(bat, 0, res) != 0)
+                {
+                    Log.print("augmentation " + bat.toString() + " - " + res.toString() + " : " + proportionAugmentation.get(bat).get(res));
+                }
+            }
+        }
+
+        for (typeRessource res : typeRessource.values())
+        {
+            if (res != typeRessource.TEMPS)
+            {
+                Log.print("augmentation production " + res.toString() + " : " + proportionAugmentationProd.get(res));
+            }
+        }
 
     }
 

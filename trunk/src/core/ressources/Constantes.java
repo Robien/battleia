@@ -1,5 +1,6 @@
 package core.ressources;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import tools.Log;
@@ -22,47 +23,49 @@ public class Constantes
     }
 
     // general
-    public static float         proportionAugmentation      = 1.2f;
-    public static final boolean random                      = false;
-    public static final int     sizePrecalcul               = 100;  // 0 = sans precalcul
+    public static HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
+    public static HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
+    public static float                                                proportionAugmentationBase  = 1.2f;
+    public static final boolean                                        random                      = false;
+    public static final int                                            sizePrecalcul               = 100;            // 0 = sans precalcul
 
     // ressource de depart
-    public static int           departBois                  = 100;
-    public static int           departPierre                = 0;
-    public static int           departMetal                 = 0;
+    public static int                                                  departBois                  = 100;
+    public static int                                                  departPierre                = 0;
+    public static int                                                  departMetal                 = 0;
 
     // bucheron
-    public static int           coutBoisBucheron            = 20;
-    public static int           coutPierreBucheron          = 0;
-    public static int           coutMetalBucheron           = 0;
-    public static int           coutPopBucheron             = 1;
-    public static int           tempsDeConstructionBucheron = 1;
-    public static int           prodBois                    = 1;
+    public static int                                                  coutBoisBucheron            = 20;
+    public static int                                                  coutPierreBucheron          = 0;
+    public static int                                                  coutMetalBucheron           = 0;
+    public static int                                                  coutPopBucheron             = 1;
+    public static int                                                  tempsDeConstructionBucheron = 1;
+    public static int                                                  prodBois                    = 1;
 
     // Carriere
-    public static int           coutBoisCarriere            = 30;
-    public static int           coutPierreCarriere          = 0;
-    public static int           coutMetalCarriere           = 0;
-    public static int           coutPopCarriere             = 1;
-    public static int           tempsDeConstructionCarriere = 1;
-    public static int           prodPierre                  = 1;
+    public static int                                                  coutBoisCarriere            = 30;
+    public static int                                                  coutPierreCarriere          = 0;
+    public static int                                                  coutMetalCarriere           = 0;
+    public static int                                                  coutPopCarriere             = 1;
+    public static int                                                  tempsDeConstructionCarriere = 1;
+    public static int                                                  prodPierre                  = 1;
 
     // Mine
-    public static int           coutBoisMine                = 50;
-    public static int           coutPierreMine              = 30;
-    public static int           coutMetalMine               = 0;
-    public static int           coutPopMine                 = 2;
-    public static int           tempsDeConstructionMine     = 1;
-    public static int           prodMetal                   = 1;
+    public static int                                                  coutBoisMine                = 50;
+    public static int                                                  coutPierreMine              = 30;
+    public static int                                                  coutMetalMine               = 0;
+    public static int                                                  coutPopMine                 = 2;
+    public static int                                                  tempsDeConstructionMine     = 1;
+    public static int                                                  prodMetal                   = 1;
 
     // Ferme
-    public static int           coutBoisFerme               = 1;
-    public static int           coutPierreFerme             = 0;
-    public static int           coutMetalFerme              = 0;
-    public static int           tempsDeConstructionFerme    = 2;
-    public static int           prodPop                     = 5;
+    public static int                                                  coutBoisFerme               = 1;
+    public static int                                                  coutPierreFerme             = 0;
+    public static int                                                  coutMetalFerme              = 0;
+    public static int                                                  tempsDeConstructionFerme    = 2;
+    public static int                                                  prodPop                     = 5;
 
-    private static Values       values;
+    private static Values                                              values;
 
     public static Values getValues()
     {
@@ -100,11 +103,22 @@ public class Constantes
         Random r = new Random();
         r.setSeed(System.currentTimeMillis());
 
+        for (typeBatiment bat : typeBatiment.values())
+        {
+            HashMap<typeRessource, Float> tmp = new HashMap<>();
+            for (typeRessource res : typeRessource.values())
+            {
+                tmp.put(res, proportionAugmentationBase);
+            }
+            proportionAugmentation.put(bat, tmp);
+        }
+        for (typeRessource res : typeRessource.values())
+        {
+            proportionAugmentationProd.put(res, proportionAugmentationBase);
+        }
+
         if (random)
         {
-            // general
-            proportionAugmentation = 1 + r.nextFloat() * 2;
-
             // bucheron
             coutBoisBucheron = coutBoisBucheron * getRandInt(r);
             coutPierreBucheron = 0;
@@ -140,6 +154,18 @@ public class Constantes
             departMetal = (int) (coutMetalBucheron + departMetal * r.nextFloat() * 10);
             departPierre = (int) (coutPierreBucheron + departPierre * r.nextFloat() * 10);
 
+            for (typeBatiment bat : typeBatiment.values())
+            {
+                for (typeRessource res : typeRessource.values())
+                {
+                    proportionAugmentation.get(bat).put(res, 1 + r.nextFloat() * 2);
+                }
+            }
+
+            for (typeRessource res : typeRessource.values())
+            {
+                proportionAugmentationProd.put(res, 1 + r.nextFloat() * 2);
+            }
             print();
         }
 
@@ -158,60 +184,60 @@ public class Constantes
             switch (ressource)
             {
             case BOIS:
-                return getValue(lvl, coutBoisBucheron);
+                return getValue(lvl, coutBoisBucheron, batiment, ressource);
             case METAL:
-                return getValue(lvl, coutMetalBucheron);
+                return getValue(lvl, coutMetalBucheron, batiment, ressource);
             case PIERRE:
-                return getValue(lvl, coutPierreBucheron);
+                return getValue(lvl, coutPierreBucheron, batiment, ressource);
             case POPULATION:
-                return getValue(lvl, coutPopBucheron);
+                return getValue(lvl, coutPopBucheron, batiment, ressource);
             case TEMPS:
-                return getValue(lvl, tempsDeConstructionBucheron);
+                return getValue(lvl, tempsDeConstructionBucheron, batiment, ressource);
             }
             break;
         case CARRIERE:
             switch (ressource)
             {
             case BOIS:
-                return getValue(lvl, coutBoisCarriere);
+                return getValue(lvl, coutBoisCarriere, batiment, ressource);
             case METAL:
-                return getValue(lvl, coutMetalCarriere);
+                return getValue(lvl, coutMetalCarriere, batiment, ressource);
             case PIERRE:
-                return getValue(lvl, coutPierreCarriere);
+                return getValue(lvl, coutPierreCarriere, batiment, ressource);
             case POPULATION:
-                return getValue(lvl, coutPopCarriere);
+                return getValue(lvl, coutPopCarriere, batiment, ressource);
             case TEMPS:
-                return getValue(lvl, tempsDeConstructionCarriere);
+                return getValue(lvl, tempsDeConstructionCarriere, batiment, ressource);
             }
             break;
         case FERME:
             switch (ressource)
             {
             case BOIS:
-                return getValue(lvl, coutBoisFerme);
+                return getValue(lvl, coutBoisFerme, batiment, ressource);
             case METAL:
-                return getValue(lvl, coutMetalFerme);
+                return getValue(lvl, coutMetalFerme, batiment, ressource);
             case PIERRE:
-                return getValue(lvl, coutPierreFerme);
+                return getValue(lvl, coutPierreFerme, batiment, ressource);
             case POPULATION:
                 return 0;
             case TEMPS:
-                return getValue(lvl, tempsDeConstructionFerme);
+                return getValue(lvl, tempsDeConstructionFerme, batiment, ressource);
             }
             break;
         case MINE:
             switch (ressource)
             {
             case BOIS:
-                return getValue(lvl, coutBoisMine);
+                return getValue(lvl, coutBoisMine, batiment, ressource);
             case METAL:
-                return getValue(lvl, coutMetalMine);
+                return getValue(lvl, coutMetalMine, batiment, ressource);
             case PIERRE:
-                return getValue(lvl, coutPierreMine);
+                return getValue(lvl, coutPierreMine, batiment, ressource);
             case POPULATION:
-                return getValue(lvl, coutPopMine);
+                return getValue(lvl, coutPopMine, batiment, ressource);
             case TEMPS:
-                return getValue(lvl, tempsDeConstructionMine);
+                return getValue(lvl, tempsDeConstructionMine, batiment, ressource);
             }
             break;
 
@@ -250,13 +276,13 @@ public class Constantes
         switch (ressource)
         {
         case BOIS:
-            return getValue(lvl, prodBois);
+            return getValueProd(lvl, prodBois, typeRessource.BOIS);
         case METAL:
-            return getValue(lvl, prodMetal);
+            return getValueProd(lvl, prodMetal, typeRessource.METAL);
         case PIERRE:
-            return getValue(lvl, prodPierre);
+            return getValueProd(lvl, prodPierre, typeRessource.PIERRE);
         case POPULATION:
-            return getValue(lvl, prodPop);
+            return getValueProd(lvl, prodPop, typeRessource.POPULATION);
         case TEMPS:
             return 0;
         default:
@@ -274,13 +300,13 @@ public class Constantes
         switch (ressource)
         {
         case BOIS:
-            return getValueFloat(lvl, prodBois);
+            return getValueProdFloat(lvl, prodBois, typeRessource.BOIS);
         case METAL:
-            return getValueFloat(lvl, prodMetal);
+            return getValueProdFloat(lvl, prodMetal, typeRessource.METAL);
         case PIERRE:
-            return getValueFloat(lvl, prodPierre);
+            return getValueProdFloat(lvl, prodPierre, typeRessource.PIERRE);
         case POPULATION:
-            return getValue(lvl, prodPop);
+            return getValueProd(lvl, prodPop, typeRessource.POPULATION);
         case TEMPS:
             return 0;
         default:
@@ -300,7 +326,7 @@ public class Constantes
             switch (ressource)
             {
             case BOIS:
-                return getValue(lvl, prodBois);
+                return getValueProd(lvl, prodBois, typeRessource.BOIS);
             case METAL:
                 return 0;
             case PIERRE:
@@ -319,7 +345,7 @@ public class Constantes
             case METAL:
                 return 0;
             case PIERRE:
-                return getValue(lvl, prodPierre);
+                return getValueProd(lvl, prodPierre, typeRessource.PIERRE);
             case POPULATION:
                 return 0;
             case TEMPS:
@@ -336,7 +362,7 @@ public class Constantes
             case PIERRE:
                 return 0;
             case POPULATION:
-                return getValue(lvl, prodPop);
+                return getValueProd(lvl, prodPop, typeRessource.POPULATION);
             case TEMPS:
                 return 0;
             }
@@ -347,7 +373,7 @@ public class Constantes
             case BOIS:
                 return 0;
             case METAL:
-                return getValue(lvl, prodMetal);
+                return getValueProd(lvl, prodMetal, typeRessource.METAL);
             case PIERRE:
                 return 0;
             case POPULATION:
@@ -364,14 +390,22 @@ public class Constantes
         return 0;
     }
 
-    public static int getValue(int lvl, int val)
+    public static int getValue(int lvl, int val, typeBatiment bat, typeRessource res)
     {
-        return (int) ((float) val * Math.pow(proportionAugmentation, lvl));
+        return (int) getValueFloat(lvl, val, bat, res);
+    }
+    public static int getValueProd(int lvl, int val, typeRessource res)
+    {
+        return (int) getValueProdFloat(lvl, val, res);
     }
 
-    public static float getValueFloat(int lvl, int val)
+    public static float getValueFloat(int lvl, int val, typeBatiment bat, typeRessource res)
     {
-        return (float) (val * Math.pow(proportionAugmentation, lvl));
+        return (float) (val * Math.pow(proportionAugmentation.get(bat).get(res), lvl));
+    }
+    public static float getValueProdFloat(int lvl, int val, typeRessource res)
+    {
+        return (float) (val * Math.pow(proportionAugmentationProd.get(res), lvl));
     }
 
     public static boolean isConstructionPossible(typeBatiment batiment, int lvlCourrant, int bois, int pierre, int metal)
@@ -394,7 +428,7 @@ public class Constantes
         Log.print("= production =");
         Log.print(prodBois + "/" + prodPierre + "/" + prodMetal + "/" + prodPop);
         Log.print("= misc =");
-        Log.print("proportion d'augmentation\t" + proportionAugmentation);
+        Log.print("proportion d'augmentation\t" + proportionAugmentationBase);
 
     }
 

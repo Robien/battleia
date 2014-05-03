@@ -26,7 +26,7 @@ public class Constantes
     public static HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
     public static HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
     public static float                                                proportionAugmentationBase  = 1.2f;
-    public static final boolean                                        random                      = true;
+    public static final boolean                                        random                      = false;
     public static final int                                            sizePrecalcul               = 100;            // 0 = sans precalcul
 
     // ressource de depart

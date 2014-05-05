@@ -88,7 +88,7 @@ public class IAManager
         // on commence le tour
         for (int tour = 0; !stop && (nbTourMax == 0 || tour < nbTourMax); tour++)
         {
-            Log.print(tag.JEU, "debut tour " + tour);
+            Log.print(tag.JEU, "debut du tour " + tour);
 
             // System.out.println("purge du cache");
             cache.purge();
@@ -100,6 +100,7 @@ public class IAManager
 
                 for (InfosBaseMoteur infosBase : bases.get(ia))
                 {
+                    infosBase.population = Constantes.getProd(infosBase.lvlFerme, typeRessource.POPULATION);
                     // System.out.println("copie de la base id " + infosBase.idBase);
                     InfosBase base = new InfosBase(infosBase);
                     basesIA.add(base);

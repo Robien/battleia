@@ -299,10 +299,14 @@ public class IAManager
                     Log.print(tag.STATS, "temps total construction : " + infosBaseMoteur.timeConstruct + " temps attente : "
                             + infosBaseMoteur.timePasConstruct);
 
-                    log.writeStats(ia, (int) infosBaseMoteur.quantiteBois, (int) infosBaseMoteur.quantitePierre, (int) infosBaseMoteur.quantiteMetal,
-                            (int) Constantes.getValues().getProd(typeRessource.POPULATION, infosBaseMoteur.getLvl(typeBatiment.FERME)),
-                            infosBaseMoteur.lvlBucheron, infosBaseMoteur.lvlCarriere, infosBaseMoteur.lvlMine, infosBaseMoteur.lvlFerme,
-                            temps.get(ia));
+                    if (statLvl != printStatsToFile.NONE)
+                    {
+                        log.writeStats(ia, (int) infosBaseMoteur.quantiteBois, (int) infosBaseMoteur.quantitePierre,
+                                (int) infosBaseMoteur.quantiteMetal,
+                                (int) Constantes.getValues().getProd(typeRessource.POPULATION, infosBaseMoteur.getLvl(typeBatiment.FERME)),
+                                infosBaseMoteur.lvlBucheron, infosBaseMoteur.lvlCarriere, infosBaseMoteur.lvlMine, infosBaseMoteur.lvlFerme,
+                                temps.get(ia));
+                    }
 
                 }
             }
@@ -310,7 +314,7 @@ public class IAManager
 
         // on recherche le/les gagnants
         Log.print(tag.JEU, "Fin de la partie !");
-        
+
         double tempsMin = Double.MAX_VALUE;
         for (AbstractIA ia : ias)
         {
@@ -325,7 +329,8 @@ public class IAManager
             {
                 totalMetal += infosBase.quantiteMetal;
             }
-            Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " (" + (int) (ia.tempsDeCalcul / 1000000) + "ms - "+((int) (ia.tempsDeCalcul/tempsMin*100)) + "%)");
+            Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " (" + (int) (ia.tempsDeCalcul / 1000000) + "ms - "
+                    + ((int) (ia.tempsDeCalcul / tempsMin * 100)) + "%)");
             if (totalMetal > maxMetal)
             {
                 gagant.clear();
@@ -343,8 +348,11 @@ public class IAManager
             Log.print(tag.JEU, ia.getName());
         }
         Log.printNbErreur();
-        log.close();
 
+        if (statLvl != printStatsToFile.NONE)
+        {
+            log.close();
+        }
     }
 
     private void init()

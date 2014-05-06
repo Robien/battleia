@@ -310,6 +310,12 @@ public class IAManager
 
         // on recherche le/les gagnants
         Log.print(tag.JEU, "Fin de la partie !");
+        
+        double tempsMin = Double.MAX_VALUE;
+        for (AbstractIA ia : ias)
+        {
+            tempsMin = Math.min(tempsMin, ia.tempsDeCalcul);
+        }
         int maxMetal = 0;
         ArrayList<AbstractIA> gagant = new ArrayList<>();
         for (AbstractIA ia : ias)
@@ -319,7 +325,7 @@ public class IAManager
             {
                 totalMetal += infosBase.quantiteMetal;
             }
-            Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " (" + (int) (ia.tempsDeCalcul / 1000000) + "ms)");
+            Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " (" + (int) (ia.tempsDeCalcul / 1000000) + "ms - "+((int) (ia.tempsDeCalcul/tempsMin*100)) + "%)");
             if (totalMetal > maxMetal)
             {
                 gagant.clear();

@@ -15,7 +15,7 @@ import api.IA.InfosBase;
  */
 public class LogFile
 {
-    
+
     private String                        path      = "log/";
 
     private HashMap<AbstractIA, File>     filesIA   = new HashMap<>();
@@ -47,6 +47,16 @@ public class LogFile
         writeStats(buffers.get(filesBase.get(base)), bois, pierre, metal, pop, lvlBucheron, lvlCarriere, lvlMine, lvlFerme, temps);
     }
 
+    public void writeStats(AbstractIA ia, InfosToPrint infos)
+    {
+        writeStats(buffers.get(filesIA.get(ia)), infos);
+    }
+
+    public void writeStats(InfosBase base, InfosToPrint infos)
+    {
+        writeStats(buffers.get(filesBase.get(base)), infos);
+    }
+
     private void writeStats(BufferedWriter w, int bois, int pierre, int metal, int pop, int lvlBucheron, int lvlCarriere, int lvlMine, int lvlFerme,
             long temps)
     {
@@ -54,6 +64,18 @@ public class LogFile
         {
             w.write(bois + "/" + pierre + "/" + metal + "/" + pop + "/" + lvlBucheron + "/" + lvlCarriere + "/" + lvlMine + "/" + lvlFerme + "/"
                     + temps + "\n");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeStats(BufferedWriter w, InfosToPrint infoToPrint)
+    {
+        try
+        {
+            w.write(infoToPrint.toString() + "\n");
         }
         catch (IOException e)
         {

@@ -3,6 +3,7 @@ package core.moteur;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import tools.InfosToPrint;
 import tools.Log;
 import tools.LogFile;
 import tools.Log.tag;
@@ -301,11 +302,26 @@ public class IAManager
 
                     if (statLvl != printStatsToFile.NONE)
                     {
-                        log.writeStats(ia, (int) infosBaseMoteur.quantiteBois, (int) infosBaseMoteur.quantitePierre,
-                                (int) infosBaseMoteur.quantiteMetal,
-                                (int) Constantes.getValues().getProd(typeRessource.POPULATION, infosBaseMoteur.getLvl(typeBatiment.FERME)),
-                                infosBaseMoteur.lvlBucheron, infosBaseMoteur.lvlCarriere, infosBaseMoteur.lvlMine, infosBaseMoteur.lvlFerme,
-                                temps.get(ia));
+
+                        InfosToPrint info = new InfosToPrint(infosBaseMoteur);
+                        info.time = temps.get(ia);
+                        info.tempsCumule = ia.tempsDeCalcul;
+                        if (Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel) != 0)
+                        {
+                            info.prodBois = 100 * infosBaseMoteur.rel.popBucheron
+                                    / Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel);
+                        }
+                        if (Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel) != 0)
+                        {
+                            info.prodPierre = 100 * infosBaseMoteur.rel.popCarriere
+                                    / Environement.get().getCoutPop(typeBatiment.CARRIERE, infosBaseMoteur.rel);
+                        }
+                        if (Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel) != 0)
+                        {
+                            info.prodMetal = 100 * infosBaseMoteur.rel.popMine
+                                    / Environement.get().getCoutPop(typeBatiment.MINE, infosBaseMoteur.rel);
+                        }
+                        log.writeStats(ia, info);
                     }
 
                 }

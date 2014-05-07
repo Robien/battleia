@@ -72,6 +72,13 @@ public class InfosToPrint
         add(prodMetal);
         add(prodPierre);
         add((prodBois + prodMetal + prodPierre) / 3);
+        if (infos.rel.customValues != null && infos.rel.customValues.size() != 0)
+        {
+            for (Object o : infos.rel.customValues)
+            {
+                add(o);
+            }
+        }
     }
 
     private void add(Object o)

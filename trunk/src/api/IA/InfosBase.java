@@ -1,5 +1,7 @@
 package api.IA;
 
+import java.util.ArrayList;
+
 import core.ressources.Constantes;
 import core.ressources.InfosBaseMoteur;
 import core.ressources.Constantes.typeBatiment;
@@ -11,28 +13,31 @@ public class InfosBase
 {
 
     // permet de différencier une base d'une autre. Ce chiffre reste constant tout au long de la partie.
-    public final int    idBase;
+    public final int         idBase;
 
     // stock de la base
-    public final int    quantiteBois;
-    public final int    quantitePierre;
-    public final int    quantiteMetal;
+    public final int         quantiteBois;
+    public final int         quantitePierre;
+    public final int         quantiteMetal;
 
-    public final int    population;
+    public final int         population;
 
     // niveau de construction des batiments de la base
-    public final int    lvlBucheron;
-    public final int    lvlCarriere;
-    public final int    lvlMine;
-    public final int    lvlFerme;
+    public final int         lvlBucheron;
+    public final int         lvlCarriere;
+    public final int         lvlMine;
+    public final int         lvlFerme;
 
     // champs à ramplir...
-    public int          popBucheron;
-    public int          popCarriere;
-    public int          popMine;
+    public int               popBucheron;
+    public int               popCarriere;
+    public int               popMine;
 
-    public typeBatiment constructionEnCours;
-    public final int    tempsRestantConstruction;
+    public typeBatiment      constructionEnCours;
+    public final int         tempsRestantConstruction;
+
+    //ajouter ici des données qui seront ajouté en fin de fichier de logs
+    public ArrayList<Object> customValues = new ArrayList<>();
 
     // retourne le niveau de construction du batiment batiment
     public int getLvl(Constantes.typeBatiment batiment)
@@ -232,8 +237,8 @@ public class InfosBase
     // constructeur par copie2.
     public InfosBase(InfosBaseMoteur info)
     {
-        this(info.idBase, (int) info.quantiteBois, (int) info.quantitePierre, (int) info.quantiteMetal, info.population, info.lvlBucheron, info.lvlCarriere,
-                info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
+        this(info.idBase, (int) info.quantiteBois, (int) info.quantitePierre, (int) info.quantiteMetal, info.population, info.lvlBucheron,
+                info.lvlCarriere, info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
                 info.tempsEcouleDepuisDebutConstruction);
     }
 }

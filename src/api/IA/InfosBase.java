@@ -6,7 +6,7 @@ import core.ressources.Constantes;
 import core.ressources.InfosBaseMoteur;
 import core.ressources.Constantes.typeBatiment;
 
-// toutes les indos utiles sont stoqué dans cette structure.
+// toutes les infos utiles sont stoqué dans cette structure.
 // il y a aussi la place pour donner les instructions de constructions (regarder les champs qui ne sont pas finaux)
 // les champs sont public (structure) mais il y aussi des getter... et du coup ben ça sert à rien!
 public class InfosBase
@@ -28,7 +28,7 @@ public class InfosBase
     public final int         lvlMine;
     public final int         lvlFerme;
 
-    // champs à ramplir...
+    // champs à remplir...
     public int               popBucheron;
     public int               popCarriere;
     public int               popMine;
@@ -36,7 +36,7 @@ public class InfosBase
     public typeBatiment      constructionEnCours;
     public final int         tempsRestantConstruction;
 
-    //ajouter ici des données qui seront ajouté en fin de fichier de logs
+    //ajouter ici des données qui seront ajoutées en fin de fichier de logs
     public ArrayList<Object> customValues = new ArrayList<>();
 
     // retourne le niveau de construction du batiment batiment

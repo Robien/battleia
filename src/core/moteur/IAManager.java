@@ -22,7 +22,7 @@ public class IAManager
     // condition de victoire
     private static int                                      nbTourMax       = 0;                // 0 == désactivé
     private static int                                      metalForWin     = 1000000;
-    private static boolean                                  isTimeImportant = false;
+    private static boolean                                  isTimeImportant = true;
     private static float                                    importanceTemps = 10f;              // plus le chiffre est grand moins le temps est
                                                                                                  // important
 

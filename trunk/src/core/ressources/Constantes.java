@@ -7,8 +7,8 @@ import tools.Log;
 
 /**
  * cette structure contient toutes les infos constantes pour le jeu
- * il ne faut pas l'utiliser directement, mais la classe Environement
- * Par contre pour faire des tests, il est conseillé de changer les valeurs
+ * il ne faut pas l'utiliser directement, mais la classe Environement à la place
+ * Par contre pour faire des tests, il est conseillé de changer les valeurs pour tester différent scenarii
  */
 public class Constantes
 {

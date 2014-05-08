@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
+import tools.Log.tag;
+
 import api.IA.AbstractIA;
 import api.IA.InfosBase;
 
@@ -27,7 +29,20 @@ public class LogFile
 
     public void add(AbstractIA ia)
     {
-        filesIA.put(ia, createFile(ia.getName()));
+        boolean possible = true;
+        for (AbstractIA ai2 : filesIA.keySet())
+        {
+            if (ia.getName() == ai2.getName())
+            {
+                Log.print(tag.ERREUR, "Attention, 2 IA avec le même nom ! c'est mal !");
+                Log.print(tag.ERREUR, "Pour la peine, je ne print des logs seulement pour une des " + ai2.getName());
+                possible = false;
+            }
+        }
+        if (possible)
+        {
+            filesIA.put(ia, createFile(ia.getName()));
+        }
     }
 
     public void add(InfosBase base)

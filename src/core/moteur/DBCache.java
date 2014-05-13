@@ -4,9 +4,13 @@ import java.util.HashMap;
 
 import api.IA.InfosBase;
 
+/**
+ * Cette classe contiend les données utile pour chaque base pour un tour donné
+ * 
+ */
 public class DBCache
 {
-    
+
     private HashMap<InfosBase, DBData> datas;
 
     public DBCache()

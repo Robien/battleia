@@ -20,11 +20,13 @@ public class IAManager
 {
 
     // condition de victoire
-    private static int                                      nbTourMax       = 0;                // 0 == désactivé
-    private static int                                      metalForWin     = 1000000;
-    private static boolean                                  isTimeImportant = false;
-    private static float                                    importanceTemps = 10f;              // plus le chiffre est grand moins le temps est
+    private static final int                                nbTourMax       = 100000;           // 0 == désactivé
+    private static final int                                metalForWin     = 1000000;
+    private static final boolean                            isTimeImportant = false;
+    private static final float                              importanceTemps = 10f;              // plus le chiffre est grand moins le temps est
                                                                                                  // important
+    private static final float                              bornesTemps     = 5f;               // plus le chiffres est petit moins les écarts
+                                                                                                 // peuvent être important
 
     private ArrayList<AbstractIA>                           ias             = new ArrayList<>();
 
@@ -78,6 +80,7 @@ public class IAManager
         Log.print(tag.IAMANAGER, "init constantes");
         // initialisation des constantes
         Constantes.init();
+        Environement.init();
 
         Log.print(tag.IAMANAGER, "creation des bases");
         // creation des bases pour chaque IA.
@@ -101,7 +104,7 @@ public class IAManager
 
                 for (InfosBaseMoteur infosBase : bases.get(ia))
                 {
-                    infosBase.population = Constantes.getProd(infosBase.lvlFerme, typeRessource.POPULATION);
+                    infosBase.population = Constantes.get().getProd(infosBase.lvlFerme, typeRessource.POPULATION);
                     // System.out.println("copie de la base id " + infosBase.idBase);
                     InfosBase base = new InfosBase(infosBase);
                     basesIA.add(base);
@@ -140,7 +143,14 @@ public class IAManager
                 Log.print(tag.IAMANAGER, "fin calcul de l'IA ");
                 Log.print(tag.STATS, "temps de calcul de l'IA " + ia.getName() + " : " + ((fin - debut) / 1000) + "us");
                 tempsMoyen += ((fin - debut) / (float) ias.size());
-                temps.put(ia, fin - debut);
+                if (fin == debut)
+                {
+                    temps.put(ia, 1l);
+                }
+                else
+                {
+                    temps.put(ia, fin - debut);
+                }
             }
 
             // vérification
@@ -175,9 +185,12 @@ public class IAManager
                     if (isTimeImportant)
                     {
                         proportionRessources = ((float) (tempsMoyen / temps.get(ia)) - 1f) / importanceTemps + 1f;
+                        proportionRessources = Math.min(bornesTemps, proportionRessources);
+                        proportionRessources = Math.max(1 / bornesTemps, proportionRessources);
+                        // System.out.println(proportionRessources);
+                        // System.out.println("= " + temps.get(ia));
                     }
 
-                    // System.out.println("ressources....");
                     // occupons nous maintenant de la production de ressources.
                     if (Environement.get().getCoutPop(typeBatiment.BUCHERON, infosBaseMoteur.rel) != 0)
                     {
@@ -275,9 +288,9 @@ public class IAManager
                             // + infosBaseMoteur.getLvl(infosBaseMoteur.rel.constructionEnCours));
                             infosBaseMoteur.addLvl(infosBaseMoteur.rel.constructionEnCours);
                             maxLvl = Math.max(maxLvl, infosBaseMoteur.getLvl(infosBaseMoteur.rel.constructionEnCours));
-                            if (2 * maxLvl > Constantes.getValues().getSize())
+                            if (2 * maxLvl > Constantes.get().getValues().getSize())
                             {
-                                Constantes.getValues().compute(Constantes.getValues().getSize() * 2);
+                                Constantes.get().getValues().compute(Constantes.get().getValues().getSize() * 2);
                             }
                             // System.out.println("lvl du " + infosBaseMoteur.rel.constructionEnCours.toString() + " : "
                             // + infosBaseMoteur.getLvl(infosBaseMoteur.rel.constructionEnCours));
@@ -328,6 +341,11 @@ public class IAManager
             }
         }
 
+        // initialisation des résultats (ça ne fait quelque chose qu'au premier appel !)
+        Resultats.get().init(ias);
+        // ajout des résultats pour cette partie
+        Resultats.get().addResult(bases, temps);
+
         // on recherche le/les gagnants
         Log.print(tag.JEU, "Fin de la partie !");
 
@@ -344,6 +362,7 @@ public class IAManager
             for (InfosBaseMoteur infosBase : bases.get(ia))
             {
                 totalMetal += infosBase.quantiteMetal;
+                // System.out.println(infosBase.quantiteMetal);
             }
             Log.print(tag.JEU, "total ia \"" + ia.getName() + "\" : " + totalMetal + " (" + (int) (ia.tempsDeCalcul / 1000000) + "ms - "
                     + ((int) (ia.tempsDeCalcul / tempsMin * 100)) + "%)");
@@ -373,12 +392,14 @@ public class IAManager
 
     private void init()
     {
+        // initialisation des ID des base
+        idBase = 0;
         // une base pour chacun. Comme c'est gentil.
         for (AbstractIA ia : ias)
         {
             ArrayList<InfosBaseMoteur> basesIA = new ArrayList<>();
-            basesIA.add(new InfosBaseMoteur(idBase++, Constantes.departBois, Constantes.departPierre, Constantes.departMetal, 0, 0, 0, 0, 0, 0, 0, 0,
-                    typeBatiment.NONE, 0));
+            basesIA.add(new InfosBaseMoteur(idBase++, Constantes.get().departBois, Constantes.get().departPierre, Constantes.get().departMetal, 0, 0,
+                    0, 0, 0, 0, 0, 0, typeBatiment.NONE, 0));
             bases.put(ia, basesIA);
         }
     }

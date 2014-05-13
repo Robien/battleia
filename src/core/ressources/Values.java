@@ -66,7 +66,7 @@ public class Values
             HashMap<typeBatiment, HashMap<typeRessource, Integer>> coutTmp = new HashMap<>();
             for (typeRessource res : typeRessource.values())
             {
-                prodTmp.put(res, Constantes.getProdFloat(i, res));
+                prodTmp.put(res, Constantes.get().getProdFloat(i, res));
             }
             prod.add(prodTmp);
             for (typeBatiment bat : typeBatiment.values())
@@ -74,7 +74,7 @@ public class Values
                 HashMap<typeRessource, Integer> dico = new HashMap<>();
                 for (typeRessource res : typeRessource.values())
                 {
-                    dico.put(res, Constantes.getCout(bat, i, res));
+                    dico.put(res, Constantes.get().getCout(bat, i, res));
                 }
                 coutTmp.put(bat, dico);
             }

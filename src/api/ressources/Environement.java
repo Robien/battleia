@@ -27,7 +27,7 @@ public class Environement
     /** Holder to make the singleton */
     private static class SingletonHolder
     {
-        private final static Environement instance = new Environement();
+        private static Environement instance = new Environement();
     }
 
     /**
@@ -38,6 +38,11 @@ public class Environement
         return SingletonHolder.instance;
     }
 
+    public static void init()
+    {
+        SingletonHolder.instance = new Environement();
+    }
+
     /**
      * The constructor is private because you need to use get() to have the unique instance of this class
      */
@@ -46,32 +51,33 @@ public class Environement
 
     public boolean RAWisConstructionPossible(Constantes.typeBatiment batiment, InfosBase base)
     {
-        return Constantes.isConstructionPossible(batiment, base.getLvl(batiment), base.quantiteBois, base.quantitePierre, base.quantiteMetal);
+        return Constantes.get().isConstructionPossible(batiment, base.getLvl(batiment), base.quantiteBois, base.quantitePierre, base.quantiteMetal);
     }
 
     public boolean RAWisConstructionPossible(typeBatiment batiment, int lvlCourrant, int bois, int pierre, int metal)
     {
-        return Constantes.isConstructionPossible(batiment, lvlCourrant, bois, pierre, metal);
+        return Constantes.get().isConstructionPossible(batiment, lvlCourrant, bois, pierre, metal);
     }
 
     public int RAWgetProd(Constantes.typeRessource res, InfosBase base)
     {
-        return Constantes.getProd(base.getLvl(getBatimentOfRessources(res)), res);
+        return Constantes.get().getProd(base.getLvl(getBatimentOfRessources(res)), res);
     }
 
     public float RAWgetProdFloat(Constantes.typeRessource res, InfosBase base)
     {
-        return Constantes.getProdFloat(base.getLvl(getBatimentOfRessources(res)), res);
+        return Constantes.get().getProdFloat(base.getLvl(getBatimentOfRessources(res)), res);
     }
 
     public int RAWgetProdNextLvl(Constantes.typeRessource res, InfosBase base)
     {
-        return Constantes.getProd(base.getLvl(getBatimentOfRessources(res)) + 1, res);
+        return Constantes.get().getProd(base.getLvl(getBatimentOfRessources(res)) + 1, res);
     }
 
     /**
      * retourne si avec les ressources actuelles la construction est possible.
      * Pour plus de précision il est possible d'utiliser la méthode RAW qui prend en paramètre les ressources directement
+     * 
      * @param batiment
      * @param base
      * @return
@@ -83,6 +89,7 @@ public class Environement
 
     /**
      * retourne combien la base produit de cette ressource par tour
+     * 
      * @param res
      * @param base
      * @return
@@ -95,6 +102,7 @@ public class Environement
     /**
      * retourne la production qu'un batiment aurait si il était augmenté d'un niveau.
      * pour plus de valures, cf getValuesPrecalcule
+     * 
      * @param res
      * @param base
      * @return
@@ -105,19 +113,20 @@ public class Environement
     }
 
     /**
-     *  retourne le batiment qui produit la ressource
-     *  retourne NONE si incohérent
+     * retourne le batiment qui produit la ressource
+     * retourne NONE si incohérent
+     * 
      * @param ressource
      * @return
      */
     public typeBatiment getBatimentOfRessources(typeRessource ressource)
     {
-        return Constantes.getBatimentOfRessources(ressource);
+        return Constantes.get().getBatimentOfRessources(ressource);
     }
 
     public int RAWgetCoutAmelioration(typeBatiment batiment, typeRessource ressource, InfosBase base)
     {
-        return Constantes.getCout(batiment, base.getLvl(batiment), ressource);
+        return Constantes.get().getCout(batiment, base.getLvl(batiment), ressource);
     }
 
     /**
@@ -157,7 +166,7 @@ public class Environement
 
     public int RAWgetCoutPop(typeBatiment batiment, InfosBase base)
     {
-        return Constantes.getCout(batiment, base.getLvl(batiment) - 1, typeRessource.POPULATION);
+        return Constantes.get().getCout(batiment, base.getLvl(batiment) - 1, typeRessource.POPULATION);
     }
 
     public int getCoutPop(typeBatiment batiment, InfosBase base)
@@ -177,6 +186,18 @@ public class Environement
 
     public HashMap<typeBatiment, Integer> getDummyRepartitionPop(InfosBase base)
     {
+        for (int i = 0; i < 10; i++)
+        {
+            try
+            {
+                Thread.sleep(0, 0);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
         return cache.getData(base).dummyRepartition;
     }
 
@@ -185,7 +206,7 @@ public class Environement
      */
     public Values getValuePrecalcule()
     {
-        return Constantes.getValues();
+        return Constantes.get().getValues();
     }
 
     public int getMetalForWin()

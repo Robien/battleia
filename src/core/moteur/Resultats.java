@@ -57,7 +57,7 @@ public class Resultats
 
     public void addResult(HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases, HashMap<AbstractIA, Long> temps)
     {
-        if (nbParties != 0)
+        if (nbParties != 0 && nbParties != 1)
         {
             boolean logMute = Log.mute;
             Log.mute = false;

@@ -23,82 +23,87 @@ public class Constantes
     }
 
     // general
-    public static HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
-    public static HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
-    public static float                                                proportionAugmentationBase  = 1.2f;
-    public static final boolean                                        random                      = false;
-    public static final int                                            sizePrecalcul               = 100;            // 0 = sans precalcul
+    public HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
+    public HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
+    public float                                                proportionAugmentationBase  = 1.2f;
+    public final boolean                                        random                      = false;
+    public final int                                            sizePrecalcul               = 100;            // 0 = sans precalcul
 
     // ressource de depart
-    public static int                                                  departBois                  = 100;
-    public static int                                                  departPierre                = 0;
-    public static int                                                  departMetal                 = 0;
+    public int                                                  departBois                  = 100;
+    public int                                                  departPierre                = 0;
+    public int                                                  departMetal                 = 0;
 
     // bucheron
-    public static int                                                  coutBoisBucheron            = 20;
-    public static int                                                  coutPierreBucheron          = 0;
-    public static int                                                  coutMetalBucheron           = 0;
-    public static int                                                  coutPopBucheron             = 1;
-    public static int                                                  tempsDeConstructionBucheron = 1;
-    public static int                                                  prodBois                    = 1;
+    public int                                                  coutBoisBucheron            = 20;
+    public int                                                  coutPierreBucheron          = 0;
+    public int                                                  coutMetalBucheron           = 0;
+    public int                                                  coutPopBucheron             = 1;
+    public int                                                  tempsDeConstructionBucheron = 1;
+    public int                                                  prodBois                    = 1;
 
     // Carriere
-    public static int                                                  coutBoisCarriere            = 30;
-    public static int                                                  coutPierreCarriere          = 0;
-    public static int                                                  coutMetalCarriere           = 0;
-    public static int                                                  coutPopCarriere             = 1;
-    public static int                                                  tempsDeConstructionCarriere = 1;
-    public static int                                                  prodPierre                  = 1;
+    public int                                                  coutBoisCarriere            = 30;
+    public int                                                  coutPierreCarriere          = 0;
+    public int                                                  coutMetalCarriere           = 0;
+    public int                                                  coutPopCarriere             = 1;
+    public int                                                  tempsDeConstructionCarriere = 1;
+    public int                                                  prodPierre                  = 1;
 
     // Mine
-    public static int                                                  coutBoisMine                = 50;
-    public static int                                                  coutPierreMine              = 30;
-    public static int                                                  coutMetalMine               = 0;
-    public static int                                                  coutPopMine                 = 2;
-    public static int                                                  tempsDeConstructionMine     = 1;
-    public static int                                                  prodMetal                   = 1;
+    public int                                                  coutBoisMine                = 50;
+    public int                                                  coutPierreMine              = 30;
+    public int                                                  coutMetalMine               = 0;
+    public int                                                  coutPopMine                 = 2;
+    public int                                                  tempsDeConstructionMine     = 1;
+    public int                                                  prodMetal                   = 1;
 
     // Ferme
-    public static int                                                  coutBoisFerme               = 1;
-    public static int                                                  coutPierreFerme             = 0;
-    public static int                                                  coutMetalFerme              = 0;
-    public static int                                                  tempsDeConstructionFerme    = 2;
-    public static int                                                  prodPop                     = 5;
+    public int                                                  coutBoisFerme               = 1;
+    public int                                                  coutPierreFerme             = 0;
+    public int                                                  coutMetalFerme              = 0;
+    public int                                                  tempsDeConstructionFerme    = 2;
+    public int                                                  prodPop                     = 5;
 
-    private static Values                                              values;
+    private Values                                              values;
 
-    public static Values getValues()
+    public Values getValues()
     {
         return values;
     }
 
-    // un singleton, ça serait mieux quand même
-    // /** Holder to make the singleton */
-    // private static class SingletonHolder
-    // {
-    // private final static Constantes instance = new Constantes();
-    // }
-    //
-    // /**
-    // * @return the unique instance of the CameraManager
-    // */
-    // public static Constantes get()
-    // {
-    // return SingletonHolder.instance;
-    // }
-    //
-    // /**
-    // * The constructor is private because you need to use get() to have the unique instance of this class
-    // */
-    // private Constantes()
-    // {}
+    /** Holder to make the singleton */
+    private static class SingletonHolder
+    {
+        private static Constantes instance = new Constantes();
+    }
 
-    public static int getRandInt(Random r)
+    /**
+     * @return the unique instance of the CameraManager
+     */
+    public static Constantes get()
+    {
+        return SingletonHolder.instance;
+    }
+
+    /**
+     * The constructor is private because you need to use get() to have the unique instance of this class
+     */
+    private Constantes()
+    {}
+
+    public static void init()
+    {
+        SingletonHolder.instance = new Constantes();
+        SingletonHolder.instance.initInstance();
+    }
+
+    public int getRandInt(Random r)
     {
         return (r.nextInt(100) + 1);
     }
 
-    public static void init()
+    private void initInstance()
     {
         Random r = new Random();
         r.setSeed(System.currentTimeMillis());
@@ -172,7 +177,7 @@ public class Constantes
         values = new Values(sizePrecalcul);
     }
 
-    public static int getCout(typeBatiment batiment, int lvl, typeRessource ressource)
+    public int getCout(typeBatiment batiment, int lvl, typeRessource ressource)
     {
         if (lvl < 0)
         {
@@ -248,7 +253,7 @@ public class Constantes
         return 0;
     }
 
-    public static typeBatiment getBatimentOfRessources(typeRessource ressource)
+    public typeBatiment getBatimentOfRessources(typeRessource ressource)
     {
         switch (ressource)
         {
@@ -267,7 +272,7 @@ public class Constantes
         }
     }
 
-    public static int getProd(int lvl, typeRessource ressource)
+    public int getProd(int lvl, typeRessource ressource)
     {
         if (lvl == 0 && ressource != typeRessource.POPULATION)
         {
@@ -290,7 +295,7 @@ public class Constantes
         }
     }
 
-    public static float getProdFloat(int lvl, typeRessource ressource)
+    public float getProdFloat(int lvl, typeRessource ressource)
     {
         if (lvl == 0 && ressource != typeRessource.POPULATION)
         {
@@ -314,7 +319,7 @@ public class Constantes
         }
     }
 
-    public static int getProd(typeBatiment batiment, int lvl, typeRessource ressource)
+    public int getProd(typeBatiment batiment, int lvl, typeRessource ressource)
     {
         if (lvl == 0 && batiment != typeBatiment.FERME)
         {
@@ -390,31 +395,33 @@ public class Constantes
         return 0;
     }
 
-    public static int getValue(int lvl, int val, typeBatiment bat, typeRessource res)
+    public int getValue(int lvl, int val, typeBatiment bat, typeRessource res)
     {
         return (int) getValueFloat(lvl, val, bat, res);
     }
-    public static int getValueProd(int lvl, int val, typeRessource res)
+
+    public int getValueProd(int lvl, int val, typeRessource res)
     {
         return (int) getValueProdFloat(lvl, val, res);
     }
 
-    public static float getValueFloat(int lvl, int val, typeBatiment bat, typeRessource res)
+    public float getValueFloat(int lvl, int val, typeBatiment bat, typeRessource res)
     {
         return (float) (val * Math.pow(proportionAugmentation.get(bat).get(res), lvl));
     }
-    public static float getValueProdFloat(int lvl, int val, typeRessource res)
+
+    public float getValueProdFloat(int lvl, int val, typeRessource res)
     {
         return (float) (val * Math.pow(proportionAugmentationProd.get(res), lvl));
     }
 
-    public static boolean isConstructionPossible(typeBatiment batiment, int lvlCourrant, int bois, int pierre, int metal)
+    public boolean isConstructionPossible(typeBatiment batiment, int lvlCourrant, int bois, int pierre, int metal)
     {
         return ((bois >= getCout(batiment, lvlCourrant, typeRessource.BOIS)) && (pierre >= getCout(batiment, lvlCourrant, typeRessource.PIERRE)) && (metal >= getCout(
                 batiment, lvlCourrant, typeRessource.METAL)));
     }
 
-    public static void print()
+    public void print()
     {
         Log.print("=== CONSTANTES ===");
         Log.print("= couts =");
@@ -427,9 +434,11 @@ public class Constantes
         Log.print("Ferme\t\t" + coutBoisFerme + "/" + coutPierreFerme + "/" + coutMetalFerme + "/0" + "/" + tempsDeConstructionFerme);
         Log.print("= production =");
         Log.print(prodBois + "/" + prodPierre + "/" + prodMetal + "/" + prodPop);
+        Log.print("= Ressources départ =");
+        Log.print(departBois + "/" + departPierre + "/" + departMetal);
         Log.print("= misc =");
         Log.print("proportion d'augmentation\t" + proportionAugmentationBase);
-        
+
         for (typeBatiment bat : typeBatiment.values())
         {
             for (typeRessource res : typeRessource.values())

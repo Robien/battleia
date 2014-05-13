@@ -18,6 +18,7 @@ public class Log
 
     private static boolean               printTag          = true;
     private static boolean               printOnlyGameInfo = false;
+    public static boolean                mute              = false;
 
     private static int                   nbErreur          = 0;
 
@@ -36,21 +37,24 @@ public class Log
 
     public static void print(String text)
     {
-        System.out.println(text);
+        if (!mute)
+        {
+            System.out.println(text);
+        }
     }
 
     public static void print(String tag, String text)
     {
-        if (!printOnlyGameInfo || tag == Log.tag.JEU.toString())
+        if (!printOnlyGameInfo || tag == Log.tag.JEU.toString() || tag == Log.tag.ERREUR.toString())
         {
 
             if (printTag)
             {
-                System.out.println("[" + tag + "] " + text);
+                print("[" + tag + "] " + text);
             }
             else
             {
-                System.out.println(text);
+                print(text);
             }
         }
     }

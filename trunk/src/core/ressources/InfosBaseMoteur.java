@@ -9,9 +9,9 @@ public class InfosBaseMoteur
 
     public int          idBase;
 
-    public float        quantiteBois;
-    public float        quantitePierre;
-    public float        quantiteMetal;
+    public float        quantiteBois     = 0;
+    public float        quantitePierre   = 0;
+    public float        quantiteMetal    = 0;
 
     public int          population;
 

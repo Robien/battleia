@@ -45,7 +45,7 @@ public class LogFile
         {
             filesIA.put(ia, createFile(ia.getName()));
         }
-        if (Resultats.get().nbParties != 0)
+        if (Resultats.get().nbParties > 1)
         {
             Log.print(tag.ERREUR, "Attention, il ne faut pas print dans des fichiers quand y'a plusieurs parties de prévues !");
         }

@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
+import core.moteur.Resultats;
+
 import tools.Log.tag;
 
 import api.IA.AbstractIA;
@@ -42,6 +44,10 @@ public class LogFile
         if (possible)
         {
             filesIA.put(ia, createFile(ia.getName()));
+        }
+        if (Resultats.get().nbParties != 0)
+        {
+            Log.print(tag.ERREUR, "Attention, il ne faut pas print dans des fichiers quand y'a plusieurs parties de prévues !");
         }
     }
 

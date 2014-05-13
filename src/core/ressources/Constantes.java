@@ -3,6 +3,7 @@ package core.ressources;
 import java.util.HashMap;
 import java.util.Random;
 
+import tools.BackupConstantes;
 import tools.Log;
 
 /**
@@ -27,7 +28,10 @@ public class Constantes
     public HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
     public float                                                proportionAugmentationBase  = 1.2f;
     public final boolean                                        random                      = false;
+    public boolean												useBackup					= false;
+    public BackupConstantes										backupManager				= new BackupConstantes();
     public final int                                            sizePrecalcul               = 100;            // 0 = sans precalcul
+    
 
     // ressource de depart
     public int                                                  departBois                  = 100;
@@ -122,7 +126,49 @@ public class Constantes
             proportionAugmentationProd.put(res, proportionAugmentationBase);
         }
 
-        if (random)
+        if(useBackup)
+        {
+        	backupManager.loadConstantes();
+        	// bucheron
+            coutBoisBucheron = backupManager.getConstantesValues().coutBoisBucheron;
+            coutPierreBucheron = backupManager.getConstantesValues().coutPierreBucheron;
+            coutMetalBucheron =backupManager.getConstantesValues().coutMetalBucheron;
+            coutPopBucheron = backupManager.getConstantesValues().coutPopBucheron;
+            tempsDeConstructionBucheron = backupManager.getConstantesValues().tempsDeConstructionBucheron;
+            prodBois = backupManager.getConstantesValues().prodBois;
+
+            // Carriere
+            coutBoisCarriere = backupManager.getConstantesValues().coutBoisCarriere;
+            coutPierreCarriere = backupManager.getConstantesValues().coutPierreCarriere;
+            coutMetalCarriere = backupManager.getConstantesValues().coutMetalCarriere;
+            coutPopCarriere = backupManager.getConstantesValues().coutPopCarriere;
+            tempsDeConstructionCarriere = backupManager.getConstantesValues().tempsDeConstructionCarriere;
+            prodPierre = backupManager.getConstantesValues().prodPierre;
+
+            // Mine
+            coutBoisMine = backupManager.getConstantesValues().coutBoisMine;
+            coutPierreMine = backupManager.getConstantesValues().coutPierreMine ;
+            coutMetalMine = backupManager.getConstantesValues().coutMetalMine;
+            coutPopMine = backupManager.getConstantesValues().coutPopMine ;
+            tempsDeConstructionMine = backupManager.getConstantesValues().tempsDeConstructionMine;
+            prodMetal = backupManager.getConstantesValues().prodMetal;
+
+            // Ferme
+            coutBoisFerme = backupManager.getConstantesValues().coutBoisFerme;
+            coutPierreFerme = backupManager.getConstantesValues().coutPierreFerme;
+            coutMetalFerme = backupManager.getConstantesValues().coutMetalFerme;
+            tempsDeConstructionFerme = backupManager.getConstantesValues().tempsDeConstructionFerme;
+            prodPop = backupManager.getConstantesValues().prodPop;
+
+            departBois = backupManager.getConstantesValues().departBois ;
+            departMetal = backupManager.getConstantesValues().departMetal;
+            departPierre = backupManager.getConstantesValues().departPierre;
+            
+            proportionAugmentation = backupManager.getConstantesValues().proportionAugmentation;
+            proportionAugmentationProd = backupManager.getConstantesValues().proportionAugmentationProd;
+            
+        }
+        else if (random)
         {
             // bucheron
             coutBoisBucheron = coutBoisBucheron * getRandInt(r);
@@ -172,7 +218,11 @@ public class Constantes
                 proportionAugmentationProd.put(res, 1 + r.nextFloat() * 2);
             }
             print();
+           
         }
+        
+        if(!useBackup)
+        { backupManager.saveConstantes();}
 
         values = new Values(sizePrecalcul);
     }
@@ -460,4 +510,5 @@ public class Constantes
 
     }
 
+  
 }

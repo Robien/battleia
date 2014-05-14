@@ -8,7 +8,7 @@ package core;
  */
 public class ConstantesDeJeu
 {
-
+	public enum e_saveState{NO_SAVE, SAVE_ALL, LOAD};
     // *****************************************************************
     // DÃ©roulement du jeu
     // *****************************************************************
@@ -34,8 +34,14 @@ public class ConstantesDeJeu
 
     // ------ calcul des constantes
 
-    // est-ce que les constantes doivent-Ãªtre calculÃ© alÃ©atoirement Ã  chaque dÃ©but de partie ?
+    // est-ce que les constantes doivent-être calculé aléatoirement Ã  chaque début de partie ?
     public static boolean random            = false;
+    // est-ce qu'il faut sauvegarder tout une valeur de random sauvegardé, aucune ou utiliser la derniere
+    public static e_saveState saveState  	= e_saveState.SAVE_ALL;
+    // index du seed utilisé, 0 = dernière sauvegardé
+    public static int indexSavedSeedUse  	= 0;
+    
+
 
     // *****************************************************************
     // Logs
@@ -45,7 +51,7 @@ public class ConstantesDeJeu
 
     // active/desactive l'affichage des tags dans la console
     public static boolean printTag          = true;
-    // dÃ©sactive tout les messages exeptÃ©s les messages sans tag, les messages JEU et les messages ERREURS
+    // dÃésactive tout les messages exeptÃ©s les messages sans tag, les messages JEU et les messages ERREURS
     public static boolean printOnlyGameInfo = false;
     // dÃ©sactive tout les messages exeptÃ©s les messages qui trichent :-Â°
     public static boolean mute              = false;

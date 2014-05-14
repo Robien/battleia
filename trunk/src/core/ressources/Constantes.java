@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 import core.ConstantesDeJeu;
-
-import tools.BackupConstantes;
+import core.ConstantesDeJeu.e_saveState;
+import tools.BackupGameManager;
 import tools.Log;
 import tools.Log.tag;
 
@@ -30,8 +30,7 @@ public class Constantes
     public HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
     public HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
     public float                                                proportionAugmentationBase  = 1.2f;
-    public boolean                                              useBackup                   = false;
-    public BackupConstantes                                     backupManager               = new BackupConstantes();
+    public BackupGameManager                                     backupManager               = new BackupGameManager();
     public final int                                            sizePrecalcul               = 100;                   // 0 = sans precalcul
 
     // ressource de depart
@@ -111,8 +110,14 @@ public class Constantes
     private void initInstance()
     {
         Random r = new Random();
-        r.setSeed(System.currentTimeMillis());
-
+        long seed = System.currentTimeMillis();
+        if (ConstantesDeJeu.random && ConstantesDeJeu.saveState == e_saveState.LOAD)
+        {
+        	Log.print(tag.CONSTANTES, "Restauration de la sauvegarde : " + ConstantesDeJeu.indexSavedSeedUse);
+        	seed = backupManager.getSeed(ConstantesDeJeu.indexSavedSeedUse);
+        }
+        r.setSeed(seed);
+       
         for (typeBatiment bat : typeBatiment.values())
         {
             HashMap<typeRessource, Float> tmp = new HashMap<>();
@@ -127,50 +132,15 @@ public class Constantes
             proportionAugmentationProd.put(res, proportionAugmentationBase);
         }
 
-        if (useBackup)
+        if (ConstantesDeJeu.random)
         {
-            backupManager.loadConstantes();
-            // bucheron
-            coutBoisBucheron = backupManager.getConstantesValues().coutBoisBucheron;
-            coutPierreBucheron = backupManager.getConstantesValues().coutPierreBucheron;
-            coutMetalBucheron = backupManager.getConstantesValues().coutMetalBucheron;
-            coutPopBucheron = backupManager.getConstantesValues().coutPopBucheron;
-            tempsDeConstructionBucheron = backupManager.getConstantesValues().tempsDeConstructionBucheron;
-            prodBois = backupManager.getConstantesValues().prodBois;
-
-            // Carriere
-            coutBoisCarriere = backupManager.getConstantesValues().coutBoisCarriere;
-            coutPierreCarriere = backupManager.getConstantesValues().coutPierreCarriere;
-            coutMetalCarriere = backupManager.getConstantesValues().coutMetalCarriere;
-            coutPopCarriere = backupManager.getConstantesValues().coutPopCarriere;
-            tempsDeConstructionCarriere = backupManager.getConstantesValues().tempsDeConstructionCarriere;
-            prodPierre = backupManager.getConstantesValues().prodPierre;
-
-            // Mine
-            coutBoisMine = backupManager.getConstantesValues().coutBoisMine;
-            coutPierreMine = backupManager.getConstantesValues().coutPierreMine;
-            coutMetalMine = backupManager.getConstantesValues().coutMetalMine;
-            coutPopMine = backupManager.getConstantesValues().coutPopMine;
-            tempsDeConstructionMine = backupManager.getConstantesValues().tempsDeConstructionMine;
-            prodMetal = backupManager.getConstantesValues().prodMetal;
-
-            // Ferme
-            coutBoisFerme = backupManager.getConstantesValues().coutBoisFerme;
-            coutPierreFerme = backupManager.getConstantesValues().coutPierreFerme;
-            coutMetalFerme = backupManager.getConstantesValues().coutMetalFerme;
-            tempsDeConstructionFerme = backupManager.getConstantesValues().tempsDeConstructionFerme;
-            prodPop = backupManager.getConstantesValues().prodPop;
-
-            departBois = backupManager.getConstantesValues().departBois;
-            departMetal = backupManager.getConstantesValues().departMetal;
-            departPierre = backupManager.getConstantesValues().departPierre;
-
-            proportionAugmentation = backupManager.getConstantesValues().proportionAugmentation;
-            proportionAugmentationProd = backupManager.getConstantesValues().proportionAugmentationProd;
-
-        }
-        else if (ConstantesDeJeu.random)
-        {
+        	Log.print(tag.CONSTANTES, "ID du générateur de nombre aléatoire utilisé: " + seed);
+        	if (ConstantesDeJeu.saveState == e_saveState.SAVE_ALL )
+            {
+        		Log.print(tag.CONSTANTES, "l'ID du générateur de nombre aléatoire a été sauvegardé: " + ConstantesDeJeu.indexSavedSeedUse);
+                backupManager.saveSeed(seed);
+            }
+        	
             // bucheron
             coutBoisBucheron = coutBoisBucheron * getRandInt(r);
             coutPierreBucheron = 0;
@@ -220,12 +190,10 @@ public class Constantes
             }
             print();
 
+            
         }
 
-        if (!useBackup)
-        {
-            backupManager.saveConstantes();
-        }
+        
 
         values = new Values(sizePrecalcul);
     }

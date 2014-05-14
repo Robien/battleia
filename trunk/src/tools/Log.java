@@ -11,7 +11,7 @@ public class Log
 {
     public enum tag
     {
-        IAMANAGER, JEU, CACHE, VALUES, IA, IADUMMY, STATS, ERREUR
+        IAMANAGER, CONSTANTES, JEU, CACHE, VALUES, IA, IADUMMY, STATS, ERREUR
     }
 
     private static HashMap<tag, Boolean> isPrintable       = new HashMap<>();
@@ -26,6 +26,7 @@ public class Log
     public static void printablePredef()
     {
         isPrintable.put(tag.IAMANAGER, false);
+        isPrintable.put(tag.CONSTANTES, true);
         isPrintable.put(tag.JEU, true);
         isPrintable.put(tag.CACHE, false);
         isPrintable.put(tag.VALUES, false);

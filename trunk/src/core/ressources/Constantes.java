@@ -5,6 +5,7 @@ import java.util.Random;
 
 import tools.BackupConstantes;
 import tools.Log;
+import tools.Log.tag;
 
 /**
  * cette structure contient toutes les infos constantes pour le jeu
@@ -28,10 +29,9 @@ public class Constantes
     public HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
     public float                                                proportionAugmentationBase  = 1.2f;
     public final boolean                                        random                      = false;
-    public boolean												useBackup					= false;
-    public BackupConstantes										backupManager				= new BackupConstantes();
-    public final int                                            sizePrecalcul               = 100;            // 0 = sans precalcul
-    
+    public boolean                                              useBackup                   = false;
+    public BackupConstantes                                     backupManager               = new BackupConstantes();
+    public final int                                            sizePrecalcul               = 100;                   // 0 = sans precalcul
 
     // ressource de depart
     public int                                                  departBois                  = 100;
@@ -126,13 +126,13 @@ public class Constantes
             proportionAugmentationProd.put(res, proportionAugmentationBase);
         }
 
-        if(useBackup)
+        if (useBackup)
         {
-        	backupManager.loadConstantes();
-        	// bucheron
+            backupManager.loadConstantes();
+            // bucheron
             coutBoisBucheron = backupManager.getConstantesValues().coutBoisBucheron;
             coutPierreBucheron = backupManager.getConstantesValues().coutPierreBucheron;
-            coutMetalBucheron =backupManager.getConstantesValues().coutMetalBucheron;
+            coutMetalBucheron = backupManager.getConstantesValues().coutMetalBucheron;
             coutPopBucheron = backupManager.getConstantesValues().coutPopBucheron;
             tempsDeConstructionBucheron = backupManager.getConstantesValues().tempsDeConstructionBucheron;
             prodBois = backupManager.getConstantesValues().prodBois;
@@ -147,9 +147,9 @@ public class Constantes
 
             // Mine
             coutBoisMine = backupManager.getConstantesValues().coutBoisMine;
-            coutPierreMine = backupManager.getConstantesValues().coutPierreMine ;
+            coutPierreMine = backupManager.getConstantesValues().coutPierreMine;
             coutMetalMine = backupManager.getConstantesValues().coutMetalMine;
-            coutPopMine = backupManager.getConstantesValues().coutPopMine ;
+            coutPopMine = backupManager.getConstantesValues().coutPopMine;
             tempsDeConstructionMine = backupManager.getConstantesValues().tempsDeConstructionMine;
             prodMetal = backupManager.getConstantesValues().prodMetal;
 
@@ -160,13 +160,13 @@ public class Constantes
             tempsDeConstructionFerme = backupManager.getConstantesValues().tempsDeConstructionFerme;
             prodPop = backupManager.getConstantesValues().prodPop;
 
-            departBois = backupManager.getConstantesValues().departBois ;
+            departBois = backupManager.getConstantesValues().departBois;
             departMetal = backupManager.getConstantesValues().departMetal;
             departPierre = backupManager.getConstantesValues().departPierre;
-            
+
             proportionAugmentation = backupManager.getConstantesValues().proportionAugmentation;
             proportionAugmentationProd = backupManager.getConstantesValues().proportionAugmentationProd;
-            
+
         }
         else if (random)
         {
@@ -218,11 +218,13 @@ public class Constantes
                 proportionAugmentationProd.put(res, 1 + r.nextFloat() * 2);
             }
             print();
-           
+
         }
-        
-        if(!useBackup)
-        { backupManager.saveConstantes();}
+
+        if (!useBackup)
+        {
+            backupManager.saveConstantes();
+        }
 
         values = new Values(sizePrecalcul);
     }
@@ -473,21 +475,22 @@ public class Constantes
 
     public void print()
     {
-        Log.print("=== CONSTANTES ===");
-        Log.print("= couts =");
-        Log.print("Bois/Pierre/Metal/Population/temps");
-        Log.print("Bucherons\t" + coutBoisBucheron + "/" + coutPierreBucheron + "/" + coutMetalBucheron + "/" + coutPopBucheron + "/"
+        Log.print(tag.CONSTANTES, "=== CONSTANTES ===");
+        Log.print(tag.CONSTANTES, "= couts =");
+        Log.print(tag.CONSTANTES, "Bois/Pierre/Metal/Population/temps");
+        Log.print(tag.CONSTANTES, "Bucherons\t" + coutBoisBucheron + "/" + coutPierreBucheron + "/" + coutMetalBucheron + "/" + coutPopBucheron + "/"
                 + tempsDeConstructionBucheron);
-        Log.print("Carriere\t" + coutBoisCarriere + "/" + coutPierreCarriere + "/" + coutMetalCarriere + "/" + coutPopCarriere + "/"
+        Log.print(tag.CONSTANTES, "Carriere\t" + coutBoisCarriere + "/" + coutPierreCarriere + "/" + coutMetalCarriere + "/" + coutPopCarriere + "/"
                 + tempsDeConstructionCarriere);
-        Log.print("Mine\t\t" + coutBoisMine + "/" + coutPierreMine + "/" + coutMetalMine + "/" + coutPopMine + "/" + tempsDeConstructionMine);
-        Log.print("Ferme\t\t" + coutBoisFerme + "/" + coutPierreFerme + "/" + coutMetalFerme + "/0" + "/" + tempsDeConstructionFerme);
-        Log.print("= production =");
-        Log.print(prodBois + "/" + prodPierre + "/" + prodMetal + "/" + prodPop);
-        Log.print("= Ressources départ =");
-        Log.print(departBois + "/" + departPierre + "/" + departMetal);
-        Log.print("= misc =");
-        Log.print("proportion d'augmentation\t" + proportionAugmentationBase);
+        Log.print(tag.CONSTANTES, "Mine\t\t" + coutBoisMine + "/" + coutPierreMine + "/" + coutMetalMine + "/" + coutPopMine + "/"
+                + tempsDeConstructionMine);
+        Log.print(tag.CONSTANTES, "Ferme\t\t" + coutBoisFerme + "/" + coutPierreFerme + "/" + coutMetalFerme + "/0" + "/" + tempsDeConstructionFerme);
+        Log.print(tag.CONSTANTES, "= production =");
+        Log.print(tag.CONSTANTES, prodBois + "/" + prodPierre + "/" + prodMetal + "/" + prodPop);
+        Log.print(tag.CONSTANTES, "= Ressources départ =");
+        Log.print(tag.CONSTANTES, departBois + "/" + departPierre + "/" + departMetal);
+        Log.print(tag.CONSTANTES, "= misc =");
+        Log.print(tag.CONSTANTES, "proportion d'augmentation\t" + proportionAugmentationBase);
 
         for (typeBatiment bat : typeBatiment.values())
         {
@@ -495,7 +498,8 @@ public class Constantes
             {
                 if (getCout(bat, 0, res) != 0)
                 {
-                    Log.print("augmentation " + bat.toString() + " - " + res.toString() + " : " + proportionAugmentation.get(bat).get(res));
+                    Log.print(tag.CONSTANTES, "augmentation " + bat.toString() + " - " + res.toString() + " : "
+                            + proportionAugmentation.get(bat).get(res));
                 }
             }
         }
@@ -504,11 +508,10 @@ public class Constantes
         {
             if (res != typeRessource.TEMPS)
             {
-                Log.print("augmentation production " + res.toString() + " : " + proportionAugmentationProd.get(res));
+                Log.print(tag.CONSTANTES, "augmentation production " + res.toString() + " : " + proportionAugmentationProd.get(res));
             }
         }
 
     }
 
-  
 }

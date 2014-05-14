@@ -2,6 +2,8 @@ package tools;
 
 import java.util.HashMap;
 
+import core.ConstantesDeJeu;
+
 /**
  * 
  * permet de log plus facilement qu'avec System.out.println()
@@ -14,13 +16,9 @@ public class Log
         IAMANAGER, CONSTANTES, JEU, CACHE, VALUES, IA, IADUMMY, STATS, ERREUR
     }
 
-    private static HashMap<tag, Boolean> isPrintable       = new HashMap<>();
+    private static HashMap<tag, Boolean> isPrintable = new HashMap<>();
 
-    private static boolean               printTag          = true;
-    private static boolean               printOnlyGameInfo = false;
-    public static boolean                mute              = false;
-
-    private static int                   nbErreur          = 0;
+    private static int                   nbErreur    = 0;
 
     // changer ici pour activer/désactiver les logs suivant les tags
     public static void printablePredef()
@@ -38,7 +36,7 @@ public class Log
 
     public static void print(String text)
     {
-        if (!mute)
+        if (!ConstantesDeJeu.mute)
         {
             System.out.println(text);
         }
@@ -46,10 +44,10 @@ public class Log
 
     public static void print(String tag, String text)
     {
-        if (!printOnlyGameInfo || tag == Log.tag.JEU.toString() || tag == Log.tag.ERREUR.toString())
+        if (!ConstantesDeJeu.printOnlyGameInfo || tag == Log.tag.JEU.toString() || tag == Log.tag.ERREUR.toString())
         {
 
-            if (printTag)
+            if (ConstantesDeJeu.printTag)
             {
                 print("[" + tag + "] " + text);
             }

@@ -30,7 +30,7 @@ public class Log
         isPrintable.put(tag.VALUES, false);
         isPrintable.put(tag.IADUMMY, false);
         isPrintable.put(tag.IA, true);
-        isPrintable.put(tag.STATS, true);
+        isPrintable.put(tag.STATS, false);
         isPrintable.put(tag.ERREUR, true);
     }
 

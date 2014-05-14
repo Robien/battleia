@@ -11,6 +11,7 @@ import api.IA.AbstractIA;
 import api.IA.InfosBase;
 import api.ressources.Environement;
 import core.ConstantesDeJeu;
+import core.ConstantesDeJeu.e_saveState;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
@@ -66,6 +67,17 @@ public class IAManager
         }
     }
 
+    // lance le jeu
+    public void BOOM(int loadSavedGame)
+    {
+    	 e_saveState lastState = ConstantesDeJeu.saveState;
+    	 ConstantesDeJeu.indexSavedSeedUse = loadSavedGame;
+    	 ConstantesDeJeu.saveState = e_saveState.LOAD;
+    	 BOOM();
+    	 ConstantesDeJeu.saveState = lastState;
+    	 ConstantesDeJeu.indexSavedSeedUse = 0;
+    }
+    
     // lance le jeu
     public void BOOM()
     {

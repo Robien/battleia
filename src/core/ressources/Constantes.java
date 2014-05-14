@@ -3,6 +3,8 @@ package core.ressources;
 import java.util.HashMap;
 import java.util.Random;
 
+import core.ConstantesDeJeu;
+
 import tools.BackupConstantes;
 import tools.Log;
 import tools.Log.tag;
@@ -28,7 +30,6 @@ public class Constantes
     public HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
     public HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
     public float                                                proportionAugmentationBase  = 1.2f;
-    public final boolean                                        random                      = false;
     public boolean                                              useBackup                   = false;
     public BackupConstantes                                     backupManager               = new BackupConstantes();
     public final int                                            sizePrecalcul               = 100;                   // 0 = sans precalcul
@@ -168,7 +169,7 @@ public class Constantes
             proportionAugmentationProd = backupManager.getConstantesValues().proportionAugmentationProd;
 
         }
-        else if (random)
+        else if (ConstantesDeJeu.random)
         {
             // bucheron
             coutBoisBucheron = coutBoisBucheron * getRandInt(r);

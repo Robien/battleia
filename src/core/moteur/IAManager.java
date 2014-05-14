@@ -10,6 +10,7 @@ import tools.Log.tag;
 import api.IA.AbstractIA;
 import api.IA.InfosBase;
 import api.ressources.Environement;
+import core.ConstantesDeJeu;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
@@ -19,23 +20,14 @@ import core.ressources.InfosBaseMoteur;
 public class IAManager
 {
 
-    // condition de victoire
-    private static final int                                nbTourMax       = 100000;           // 0 == désactivé
-    private static final int                                metalForWin     = 1000000;
-    private static final boolean                            isTimeImportant = false;
-    private static final float                              importanceTemps = 10f;              // plus le chiffre est grand moins le temps est
-                                                                                                 // important
-    private static final float                              bornesTemps     = 5f;               // plus le chiffres est petit moins les écarts
-                                                                                                 // peuvent être important
+    private ArrayList<AbstractIA>                           ias    = new ArrayList<>();
 
-    private ArrayList<AbstractIA>                           ias             = new ArrayList<>();
+    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases  = new HashMap<>();
+    private HashMap<AbstractIA, Long>                       temps  = new HashMap<>();
+    private static int                                      idBase = 0;
+    private boolean                                         stop   = false;
 
-    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases           = new HashMap<>();
-    private HashMap<AbstractIA, Long>                       temps           = new HashMap<>();
-    private static int                                      idBase          = 0;
-    private boolean                                         stop            = false;
-
-    private int                                             maxLvl          = 0;
+    private int                                             maxLvl = 0;
     private printStatsToFile                                statLvl;
     private LogFile                                         log;
 
@@ -90,7 +82,7 @@ public class IAManager
         DBCache cache = new DBCache();
 
         // on commence le tour
-        for (int tour = 0; !stop && (nbTourMax == 0 || tour < nbTourMax); tour++)
+        for (int tour = 0; !stop && (ConstantesDeJeu.nbTourMax == 0 || tour < ConstantesDeJeu.nbTourMax); tour++)
         {
             Log.print(tag.JEU, "debut du tour " + tour);
 
@@ -182,11 +174,11 @@ public class IAManager
                     }
 
                     float proportionRessources = 1;
-                    if (isTimeImportant)
+                    if (ConstantesDeJeu.isTimeImportant)
                     {
-                        proportionRessources = ((float) (tempsMoyen / temps.get(ia)) - 1f) / importanceTemps + 1f;
-                        proportionRessources = Math.min(bornesTemps, proportionRessources);
-                        proportionRessources = Math.max(1 / bornesTemps, proportionRessources);
+                        proportionRessources = ((float) (tempsMoyen / temps.get(ia)) - 1f) / ConstantesDeJeu.importanceTemps + 1f;
+                        proportionRessources = Math.min(ConstantesDeJeu.bornesTemps, proportionRessources);
+                        proportionRessources = Math.max(1 / ConstantesDeJeu.bornesTemps, proportionRessources);
                         // System.out.println(proportionRessources);
                         // System.out.println("= " + temps.get(ia));
                     }
@@ -239,7 +231,7 @@ public class IAManager
                         }
 
                     }
-                    if (infosBaseMoteur.quantiteMetal >= metalForWin)
+                    if (infosBaseMoteur.quantiteMetal >= ConstantesDeJeu.metalForWin)
                     {
                         stop = true;
                     }
@@ -404,14 +396,15 @@ public class IAManager
         }
     }
 
+    // TODO : remove
     public static int getNbTourMax()
     {
-        return nbTourMax;
+        return ConstantesDeJeu.nbTourMax;
     }
 
     public static int getMetalForWin()
     {
-        return metalForWin;
+        return ConstantesDeJeu.metalForWin;
     }
 
 }

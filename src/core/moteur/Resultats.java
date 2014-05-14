@@ -12,17 +12,20 @@ import java.util.Map;
 import tools.Log;
 import tools.Log.tag;
 import api.IA.AbstractIA;
+import core.ConstantesDeJeu;
 import core.ressources.InfosBaseMoteur;
 
 public class Resultats
 {
 
+    // vous pouvez entrer ici le nombre de parties que vous prévoyez de simuler pour avoir de meilleurs messages de logs
+    // à vous après de faire réélement ce nombre de simulations !
+    public int                                                     nbParties  = 0;
+
     private ArrayList<String>                                      ias        = new ArrayList<>();
     private HashMap<String, InfoResultat>                          iaResultat = new HashMap<>();
     private ArrayList<HashMap<String, ArrayList<InfosBaseMoteur>>> bases      = new ArrayList<>();
     private ArrayList<HashMap<String, Long>>                       temps      = new ArrayList<>();
-
-    public int                                                     nbParties  = 0;
 
     private static long                                            timeDebut  = System.currentTimeMillis();
 
@@ -59,14 +62,14 @@ public class Resultats
     {
         if (nbParties != 0 && nbParties != 1)
         {
-            boolean logMute = Log.mute;
-            Log.mute = false;
+            boolean logMute = ConstantesDeJeu.mute;
+            ConstantesDeJeu.mute = false;
 
             float time = (System.currentTimeMillis() - timeDebut) / 1000f;
             time = (nbParties - this.bases.size() - 1) * time / ((float) this.bases.size() + 1f);
             Log.print(tag.JEU, "fin partie " + (this.bases.size() + 1) + "/" + nbParties + " (" + (100 * (this.bases.size() + 1) / nbParties)
                     + "% aprox :" + (int) time + "s)");
-            Log.mute = logMute;
+            ConstantesDeJeu.mute = logMute;
         }
         else
         {
@@ -97,8 +100,8 @@ public class Resultats
 
     public void compute()
     {
-        boolean logMute = Log.mute;
-        Log.mute = false;
+        boolean logMute = ConstantesDeJeu.mute;
+        ConstantesDeJeu.mute = false;
         if (bases.size() != 1)
         {
             Log.print(tag.JEU, "Résultats de " + bases.size() + " parties :");
@@ -170,7 +173,7 @@ public class Resultats
 
             }
         }
-        Log.mute = logMute;
+        ConstantesDeJeu.mute = logMute;
 
     }
 

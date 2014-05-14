@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
+import core.ConstantesDeJeu;
 import core.moteur.Resultats;
 
 import tools.Log.tag;
@@ -19,8 +20,6 @@ import api.IA.InfosBase;
  */
 public class LogFile
 {
-
-    private String                        path      = "log/";
 
     private HashMap<AbstractIA, File>     filesIA   = new HashMap<>();
     private HashMap<InfosBase, File>      filesBase = new HashMap<>();
@@ -123,7 +122,7 @@ public class LogFile
     private File createFile(String name)
     {
         name = name.replace(" ", "_").replaceAll("[\\W\\d]", ".");
-        File f = new File(path + "IA." + name + ".txt");
+        File f = new File(ConstantesDeJeu.path + "IA." + name + ".txt");
 
         if (f.exists())
         {

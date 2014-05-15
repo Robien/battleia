@@ -160,4 +160,57 @@ public class TerrainManager
         }
     }
 
+    public ArrayList<Case> getListeCasesAutour(Case c)
+    {
+        ArrayList<Case> cases = new ArrayList<>();
+        for (int i = -1; i < 1; i++)
+        {
+            for (int j = -1; j < 1; j++)
+            {
+                if (i != 0 && j != 0)
+                {
+                    if (c.getPosX() + i < 0 || c.getPosX() + i > terrain.length || c.getPosY() + j < 0 || c.getPosY() + j > terrain[0].length)
+                    {
+
+                    }
+                    else
+                    {
+                        cases.add(terrain[c.getPosX() + i][c.getPosY() + j]);
+                    }
+                }
+            }
+
+        }
+        return cases;
+    }
+
+    public Case[][] getCasesAutour(Case c)
+    {
+        Case[][] cases = new Case[3][3];
+        for (int i = -1; i < 1; i++)
+        {
+            for (int j = -1; j < 1; j++)
+            {
+                if (i != 0 && j != 0)
+                {
+                    if (c.getPosX() + i < 0 || c.getPosX() + i > terrain.length || c.getPosY() + j < 0 || c.getPosY() + j > terrain[0].length)
+                    {
+                        cases[i + 1][j + 1] = new Case(c.getPosX() + i, c.getPosY() + j);
+                        // constructeur par défaut = case hors-terrain
+                    }
+                    else
+                    {
+                        cases[i + 1][j + 1] = (terrain[c.getPosX() + i][c.getPosY() + j]);
+                    }
+                }
+                else
+                {
+                    cases[0][0] = c;
+                }
+            }
+
+        }
+        return cases;
+    }
+
 }

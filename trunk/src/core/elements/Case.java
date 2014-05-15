@@ -53,6 +53,15 @@ public class Case
         ia = 0;
     }
 
+    public Case(int x, int y)
+    {
+        this.posX = x;
+        this.posY = y;
+        this.etat = etatCase.ESPACE;
+        base = 0;
+        ia = 0;
+    }
+
     /**
      * @return the posX
      */

@@ -3,6 +3,7 @@ package api.IA;
 import java.util.ArrayList;
 
 import core.elements.Case;
+import core.moteur.TerrainManager;
 import core.ressources.Constantes;
 import core.ressources.InfosBaseMoteur;
 import core.ressources.Constantes.typeBatiment;
@@ -37,11 +38,12 @@ public class InfosBase
     public typeBatiment      constructionEnCours;
     public final int         tempsRestantConstruction;
 
-    // V2 --- ne pas prendre en compte !
-    public Case              caseBase;
-
     // ajouter ici des données qui seront ajoutées en fin de fichier de logs
     public ArrayList<Object> customValues = new ArrayList<>();
+
+    // V2 --- ne pas prendre en compte !
+    public Case              caseBase;
+    public Case[][]          caseAutourBase;                  // caseAutourBase[1][1] = caseBase
 
     // retourne le niveau de construction du batiment batiment
     public int getLvl(Constantes.typeBatiment batiment)
@@ -245,5 +247,6 @@ public class InfosBase
                 info.lvlCarriere, info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
                 info.tempsEcouleDepuisDebutConstruction);
         caseBase = info.caseBase;
+        caseAutourBase = TerrainManager.get().getCasesAutour(caseBase);
     }
 }

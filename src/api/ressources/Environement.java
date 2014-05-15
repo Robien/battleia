@@ -6,8 +6,8 @@ package api.ressources;
 import java.util.HashMap;
 
 import api.IA.InfosBase;
+import core.ConstantesDeJeu;
 import core.moteur.DBCache;
-import core.moteur.IAManager;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
@@ -15,7 +15,7 @@ import core.ressources.Values;
 
 /**
  * cette classe contiend tout ce qu'il faut savoir sur l'environement.
- * Il y a aussi ici les valeurs précalculé pour éviter que les IA le fassent elles mêmes
+ * Il y a aussi ici les valeurs précalculées pour éviter que les IA le fassent elles mêmes
  * les méthodes dont le nom commence par RAW sont des méthodes qui font vraiment le calcul, sinon c'est précalculé.
  * C'est une classe singleton
  */
@@ -184,6 +184,13 @@ public class Environement
         this.cache = cache;
     }
 
+    /**
+     * Retourne une répartition de pop equilibré en proportion
+     * Un malus temporel pourra s'appliquer à ceux qui utilise cette fonction
+     * 
+     * @param base
+     * @return
+     */
     public HashMap<typeBatiment, Integer> getDummyRepartitionPop(InfosBase base)
     {
         for (int i = 0; i < 10; i++)
@@ -209,14 +216,28 @@ public class Environement
         return Constantes.get().getValues();
     }
 
+    /**
+     * quantitée de métal pour gagner
+     * Deprecated : utiliser à la place ConstantesDeJeu.metalForWin directement
+     * 
+     * @return
+     */
+    @Deprecated
     public int getMetalForWin()
     {
-        return IAManager.getMetalForWin();
+        return ConstantesDeJeu.metalForWin;
     }
 
+    /**
+     * retourne le nombre de tour que peut prendre la partie au maximum
+     * Deprecated : utiliser à la place ConstantesDeJeu.nbTourMax directement
+     * 
+     * @return
+     */
+    @Deprecated
     public int getNbTourMax()
     {
-        return IAManager.getNbTourMax();
+        return ConstantesDeJeu.nbTourMax;
     }
 
 }

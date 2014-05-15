@@ -23,15 +23,8 @@ public class Log
     // changer ici pour activer/désactiver les logs suivant les tags
     public static void printablePredef()
     {
-        isPrintable.put(tag.IAMANAGER, false);
-        isPrintable.put(tag.CONSTANTES, true);
-        isPrintable.put(tag.JEU, true);
-        isPrintable.put(tag.CACHE, false);
-        isPrintable.put(tag.VALUES, false);
-        isPrintable.put(tag.IADUMMY, false);
-        isPrintable.put(tag.IA, true);
-        isPrintable.put(tag.STATS, false);
-        isPrintable.put(tag.ERREUR, true);
+        // il faut maintenant changer les préférences de logs dans la classe ConstantesDeJeu.java
+        ConstantesDeJeu.printablePredef(isPrintable);
     }
 
     public static void print(String text)

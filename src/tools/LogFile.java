@@ -55,17 +55,17 @@ public class LogFile
         filesBase.put(base, createFile("baseID:" + base.idBase));
     }
 
-    public void writeStats(AbstractIA ia, int bois, int pierre, int metal, int pop, int lvlBucheron, int lvlCarriere, int lvlMine, int lvlFerme,
-            long temps)
-    {
-        writeStats(buffers.get(filesIA.get(ia)), bois, pierre, metal, pop, lvlBucheron, lvlCarriere, lvlMine, lvlFerme, temps);
-    }
-
-    public void writeStats(InfosBase base, int bois, int pierre, int metal, int pop, int lvlBucheron, int lvlCarriere, int lvlMine, int lvlFerme,
-            long temps)
-    {
-        writeStats(buffers.get(filesBase.get(base)), bois, pierre, metal, pop, lvlBucheron, lvlCarriere, lvlMine, lvlFerme, temps);
-    }
+//    public void writeStats(AbstractIA ia, int bois, int pierre, int metal, int pop, int lvlBucheron, int lvlCarriere, int lvlMine, int lvlFerme,
+//            long temps)
+//    {
+//        writeStats(buffers.get(filesIA.get(ia)), bois, pierre, metal, pop, lvlBucheron, lvlCarriere, lvlMine, lvlFerme, temps);
+//    }
+//
+//    public void writeStats(InfosBase base, int bois, int pierre, int metal, int pop, int lvlBucheron, int lvlCarriere, int lvlMine, int lvlFerme,
+//            long temps)
+//    {
+//        writeStats(buffers.get(filesBase.get(base)), bois, pierre, metal, pop, lvlBucheron, lvlCarriere, lvlMine, lvlFerme, temps);
+//    }
 
     public void writeStats(AbstractIA ia, InfosToPrint infos)
     {
@@ -77,19 +77,19 @@ public class LogFile
         writeStats(buffers.get(filesBase.get(base)), infos);
     }
 
-    private void writeStats(BufferedWriter w, int bois, int pierre, int metal, int pop, int lvlBucheron, int lvlCarriere, int lvlMine, int lvlFerme,
-            long temps)
-    {
-        try
-        {
-            w.write(bois + "/" + pierre + "/" + metal + "/" + pop + "/" + lvlBucheron + "/" + lvlCarriere + "/" + lvlMine + "/" + lvlFerme + "/"
-                    + temps + "\n");
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    private void writeStats(BufferedWriter w, int bois, int pierre, int metal, int pop, int lvlBucheron, int lvlCarriere, int lvlMine, int lvlFerme,
+//            long temps)
+//    {
+//        try
+//        {
+//            w.write(bois + "/" + pierre + "/" + metal + "/" + pop + "/" + lvlBucheron + "/" + lvlCarriere + "/" + lvlMine + "/" + lvlFerme + "/"
+//                    + temps + "\n");
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void writeStats(BufferedWriter w, InfosToPrint infoToPrint)
     {

@@ -1,7 +1,7 @@
 package core.ressources;
 
 import api.IA.InfosBase;
-import core.ressources.Constantes;
+import core.elements.Case;
 import core.ressources.Constantes.typeBatiment;
 
 public class InfosBaseMoteur
@@ -31,6 +31,9 @@ public class InfosBaseMoteur
 
     public int          timeConstruct    = 0;
     public int          timePasConstruct = 0;
+
+    // V2 --- ne pas prendre en compte !
+    public Case         caseBase;
 
     /**
      * @return the popBucheron

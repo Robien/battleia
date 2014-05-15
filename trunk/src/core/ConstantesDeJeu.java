@@ -44,7 +44,7 @@ public class ConstantesDeJeu
 
     // est-ce que les constantes doivent-être calculées aléatoirement à chaque début de partie ?
     public static boolean     random            = false;
-    // est-ce qu'il faut sauvegarder tout une valeur de random sauvegard�, aucune ou utiliser la derniere
+    // est-ce qu'il faut sauvegarder tout une valeur de random sauvegardé, aucune ou utiliser la derniere
     public static e_saveState saveState         = e_saveState.SAVE_ALL;
     // index du seed utilis�, 0 = derni�re sauvegard�
     public static int         indexSavedSeedUse = 0;

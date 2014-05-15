@@ -1,5 +1,6 @@
 package core.ressources;
 
+import api.IA.AbstractIA;
 import api.IA.InfosBase;
 import core.elements.Case;
 import core.ressources.Constantes.typeBatiment;
@@ -7,6 +8,7 @@ import core.ressources.Constantes.typeBatiment;
 public class InfosBaseMoteur
 {
 
+    public AbstractIA   ia               = null;
     public int          idBase;
 
     public float        quantiteBois     = 0;
@@ -218,7 +220,7 @@ public class InfosBaseMoteur
     // constructeur avec tout les champs.
 
     public InfosBaseMoteur(int idBase, float b, float p, float m, int pop, int lvlB, int lvlC, int lvlM, int lvlF, int popB, int popC, int popM,
-            typeBatiment constructionEnCours, int tempsEcouleDepuisDebutConstruction)
+            typeBatiment constructionEnCours, int tempsEcouleDepuisDebutConstruction, AbstractIA ia)
     {
         this.idBase = idBase;
 
@@ -240,6 +242,8 @@ public class InfosBaseMoteur
         this.constructionEnCours = constructionEnCours;
         this.tempsEcouleDepuisDebutConstruction = tempsEcouleDepuisDebutConstruction;
 
+        this.ia = ia;
+
     }
 
     // constructeur par copie.
@@ -247,6 +251,6 @@ public class InfosBaseMoteur
     {
         this(info.idBase, info.quantiteBois, info.quantitePierre, info.quantiteMetal, info.population, info.lvlBucheron, info.lvlCarriere,
                 info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
-                info.tempsEcouleDepuisDebutConstruction);
+                info.tempsEcouleDepuisDebutConstruction, info.ia);
     }
 }

@@ -12,14 +12,15 @@ public class Case
     }
 
     // position de la case
-    private int      posX;
-    private int      posY;
+    private final int      posX;
+    private final int      posY;
 
     // etat de la case
-    private etatCase etat;
+    private final etatCase etat;
 
-    // id de la base sur la case si etat == OCCUPE
-    private int      base;
+    // id de la base et de l'IA sur la case si etat == OCCUPE
+    private final int      base;
+    private final int      ia;
 
     public Case(int posX, int posY, etatCase etat)
     {
@@ -31,14 +32,16 @@ public class Case
             Log.print(tag.ERREUR, "création d'une case occupé sans base associé !");
         }
         base = 0;
+        ia = 0;
     }
 
-    public Case(int posX, int posY, int idBase)
+    public Case(int posX, int posY, int idBase, int idIa)
     {
         this.posX = posX;
         this.posY = posY;
         this.etat = etatCase.OCCUPE;
         base = idBase;
+        ia = idIa;
     }
 
     public Case()
@@ -47,6 +50,7 @@ public class Case
         this.posY = 0;
         this.etat = etatCase.ESPACE;
         base = 0;
+        ia = 0;
     }
 
     /**
@@ -82,6 +86,14 @@ public class Case
     }
 
     /**
+     * @return the ia
+     */
+    public int getIaID()
+    {
+        return ia;
+    }
+
+    /**
      * C'est les coordonnées les plus mal chaussé !
      * Hahahaha qu'est-ce qu'on rigole, hein ?
      * 
@@ -90,6 +102,16 @@ public class Case
     public String getCoordonneesPrintable()
     {
         return "[" + getPosX() + ":" + getPosY() + "]";
+    }
+
+    public boolean isColonisable()
+    {
+        return etat == etatCase.LIBRE;
+    }
+
+    public boolean isMarchable()
+    {
+        return etat == etatCase.LIBRE || etat == etatCase.INHABITABLE;
     }
 
 }

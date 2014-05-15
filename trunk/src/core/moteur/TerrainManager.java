@@ -85,7 +85,7 @@ public class TerrainManager
 
                 int posY = (j + 1) * terrain[i].length / (cote - redParCote + 1);
 
-                terrain[posX][posY] = new Case(posX, posY, basesRandom.get(numBase).idBase);
+                terrain[posX][posY] = new Case(posX, posY, basesRandom.get(numBase).idBase, basesRandom.get(numBase).ia.id);
                 basesRandom.get(numBase).caseBase = terrain[posX][posY];
                 numBase++;
 
@@ -104,7 +104,7 @@ public class TerrainManager
         // Log.print(tag.JEU, "base id " + infosBaseMoteur.idBase + " " + infosBaseMoteur.caseBase.getCoordonneesPrintable());
         // }
 
-//        print();
+        // print();
 
     }
 

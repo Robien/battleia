@@ -9,9 +9,13 @@ import java.util.ArrayList;
 public abstract class AbstractIA
 {
 
-    //temps de calcul cumulé de l'IA à titre informatif (en nano secondes)
-    public double tempsDeCalcul = 0;
-    
+    // temps de calcul cumulé de l'IA à titre informatif (en nano secondes)
+    public double     tempsDeCalcul = 0;
+    // id de l'IA
+    public final int  id            = nbIa++;
+    // nombre d'IA en jeu. Peux être faux dans certain cas rares
+    public static int nbIa          = 0;
+
     // cette méthode est appelé à chaque nouveau tour
     // infosBases contient les infos sur les différentes bases controlé par l'IA. Pour l'instant le tableau contiend qu'un seul élément.
     // l'IA doit choisir quel action faire et l'inscrire directement dans "infosBases"

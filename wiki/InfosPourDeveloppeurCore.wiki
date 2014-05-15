@@ -1,0 +1,60 @@
+#summary Regroupe ce qu'il faut savoir pour développer le core
+
+
+Cette page ne concerne pas les gens qui programme juste des IAs, seulement ceux qui veulent proposer des patchs ou sont committeur dans le projet qui gère les IAs
+
+
+
+= les données =
+
+Les données sont stocké dans différents endroits :
+
+== Les infos d'une base ==
+
+Les infos de bases sont envoyé aux IA avec la classe InfosBase. Elle contient toutes les données mais avec des champs finaux donc pas modifiable. Il n'est donc pas possible pour une IA de modifier son niveau de mine directement, parce que bhouu c'est de la triche, tout ça.
+Les données sont donc stocké dans une autres classes qui s'appelle InfosBaseMoteur qui est dans core/ressources
+La différence principale est que les champs ne sont pas finaux. Il y a aussi quelques autres infos importantes qui sont dedans (comme des trucs de stats)
+Donc avant de lancer la méthode NouveauTour d'une IA, l'IAManager copie les infos de infosBasesMoteur dans un nouvel objet InfosBase. Il y a un lien vers ce nouvel objet dans InfosBaseMoteur.rel
+
+== Les infos d'un environnement d'une IA ==
+
+Pour que les IA n'est pas à avoir à faire des calculs sans intérêts des données sont calculé à chaque tour avant de donner la main à l'IA.
+il y a 2 classes qui font ça dans core/moteur : DBCache et DBData
+DBData calcules les infos à propos d'une base et les stock. DBcache fait le lien entre une base et son DBData. Toutes les infos calculé sont appelable par des méthodes dans Environement.
+
+== Les infos d'un environnement généraux ==
+
+La classe Values calcul des données (genre prix de constructions) sur plusieurs niveau en avance. Si les niveaux de construction des batiments deviennent trop élevé d'autres valeurs sont calculé
+
+
+= IAManager =
+
+Voilà ce que doit faire IAManager, dans l'ordre.
+
+== avant le calculs des tours ==
+
+ # initialisation de Constantes, Environement et DBCache
+ # créations d'une base pour chaque IA et création du terrain (V2)
+
+== pour chaque tour ==
+
+vide DBCache qui contient les infos du tour d'avant
+pour chaque IA :
+ # copie des InfosBasesMoteur dans un array d'InfosBase
+ # calcul du cache
+ # lance le calcul de l'IA
+
+maintenant on sais se que chaque IA veux faire.
+plus qu'à passer un tour maintenant !
+
+pour chaque IA :
+ # calcul des ressources en fonction de la prod et de tout le bazar
+ # si y'a un nouvel ordre de construction, on prend les ressources
+ # on avance la construction en cours
+ # si la construction est finie on augmente le niveau de 1
+
+== à la fin ==
+
+Ben on calcul les résultats et voilà !
+
+

@@ -404,7 +404,7 @@ public class IAManager
         {
             ArrayList<InfosBaseMoteur> basesIA = new ArrayList<>();
             basesIA.add(new InfosBaseMoteur(idBase, Constantes.get().departBois, Constantes.get().departPierre, Constantes.get().departMetal, 0, 0,
-                    0, 0, 0, 0, 0, 0, typeBatiment.NONE, 0));
+                    0, 0, 0, 0, 0, 0, typeBatiment.NONE, 0, ia));
             bases.put(ia, basesIA);
             basesParID.put(idBase, basesIA);
             idBase++;

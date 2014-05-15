@@ -408,15 +408,4 @@ public class IAManager
         }
     }
 
-    // TODO : remove
-    public static int getNbTourMax()
-    {
-        return ConstantesDeJeu.nbTourMax;
-    }
-
-    public static int getMetalForWin()
-    {
-        return ConstantesDeJeu.metalForWin;
-    }
-
 }

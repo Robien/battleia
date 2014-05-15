@@ -70,14 +70,14 @@ public class IAManager
     // lance le jeu
     public void BOOM(int loadSavedGame)
     {
-    	 e_saveState lastState = ConstantesDeJeu.saveState;
-    	 ConstantesDeJeu.indexSavedSeedUse = loadSavedGame;
-    	 ConstantesDeJeu.saveState = e_saveState.LOAD;
-    	 BOOM();
-    	 ConstantesDeJeu.saveState = lastState;
-    	 ConstantesDeJeu.indexSavedSeedUse = 0;
+        e_saveState lastState = ConstantesDeJeu.saveState;
+        ConstantesDeJeu.indexSavedSeedUse = loadSavedGame;
+        ConstantesDeJeu.saveState = e_saveState.LOAD;
+        BOOM();
+        ConstantesDeJeu.saveState = lastState;
+        ConstantesDeJeu.indexSavedSeedUse = 0;
     }
-    
+
     // lance le jeu
     public void BOOM()
     {

@@ -1,11 +1,2 @@
 eclipse.preferences.version=1
-encoding//src/api/IA/AbstractIA.java=UTF-8
-encoding//src/api/IA/InfosBase.java=UTF-8
-encoding//src/api/ressources/Environement.java=UTF-8
-encoding//src/core/Main.java=UTF-8
-encoding//src/core/moteur/IAManager.java=UTF-8
-encoding//src/core/ressources/Constantes.java=UTF-8
-encoding//src/core/ressources/Values.java=UTF-8
-encoding//src/dumy/DumyAI.java=UTF-8
-encoding//src/dumy/DumyAIVariante.java=UTF-8
-encoding//src/tools/Log.java=UTF-8
+encoding/<project>=UTF-8

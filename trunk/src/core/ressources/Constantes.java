@@ -73,8 +73,8 @@ public class Constantes
 
     // V2 -- ne pas prendre en compte parce que vous êtes toujours en V1, bande de vieux.
 
-    public int                                                  tailleX                     = 100;
-    public int                                                  tailleY                     = 100;
+    public int                                                  tailleX                     = 10;
+    public int                                                  tailleY                     = 50;
 
     public Values getValues()
     {
@@ -193,6 +193,12 @@ public class Constantes
             {
                 proportionAugmentationProd.put(res, 1 + r.nextFloat() * 2);
             }
+
+            // V2
+
+            tailleX = getRandInt(r) + 10;
+            tailleY = getRandInt(r) + 10;
+
             print();
 
         }

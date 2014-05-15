@@ -101,7 +101,7 @@ public class BackupGameManager
                 oos.writeObject(seedList);
                 // on vide le tampon
                 oos.flush();
-                Log.print(tag.ERREUR, "Le fichier de sauvegarde � �t� cr�� : " + _path + _fileName);
+                Log.print(tag.ERREUR, "Le fichier de sauvegarde à été créé : " + _path + _fileName);
             }
             catch (java.io.IOException e)
             {

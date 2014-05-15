@@ -21,14 +21,15 @@ import core.ressources.InfosBaseMoteur;
 public class IAManager
 {
 
-    private ArrayList<AbstractIA>                           ias    = new ArrayList<>();
+    private ArrayList<AbstractIA>                           ias        = new ArrayList<>();
 
-    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases  = new HashMap<>();
-    private HashMap<AbstractIA, Long>                       temps  = new HashMap<>();
-    private static int                                      idBase = 0;
-    private boolean                                         stop   = false;
+    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases      = new HashMap<>();
+    private HashMap<Integer, ArrayList<InfosBaseMoteur>>    basesParID = new HashMap<>();
+    private HashMap<AbstractIA, Long>                       temps      = new HashMap<>();
+    private static int                                      idBase     = 0;
+    private boolean                                         stop       = false;
 
-    private int                                             maxLvl = 0;
+    private int                                             maxLvl     = 0;
     private printStatsToFile                                statLvl;
     private LogFile                                         log;
 
@@ -397,15 +398,21 @@ public class IAManager
     private void init()
     {
         // initialisation des ID des base
-        idBase = 0;
+        idBase = 1;
         // une base pour chacun. Comme c'est gentil.
         for (AbstractIA ia : ias)
         {
             ArrayList<InfosBaseMoteur> basesIA = new ArrayList<>();
-            basesIA.add(new InfosBaseMoteur(idBase++, Constantes.get().departBois, Constantes.get().departPierre, Constantes.get().departMetal, 0, 0,
+            basesIA.add(new InfosBaseMoteur(idBase, Constantes.get().departBois, Constantes.get().departPierre, Constantes.get().departMetal, 0, 0,
                     0, 0, 0, 0, 0, 0, typeBatiment.NONE, 0));
             bases.put(ia, basesIA);
+            basesParID.put(idBase, basesIA);
+            idBase++;
         }
+
+        // génération du terrain
+        TerrainManager.get().build(bases.values());
+
     }
 
 }

@@ -30,10 +30,10 @@ public class Constantes
     public HashMap<typeBatiment, HashMap<typeRessource, Float>> proportionAugmentation      = new HashMap<>();
     public HashMap<typeRessource, Float>                        proportionAugmentationProd  = new HashMap<>();
     public float                                                proportionAugmentationBase  = 1.2f;
-    public BackupGameManager                                     backupManager               = new BackupGameManager();
-    public final int                                            sizePrecalcul               = 100;                   // 0 = sans precalcul
+    public BackupGameManager                                    backupManager               = new BackupGameManager();
+    public final int                                            sizePrecalcul               = 100;                    // 0 = sans precalcul
 
-    // ressource de depart
+    // ressources de depart
     public int                                                  departBois                  = 100;
     public int                                                  departPierre                = 0;
     public int                                                  departMetal                 = 0;
@@ -71,6 +71,11 @@ public class Constantes
 
     private Values                                              values;
 
+    // V2 -- ne pas prendre en compte parce que vous êtes toujours en V1, bande de vieux.
+
+    public int                                                  tailleX                     = 100;
+    public int                                                  tailleY                     = 100;
+
     public Values getValues()
     {
         return values;
@@ -83,7 +88,7 @@ public class Constantes
     }
 
     /**
-     * @return the unique instance of the CameraManager
+     * @return the unique instance of Constantes
      */
     public static Constantes get()
     {
@@ -113,11 +118,11 @@ public class Constantes
         long seed = System.currentTimeMillis();
         if (ConstantesDeJeu.random && ConstantesDeJeu.saveState == e_saveState.LOAD)
         {
-        	Log.print(tag.CONSTANTES, "Restauration de la sauvegarde : " + ConstantesDeJeu.indexSavedSeedUse);
-        	seed = backupManager.getSeed(ConstantesDeJeu.indexSavedSeedUse);
+            Log.print(tag.CONSTANTES, "Restauration de la sauvegarde : " + ConstantesDeJeu.indexSavedSeedUse);
+            seed = backupManager.getSeed(ConstantesDeJeu.indexSavedSeedUse);
         }
         r.setSeed(seed);
-       
+
         for (typeBatiment bat : typeBatiment.values())
         {
             HashMap<typeRessource, Float> tmp = new HashMap<>();
@@ -134,13 +139,13 @@ public class Constantes
 
         if (ConstantesDeJeu.random)
         {
-        	Log.print(tag.CONSTANTES, "ID du générateur de nombre aléatoire utilisé: " + seed);
-        	if (ConstantesDeJeu.saveState == e_saveState.SAVE_ALL )
+            Log.print(tag.CONSTANTES, "ID du générateur de nombre aléatoire utilisé: " + seed);
+            if (ConstantesDeJeu.saveState == e_saveState.SAVE_ALL)
             {
-        		Log.print(tag.CONSTANTES, "l'ID du générateur de nombre aléatoire a été sauvegardé: " + ConstantesDeJeu.indexSavedSeedUse);
+                Log.print(tag.CONSTANTES, "l'ID du générateur de nombre aléatoire a été sauvegardé: " + ConstantesDeJeu.indexSavedSeedUse);
                 backupManager.saveSeed(seed);
             }
-        	
+
             // bucheron
             coutBoisBucheron = coutBoisBucheron * getRandInt(r);
             coutPierreBucheron = 0;
@@ -190,10 +195,7 @@ public class Constantes
             }
             print();
 
-            
         }
-
-        
 
         values = new Values(sizePrecalcul);
     }

@@ -6,8 +6,8 @@ import java.util.Collections;
 
 import tools.Log;
 import tools.Log.tag;
-import core.elements.Case;
-import core.elements.Case.etatCase;
+import api.ressources.elements.Case;
+import api.ressources.elements.Case.etatCase;
 import core.ressources.Constantes;
 import core.ressources.InfosBaseMoteur;
 

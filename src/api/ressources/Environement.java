@@ -6,11 +6,14 @@ package api.ressources;
 import java.util.HashMap;
 
 import api.IA.InfosBase;
+import api.ressources.elements.Case;
+import api.ressources.elements.Groupe;
 import core.ConstantesDeJeu;
 import core.moteur.DBCache;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
+import core.ressources.Constantes.typeUnite;
 import core.ressources.Values;
 
 /**
@@ -240,4 +243,38 @@ public class Environement
         return ConstantesDeJeu.nbTourMax;
     }
 
+    /**
+     * V2 !
+     */
+    public float getDistance(Case a, Case b)
+    {
+        int x = a.getPosX() - b.getPosX();
+        int y = a.getPosY() - b.getPosY();
+        return (float) (Math.sqrt(x * x + y * y));
+    }
+
+    /**
+     * V2 !
+     */
+    public float getVitesseGroupe(Groupe g)
+    {
+        boolean vide = true;
+        float vitesse = Float.MAX_VALUE;
+        for (typeUnite u : typeUnite.values())
+        {
+            if (g.getNbUnite(u) > 0)
+            {
+                vitesse = Math.min(Constantes.get().getVitesseUnite(u), vitesse);
+                vide = false;
+            }
+        }
+        if (vide)
+        {
+            return 0;
+        }
+        else
+        {
+            return vitesse;
+        }
+    }
 }

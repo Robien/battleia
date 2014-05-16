@@ -73,8 +73,19 @@ public class Constantes
 
     // V2 -- ne pas prendre en compte parce que vous êtes toujours en V1, bande de vieux.
 
+    // terrain
     public int                                                  tailleX                     = 10;
-    public int                                                  tailleY                     = 50;
+    public int                                                  tailleY                     = 20;
+
+    // unités
+
+    public enum typeUnite
+    {
+        PEON
+    }
+
+    // TODO: rand
+    public float vitessePeon = 1f;
 
     public Values getValues()
     {
@@ -489,6 +500,16 @@ public class Constantes
             }
         }
 
+    }
+
+    public float getVitesseUnite(typeUnite type)
+    {
+        switch (type)
+        {
+        case PEON:
+            return vitessePeon;
+        }
+        return 0f;
     }
 
 }

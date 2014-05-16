@@ -2,7 +2,7 @@ package core.ressources;
 
 import api.IA.AbstractIA;
 import api.IA.InfosBase;
-import core.elements.Case;
+import api.ressources.elements.Case;
 import core.ressources.Constantes.typeBatiment;
 
 public class InfosBaseMoteur

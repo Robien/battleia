@@ -2,11 +2,11 @@ package api.IA;
 
 import java.util.ArrayList;
 
-import core.elements.Case;
+import api.ressources.elements.Case;
 import core.moteur.TerrainManager;
 import core.ressources.Constantes;
-import core.ressources.InfosBaseMoteur;
 import core.ressources.Constantes.typeBatiment;
+import core.ressources.InfosBaseMoteur;
 
 // toutes les infos utiles sont stoqué dans cette structure.
 // il y a aussi la place pour donner les instructions de constructions (regarder les champs qui ne sont pas finaux)
@@ -43,9 +43,14 @@ public class InfosBase
 
     // V2 --- ne pas prendre en compte !
     public Case              caseBase;
-    public Case[][]          caseAutourBase;                  // caseAutourBase[1][1] = caseBase
+    public Case[][]          caseAutourBase;                  // (Case[3][3]) caseAutourBase[1][1] = caseBase
 
-    // retourne le niveau de construction du batiment batiment
+    /**
+     * retourne le niveau de construction du batiment batiment
+     * 
+     * @param batiment
+     * @return
+     */
     public int getLvl(Constantes.typeBatiment batiment)
     {
         switch (batiment)
@@ -205,8 +210,35 @@ public class InfosBase
         return lvlFerme;
     }
 
-    // constructeur avec tout les champs.
-
+    /**
+     * constructeur avec tout les champs.
+     * 
+     * @param idBase
+     * @param b
+     *            bois
+     * @param p
+     *            pierre
+     * @param m
+     *            metal
+     * @param pop
+     *            population
+     * @param lvlB
+     *            niveau bucheron
+     * @param lvlC
+     *            niveau carriere
+     * @param lvlM
+     *            niveau mine
+     * @param lvlF
+     *            niveau ferme
+     * @param popB
+     *            travailleur pour le bucheron
+     * @param popC
+     *            travailleur pour la carriere
+     * @param popM
+     *            travailleur pour la mine
+     * @param constructionEnCours
+     * @param tempsEcouleDepuisDebutConstruction
+     */
     public InfosBase(int idBase, int b, int p, int m, int pop, int lvlB, int lvlC, int lvlM, int lvlF, int popB, int popC, int popM,
             typeBatiment constructionEnCours, int tempsEcouleDepuisDebutConstruction)
     {
@@ -232,7 +264,11 @@ public class InfosBase
 
     }
 
-    // constructeur par copie.
+    /**
+     * constructeur par copie.
+     * 
+     * @param info
+     */
     public InfosBase(InfosBase info)
     {
         this(info.idBase, info.quantiteBois, info.quantitePierre, info.quantiteMetal, info.population, info.lvlBucheron, info.lvlCarriere,
@@ -240,7 +276,11 @@ public class InfosBase
                 info.tempsRestantConstruction);
     }
 
-    // constructeur par copie2.
+    /**
+     * constructeur par copie2.
+     * 
+     * @param info
+     */
     public InfosBase(InfosBaseMoteur info)
     {
         this(info.idBase, (int) info.quantiteBois, (int) info.quantitePierre, (int) info.quantiteMetal, info.population, info.lvlBucheron,

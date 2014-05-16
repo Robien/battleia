@@ -12,7 +12,7 @@ import core.ressources.SerializableSavedSeed;
 public class BackupGameManager
 {
     private String               _path     = "log/";
-    private String               _fileName = "lastConstant.ser";
+    private String               _fileName = "LastSeedsRandomGame.ser";
 
     public SerializableSavedSeed seedList;
 

@@ -10,6 +10,7 @@ import tools.Log.tag;
 import api.IA.AbstractIA;
 import api.IA.InfosBase;
 import api.ressources.Environement;
+import api.ressources.elements.Groupe;
 import core.ConstantesDeJeu;
 import core.ConstantesDeJeu.e_saveState;
 import core.ressources.Constantes;
@@ -170,6 +171,11 @@ public class IAManager
                 for (InfosBaseMoteur infosBaseMoteur : bases.get(ia))
                 {
 
+                    for (Groupe g : infosBaseMoteur.rel.groupes)
+                    {
+                        infosBaseMoteur.groupes.put(g.getId(), new Groupe(g, infosBaseMoteur.rel));
+                    }
+
                     if (infosBaseMoteur.rel.popBucheron < 0)
                     {
                         infosBaseMoteur.rel.popBucheron = 0;
@@ -287,7 +293,6 @@ public class IAManager
                         // System.out.println("temps avant fin :" + infosBaseMoteur.tempsEcouleDepuisDebutConstruction);
                         if (infosBaseMoteur.tempsEcouleDepuisDebutConstruction <= 0)
                         {
-                            // System.out.println("construction terminé !");
                             // la construction est terminée.
                             // System.out.println("lvl du " + infosBaseMoteur.rel.constructionEnCours.toString() + " : "
                             // + infosBaseMoteur.getLvl(infosBaseMoteur.rel.constructionEnCours));

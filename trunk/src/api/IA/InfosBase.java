@@ -3,6 +3,7 @@ package api.IA;
 import java.util.ArrayList;
 
 import api.ressources.elements.Case;
+import api.ressources.elements.Groupe;
 import core.moteur.TerrainManager;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
@@ -44,6 +45,9 @@ public class InfosBase
     // V2 --- ne pas prendre en compte !
     public Case              caseBase;
     public Case[][]          caseAutourBase;                  // (Case[3][3]) caseAutourBase[1][1] = caseBase
+
+    // ajouter ici les nouveaux groupes, ne contiend pas les anciens
+    public ArrayList<Groupe> groupes      = new ArrayList<>();
 
     /**
      * retourne le niveau de construction du batiment batiment

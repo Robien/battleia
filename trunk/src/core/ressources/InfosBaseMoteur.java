@@ -1,41 +1,46 @@
 package core.ressources;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import api.IA.AbstractIA;
 import api.IA.InfosBase;
 import api.ressources.elements.Case;
+import api.ressources.elements.Groupe;
 import core.ressources.Constantes.typeBatiment;
 
 public class InfosBaseMoteur
 {
 
-    public AbstractIA   ia               = null;
-    public int          idBase;
+    public AbstractIA               ia               = null;
+    public int                      idBase;
 
-    public float        quantiteBois     = 0;
-    public float        quantitePierre   = 0;
-    public float        quantiteMetal    = 0;
+    public float                    quantiteBois     = 0;
+    public float                    quantitePierre   = 0;
+    public float                    quantiteMetal    = 0;
 
-    public int          population;
+    public int                      population;
 
-    public int          lvlBucheron;
-    public int          lvlCarriere;
-    public int          lvlMine;
-    public int          lvlFerme;
+    public int                      lvlBucheron;
+    public int                      lvlCarriere;
+    public int                      lvlMine;
+    public int                      lvlFerme;
 
-    public int          popBucheron;
-    public int          popCarriere;
-    public int          popMine;
+    public int                      popBucheron;
+    public int                      popCarriere;
+    public int                      popMine;
 
-    public typeBatiment constructionEnCours;
-    public int          tempsEcouleDepuisDebutConstruction;
+    public typeBatiment             constructionEnCours;
+    public int                      tempsEcouleDepuisDebutConstruction;
 
-    public InfosBase    rel              = null;
+    public InfosBase                rel              = null;
 
-    public int          timeConstruct    = 0;
-    public int          timePasConstruct = 0;
+    public int                      timeConstruct    = 0;
+    public int                      timePasConstruct = 0;
 
     // V2 --- ne pas prendre en compte !
-    public Case         caseBase;
+    public Case                     caseBase;
+    public HashMap<Integer, Groupe> groupes          = new HashMap<>();
 
     /**
      * @return the popBucheron

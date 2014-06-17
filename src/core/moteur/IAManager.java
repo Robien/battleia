@@ -133,7 +133,18 @@ public class IAManager
                 // };
                 long debut = System.nanoTime();
                 // threadIA.start();
-                ia.nouveauTour(basesIA);
+                try
+                {
+                    if (!ia.isDiqualifie)
+                    {
+                        ia.nouveauTour(basesIA);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    ia.isDiqualifie = true;
+                }
                 // try
                 // {
                 // threadIA.join();

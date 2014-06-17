@@ -11,6 +11,9 @@ public class Groupe
     private Case       destination  = null;
     private int        tempsRestant = 0;
 
+    private float      realPosX     = 0;
+    private float      realPosY     = 0;
+
     private final int  id;
     private static int nbGroupe     = 0;
 
@@ -25,6 +28,8 @@ public class Groupe
         id = nbGroupe++;
         init();
         autour = position;
+        realPosX = position[1][1].getPosX();
+        realPosY = position[1][1].getPosY();
     }
 
     public Groupe(Groupe g)
@@ -37,6 +42,8 @@ public class Groupe
         }
         autour = g.autour;
         destination = g.destination;
+        realPosX = g.realPosX;
+        realPosY = g.realPosY;
     }
 
     public Groupe(Groupe g, InfosBase info)

@@ -1,6 +1,5 @@
 package core.ressources;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import api.IA.AbstractIA;

@@ -250,7 +250,8 @@ public class Environement
     {
         int x = a.getPosX() - b.getPosX();
         int y = a.getPosY() - b.getPosY();
-        return (float) (Math.sqrt(x * x + y * y));
+        // return (float) (Math.sqrt(x * x + y * y));
+        return (float) (x + y);
     }
 
     /**

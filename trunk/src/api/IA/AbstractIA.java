@@ -16,6 +16,9 @@ public abstract class AbstractIA
     // nombre d'IA en jeu. Peux être faux dans certain cas rares
     public static int nbIa          = 0;
 
+    // si ce boolean passe à true, la partie arrete d'évoluer pour cette IA (arret du temps)
+    public boolean    isDiqualifie  = false;
+
     // cette méthode est appelé à chaque nouveau tour
     // infosBases contient les infos sur les différentes bases controlé par l'IA. Pour l'instant le tableau contiend qu'un seul élément.
     // l'IA doit choisir quel action faire et l'inscrire directement dans "infosBases"

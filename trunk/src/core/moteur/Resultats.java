@@ -127,18 +127,22 @@ public class Resultats
             for (String ia : allMetal.keySet())
             {
                 iaResultat.get(ia).metal += allMetal.get(ia);
-                // if (pos == 1)
-                // {
-                // iaResultat.get(ia).pointClassement += 3;
-                // }
-                // else if (pos == 2)
-                // {
-                // iaResultat.get(ia).pointClassement += 2;
-                // }
-                // else if (pos == 3)
-                // {
-                // iaResultat.get(ia).pointClassement += 1;
-                // }
+                if (pos == 1)
+                {
+                    iaResultat.get(ia).nb1erePlace++;
+                }
+                else if (pos == 2)
+                {
+                    iaResultat.get(ia).nb2erePlace++;
+                }
+                else if (pos == 3)
+                {
+                    iaResultat.get(ia).nb3erePlace++;
+                }
+                if (bases.get(i).get(ia).get(0).ia.isDiqualifie)
+                {
+                    iaResultat.get(ia).nbDisqualification++;
+                }
                 // else
                 // {
                 // }
@@ -164,8 +168,33 @@ public class Resultats
             }
             if (bases.size() != 1)
             {
-                Log.print(tag.JEU, (++pos) + " -  " + tmp + "\t points : " + (int) iaResultat.get(ia).pointClassement + "\t total Metal : "
-                        + iaResultat.get(ia).metal);
+                Log.print(
+                        tag.JEU,
+                        (++pos)
+                                + " -  "
+                                + tmp
+                                + "\t points : "
+                                + (int) iaResultat.get(ia).pointClassement
+                                + "\t total Metal : "
+                                + iaResultat.get(ia).metal
+                                + "\t ["
+                                + iaResultat.get(ia).nb1erePlace
+                                + "/"
+                                + iaResultat.get(ia).nb2erePlace
+                                + "/"
+                                + iaResultat.get(ia).nb3erePlace
+                                + "]\t["
+                                + (int) (100 * (float) iaResultat.get(ia).nb1erePlace / (float) bases.size())
+                                + "%/"
+                                + (int) (100 * (float) iaResultat.get(ia).nb2erePlace / (float) bases.size())
+                                + "%/"
+                                + (int) (100 * (float) iaResultat.get(ia).nb3erePlace / (float) bases.size())
+                                + "%]\t (podium :"
+                                + (iaResultat.get(ia).nb1erePlace + iaResultat.get(ia).nb2erePlace + iaResultat.get(ia).nb3erePlace)
+                                + "="
+                                + (int) (100 * (float) (iaResultat.get(ia).nb1erePlace + iaResultat.get(ia).nb2erePlace + iaResultat.get(ia).nb3erePlace) / (float) bases
+                                        .size()) + "%) disqualification :" + iaResultat.get(ia).nbDisqualification + " ("
+                                + (int) (100 * (float) iaResultat.get(ia).nbDisqualification / (float) bases.size()) + "%)");
             }
             else
             {

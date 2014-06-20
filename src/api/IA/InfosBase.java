@@ -40,14 +40,14 @@ public class InfosBase
     public final int         tempsRestantConstruction;
 
     // ajouter ici des données qui seront ajoutées en fin de fichier de logs
-    public ArrayList<Object> customValues = new ArrayList<>();
+    public ArrayList<Object> customValues    = new ArrayList<>();
 
     // V2 --- ne pas prendre en compte !
     public Case              caseBase;
-    public Case[][]          caseAutourBase;                  // (Case[3][3]) caseAutourBase[1][1] = caseBase
+    public Case[][]          caseAutourBase;                     // (Case[3][3]) caseAutourBase[1][1] = caseBase
 
     // ajouter ici les nouveaux groupes, ne contiend pas les anciens
-    public ArrayList<Groupe> groupes      = new ArrayList<>();
+    public ArrayList<Groupe> nouveauxGroupes = new ArrayList<>();
 
     /**
      * retourne le niveau de construction du batiment batiment
@@ -285,12 +285,12 @@ public class InfosBase
      * 
      * @param info
      */
-    public InfosBase(InfosBaseMoteur info)
+    public InfosBase(InfosBaseMoteur info, TerrainManager terrain)
     {
         this(info.idBase, (int) info.quantiteBois, (int) info.quantitePierre, (int) info.quantiteMetal, info.population, info.lvlBucheron,
                 info.lvlCarriere, info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
                 info.tempsEcouleDepuisDebutConstruction);
         caseBase = info.caseBase;
-        caseAutourBase = TerrainManager.get().getCasesAutour(caseBase);
+        caseAutourBase = terrain.getCasesAutour(caseBase);
     }
 }

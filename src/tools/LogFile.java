@@ -121,7 +121,8 @@ public class LogFile
 
     private File createFile(String name)
     {
-        name = name.replace(" ", "_").replaceAll("[\\W\\d]", ".");
+//        name = name.replace(" ", "_").replaceAll("[\\W\\d]", ".");
+        name = name.replace(" ", "_").replaceAll("[^a-zA-Z 0-9]", ".");
         File f = new File(ConstantesDeJeu.path + "IA." + name + ".txt");
 
         if (f.exists())

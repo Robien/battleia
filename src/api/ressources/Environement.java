@@ -5,6 +5,7 @@ package api.ressources;
 
 import java.util.HashMap;
 
+import api.IA.AbstractIA;
 import api.IA.InfosBase;
 import api.ressources.elements.Case;
 import api.ressources.elements.Groupe;
@@ -196,15 +197,19 @@ public class Environement
      */
     public HashMap<typeBatiment, Integer> getDummyRepartitionPop(InfosBase base)
     {
-        for (int i = 0; i < 10; i++)
+        if (ConstantesDeJeu.isTimeImportant)
         {
-            try
+
+            for (int i = 0; i < 50; i++)
             {
-                Thread.sleep(0, 0);
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
+                try
+                {
+                    Thread.sleep(0, 0);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -245,6 +250,7 @@ public class Environement
 
     /**
      * V2 !
+     * pas possible d'aller en diagonale !
      */
     public float getDistance(Case a, Case b)
     {
@@ -259,23 +265,30 @@ public class Environement
      */
     public float getVitesseGroupe(Groupe g)
     {
-        boolean vide = true;
-        float vitesse = Float.MAX_VALUE;
+        float vitesse = 0;
         for (typeUnite u : typeUnite.values())
         {
             if (g.getNbUnite(u) > 0)
             {
-                vitesse = Math.min(Constantes.get().getVitesseUnite(u), vitesse);
-                vide = false;
+                vitesse = Math.max(Constantes.get().getVitesseUnite(u), vitesse);
             }
         }
-        if (vide)
-        {
-            return 0;
-        }
-        else
-        {
-            return vitesse;
-        }
+        return vitesse;
+    }
+
+    /**
+     * V2 !
+     */
+    public HashMap<Integer, Groupe> getGroupes(AbstractIA ia)
+    {
+        return cache.getGroupes(ia);
+    }
+
+    /**
+     * V2 !
+     */
+    public Groupe getGroupe(AbstractIA ia, int id)
+    {
+        return cache.getGroupes(ia).get(id);
     }
 }

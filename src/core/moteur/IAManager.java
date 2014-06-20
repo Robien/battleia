@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 import tools.InfosToPrint;
 import tools.Log;
-import tools.LogFile;
 import tools.Log.tag;
+import tools.LogFile;
 import api.IA.AbstractIA;
 import api.IA.InfosBase;
 import api.ressources.Environement;
@@ -16,23 +16,27 @@ import core.ConstantesDeJeu.e_saveState;
 import core.ressources.Constantes;
 import core.ressources.Constantes.typeBatiment;
 import core.ressources.Constantes.typeRessource;
+import core.ressources.IAMoteur;
 import core.ressources.InfosBaseMoteur;
 
 // gestionaire d'IA
 public class IAManager
 {
 
-    private ArrayList<AbstractIA>                           ias        = new ArrayList<>();
+    private ArrayList<AbstractIA>                           ias            = new ArrayList<>();
 
-    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases      = new HashMap<>();
-    private HashMap<Integer, ArrayList<InfosBaseMoteur>>    basesParID = new HashMap<>();
-    private HashMap<AbstractIA, Long>                       temps      = new HashMap<>();
-    private static int                                      idBase     = 0;
-    private boolean                                         stop       = false;
+    private HashMap<AbstractIA, ArrayList<InfosBaseMoteur>> bases          = new HashMap<>();
+    private HashMap<AbstractIA, IAMoteur>                   iaMoteurs      = new HashMap<>();
+    private HashMap<Integer, InfosBaseMoteur>               basesParID     = new HashMap<>();
+    private HashMap<AbstractIA, Long>                       temps          = new HashMap<>();
+    private static int                                      idBase         = 0;
+    private boolean                                         stop           = false;
 
-    private int                                             maxLvl     = 0;
+    private int                                             maxLvl         = 0;
     private printStatsToFile                                statLvl;
     private LogFile                                         log;
+
+    private TerrainManager                                  terrainManager = new TerrainManager();
 
     public enum printStatsToFile
     {
@@ -110,14 +114,17 @@ public class IAManager
 
                 for (InfosBaseMoteur infosBase : bases.get(ia))
                 {
-                    infosBase.population = Constantes.get().getProd(infosBase.lvlFerme, typeRessource.POPULATION);
+                    infosBase.population = Constantes.get().getProd(infosBase.lvlFerme, typeRessource.POPULATION) - infosBase.peonEnVoyage;
                     // System.out.println("copie de la base id " + infosBase.idBase);
-                    InfosBase base = new InfosBase(infosBase);
+                    InfosBase base = new InfosBase(infosBase, terrainManager);
                     basesIA.add(base);
                     // System.out.println("calcul du cache");
                     cache.addInfoBase(base);
                     infosBase.rel = base;
                 }
+
+                // copie des groupes pour le joueur
+                cache.addGroupes(iaMoteurs.get(ia).getGroupesCopy(terrainManager), ia);
 
                 Environement.get().setCache(cache);
 
@@ -142,8 +149,10 @@ public class IAManager
                 }
                 catch (Exception e)
                 {
+                    Log.print(tag.ERREUR, "IA " + ia.getName() + " disqualifié !");
                     e.printStackTrace();
                     ia.isDiqualifie = true;
+//                    return;
                 }
                 // try
                 // {
@@ -170,8 +179,35 @@ public class IAManager
                 }
             }
 
-            // vérification
-            // pour l'instant je crois les gens sur parole...
+            // déplacement des unitées
+
+            for (AbstractIA ia : ias)
+            {
+                // avancée des groupes d'un tour
+                iaMoteurs.get(ia).avanceDUnTour(terrainManager);
+            }
+
+
+//            HashMap<Integer, HashMap<Integer, String>> invrai = new HashMap<>();
+//            for (AbstractIA ia : ias)
+//            {
+//                for (Groupe g : iaMoteurs.get(ia).groupes)
+//                {
+//                    if (invrai.get(g.getPosition().getPosX()) == null)
+//                    {
+//                        invrai.put(g.getPosition().getPosX(), new HashMap<Integer, String>());
+//                    }
+//                    invrai.get(g.getPosition().getPosX()).put(g.getPosition().getPosY(), "G");
+////                    if (g.getDestination() != null)
+////                    {
+////                        Log.print(tag.JEU, "Ajout pos " + g.getDestination().getCoordonneesPrintable());
+////                    }
+//
+//                }
+//
+//            }
+//
+//            terrainManager.print(invrai);
 
             Log.print(tag.IAMANAGER, "calcul du tour");
             // on fait le calcul du tour
@@ -182,7 +218,7 @@ public class IAManager
                 for (InfosBaseMoteur infosBaseMoteur : bases.get(ia))
                 {
 
-                    for (Groupe g : infosBaseMoteur.rel.groupes)
+                    for (Groupe g : infosBaseMoteur.rel.nouveauxGroupes)
                     {
                         infosBaseMoteur.groupes.put(g.getId(), new Groupe(g, infosBaseMoteur.rel));
                     }
@@ -264,6 +300,34 @@ public class IAManager
                     if (infosBaseMoteur.quantiteMetal >= ConstantesDeJeu.metalForWin)
                     {
                         stop = true;
+                    }
+
+                    // gestion des groupes
+
+                    // copie des nouveaux groupes
+                    for (Groupe g : infosBaseMoteur.rel.nouveauxGroupes)
+                    {
+                        iaMoteurs.get(ia).groupes.add(g);
+                        // Log.print(tag.JEU, "ajout des cases");
+                        // Log.print(tag.JEU,infosBaseMoteur.caseBase.getCoordonneesPrintable());
+                        // for (Case[] c1 : terrainManager.getCasesAutour(infosBaseMoteur.caseBase))
+                        // {
+                        // for (Case case1 : c1)
+                        // {
+                        // Log.print(tag.JEU,case1.getCoordonneesPrintable());
+                        // }
+                        // }
+                        // Log.print(tag.JEU,terrainManager.getCasesAutour(infosBaseMoteur.caseBase)[1][1].getCoordonneesPrintable());
+                        g.setAutour(terrainManager.getCasesAutour(infosBaseMoteur.caseBase));
+                        infosBaseMoteur.addGroupe(g);
+                        // TODO: verif
+                        // TODO: cost
+                    }
+                    
+                    //copie des nouvelles destinations
+                    for (Groupe g : Environement.get().getGroupes(ia).values())
+                    {
+                        iaMoteurs.get(ia).majDestination(g);
                     }
 
                     // System.out.println("construction...");
@@ -419,16 +483,32 @@ public class IAManager
         for (AbstractIA ia : ias)
         {
             ArrayList<InfosBaseMoteur> basesIA = new ArrayList<>();
-            basesIA.add(new InfosBaseMoteur(idBase, Constantes.get().departBois, Constantes.get().departPierre, Constantes.get().departMetal, 0, 0,
-                    0, 0, 0, 0, 0, 0, typeBatiment.NONE, 0, ia));
+
+            InfosBaseMoteur ibm = infosBaseMoteurFactory(ia);
+            basesIA.add(ibm);
+            basesParID.put(ibm.idBase, ibm);
+
+            // ibm = infosBaseMoteurFactory(ia);
+            // basesIA.add(ibm);
+            // basesParID.put(ibm.idBase, ibm);
+
             bases.put(ia, basesIA);
-            basesParID.put(idBase, basesIA);
-            idBase++;
+
+            iaMoteurs.put(ia, new IAMoteur(ia));
         }
 
         // génération du terrain
-        TerrainManager.get().build(bases.values());
+        terrainManager.build(bases.values());
+        // terrainManager.print();
 
+    }
+
+    private InfosBaseMoteur infosBaseMoteurFactory(AbstractIA ia)
+    {
+        InfosBaseMoteur res = new InfosBaseMoteur(idBase, Constantes.get().departBois, Constantes.get().departPierre, Constantes.get().departMetal,
+                0, 0, 0, 0, 0, 0, 0, 0, typeBatiment.NONE, 0, ia);
+        idBase++;
+        return res;
     }
 
 }

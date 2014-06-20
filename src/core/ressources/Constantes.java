@@ -81,11 +81,16 @@ public class Constantes
 
     public enum typeUnite
     {
-        PEON
-    }
+        PEON(1f);
 
-    // TODO: rand
-    public float vitessePeon = 1f;
+        float vitesse;
+
+        typeUnite(float vitesse)
+        {
+            // TODO: rand
+            this.vitesse = vitesse;
+        }
+    }
 
     public Values getValues()
     {
@@ -504,12 +509,7 @@ public class Constantes
 
     public float getVitesseUnite(typeUnite type)
     {
-        switch (type)
-        {
-        case PEON:
-            return vitessePeon;
-        }
-        return 0f;
+        return type.vitesse;
     }
 
 }

@@ -7,6 +7,7 @@ import api.IA.InfosBase;
 import api.ressources.elements.Case;
 import api.ressources.elements.Groupe;
 import core.ressources.Constantes.typeBatiment;
+import core.ressources.Constantes.typeUnite;
 
 public class InfosBaseMoteur
 {
@@ -40,6 +41,8 @@ public class InfosBaseMoteur
     // V2 --- ne pas prendre en compte !
     public Case                     caseBase;
     public HashMap<Integer, Groupe> groupes          = new HashMap<>();
+
+    public int                      peonEnVoyage     = 0;
 
     /**
      * @return the popBucheron
@@ -256,5 +259,11 @@ public class InfosBaseMoteur
         this(info.idBase, info.quantiteBois, info.quantitePierre, info.quantiteMetal, info.population, info.lvlBucheron, info.lvlCarriere,
                 info.lvlMine, info.lvlFerme, info.popBucheron, info.popCarriere, info.popMine, info.constructionEnCours,
                 info.tempsEcouleDepuisDebutConstruction, info.ia);
+    }
+
+    public void addGroupe(Groupe g)
+    {
+        groupes.put(g.getId(), g);
+        peonEnVoyage += g.getNbUnite(typeUnite.PEON);
     }
 }

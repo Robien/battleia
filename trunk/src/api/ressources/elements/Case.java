@@ -123,4 +123,9 @@ public class Case
         return etat == etatCase.LIBRE || etat == etatCase.INHABITABLE;
     }
 
+    public boolean isSameAs(Case other)
+    {
+        return (posX == other.posX && posY == other.posY);
+    }
+
 }

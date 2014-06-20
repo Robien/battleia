@@ -3,6 +3,7 @@ package core.moteur;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 
 import tools.Log;
 import tools.Log.tag;
@@ -16,24 +17,24 @@ public class TerrainManager
 
     private Case[][] terrain;
 
-    /** Holder to make the singleton */
-    private static class SingletonHolder
-    {
-        private static TerrainManager instance = new TerrainManager();
-    }
-
-    /**
-     * @return the unique instance of TerrainManager
-     */
-    public static TerrainManager get()
-    {
-        return SingletonHolder.instance;
-    }
-
-    /**
-     * The constructor is private because you need to use get() to have the unique instance of this class
-     */
-    private TerrainManager()
+    // /** Holder to make the singleton */
+    // private static class SingletonHolder
+    // {
+    // private static TerrainManager instance = new TerrainManager();
+    // }
+    //
+    // /**
+    // * @return the unique instance of TerrainManager
+    // */
+    // public static TerrainManager get()
+    // {
+    // return SingletonHolder.instance;
+    // }
+    //
+    // /**
+    // * The constructor is private because you need to use get() to have the unique instance of this class
+    // */
+    public TerrainManager()
     {}
 
     /**
@@ -160,6 +161,35 @@ public class TerrainManager
         }
     }
 
+    public void print(HashMap<Integer, HashMap<Integer, String>> infos)
+    {
+        for (int i = 0; i < terrain.length; i += 1)
+        {
+            for (int j = 0; j < terrain[i].length; j += 1)
+            {
+                switch (terrain[i][j].getEtat())
+                {
+                case OCCUPE:
+                    System.out.print("X");
+                    break;
+
+                default:
+                    if (infos.get(i) != null && infos.get(i).get(j) != null)
+                    {
+                        System.out.print(infos.get(i).get(j));
+                    }
+                    else
+                    {
+                        System.out.print(".");
+                    }
+                    break;
+                }
+            }
+
+            System.out.println();
+        }
+    }
+
     public ArrayList<Case> getListeCasesAutour(Case c)
     {
         ArrayList<Case> cases = new ArrayList<>();
@@ -186,14 +216,18 @@ public class TerrainManager
 
     public Case[][] getCasesAutour(Case c)
     {
+        // if (c == null)
+        // {
+        // return null;
+        // }
         Case[][] cases = new Case[3][3];
-        for (int i = -1; i < 1; i++)
+        for (int i = -1; i <= 1; i++)
         {
-            for (int j = -1; j < 1; j++)
+            for (int j = -1; j <= 1; j++)
             {
-                if (i != 0 && j != 0)
+                if (i != 0 || j != 0)
                 {
-                    if (c.getPosX() + i < 0 || c.getPosX() + i > terrain.length || c.getPosY() + j < 0 || c.getPosY() + j > terrain[0].length)
+                    if (c.getPosX() + i < 0 || c.getPosX() + i > terrain.length-1 || c.getPosY() + j < 0 || c.getPosY() + j > terrain[0].length-1)
                     {
                         cases[i + 1][j + 1] = new Case(c.getPosX() + i, c.getPosY() + j);
                         // constructeur par défaut = case hors-terrain
@@ -205,11 +239,28 @@ public class TerrainManager
                 }
                 else
                 {
-                    cases[0][0] = c;
+                    cases[1][1] = c;
                 }
             }
 
         }
+
+        // print();
+        // for (Case[] c1 : cases)
+        // {
+        // for (Case case1 : c1)
+        // {
+        // if (case1 == null)
+        // {
+        // Log.print(tag.JEU, "ha bha c'est nul ça");
+        // }
+        // else
+        // {
+        // Log.print(tag.JEU, case1.getCoordonneesPrintable());
+        // }
+        // }
+        // }
+
         return cases;
     }
 
